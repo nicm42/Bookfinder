@@ -13,4 +13,10 @@ describe('App tests', () => {
     expect(inputElement).toBeInTheDocument();
     expect(submitButton).toBeInTheDocument();
   });
+
+  it('has a Book component', () => {
+    render(<App />);
+    const card = screen.getAllByTestId('card');
+    expect(card).toHaveLength(2);
+  });
 });
