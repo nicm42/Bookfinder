@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
+import Search from './components/Search';
 
-function App() {
+const App = () => {
   useEffect(() => {
     document.title = 'Bookfinder';
   }, []);
 
-  return <div className="App"></div>;
-}
+  return <Search />;
+};
 
 export default App;

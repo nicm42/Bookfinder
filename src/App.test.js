@@ -1,8 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  //const linkElement = screen.getByText(/learn react/i);
-  //expect(linkElement).toBeInTheDocument();
+describe('App tests', () => {
+  it('renders without crashing', () => {
+    render(<App />);
+  });
+
+  it('has a Search component', () => {
+    render(<App />);
+    const inputElement = screen.getByRole('textbox');
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    expect(inputElement).toBeInTheDocument();
+    expect(submitButton).toBeInTheDocument();
+  });
 });
