@@ -12,13 +12,13 @@ describe('Search tests', () => {
     expect(card).toHaveLength(2);
   });
 
-  it('cards contain all the expected information', () => {
+  it('has all the expected information in the cards', () => {
     render(<Books />);
     const coverImage = screen.getAllByRole('img');
     const title = screen.getAllByTestId('title');
     const author = screen.getAllByTestId('author');
     const publisher = screen.getAllByTestId('publisher');
-    const moreInfo = screen.getAllByTestId('moreInfo');
+    const moreInfo = screen.getAllByRole('link');
     expect(coverImage).toHaveLength(2);
     expect(title).toHaveLength(2);
     expect(author).toHaveLength(2);

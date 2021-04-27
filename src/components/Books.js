@@ -9,6 +9,7 @@ const Books = () => {
       title: 'title 1',
       author: 'author 1',
       publisher: 'publisher 1',
+      link: 'link 1',
     },
     {
       id: 'id 2',
@@ -16,6 +17,7 @@ const Books = () => {
       title: 'title 2',
       author: 'author 2',
       publisher: 'publisher 2',
+      link: 'link 2',
     },
   ];
 
@@ -23,13 +25,11 @@ const Books = () => {
     <>
       {cards.map((card) => (
         <Card key={card.id} data-testid="card">
-          <Cover />
-          <Title data-testid="title" />
-          <Author data-testid="author" />
-          <Publisher data-testid="publisher" />
-          <a href="#" data-testid="moreInfo">
-            More information
-          </a>
+          <Cover src={card.cover} />
+          <Title data-testid="title">{card.title}</Title>
+          <Author data-testid="author">{card.author}</Author>
+          <Publisher data-testid="publisher">{card.publisher}</Publisher>
+          <a href={card.link}>More information</a>
         </Card>
       ))}
     </>
