@@ -5,7 +5,7 @@ const Search = () => {
   return (
     <div>
       <Input />
-      <Submit>Submit</Submit>
+      <Submit>Search</Submit>
     </div>
   );
 };

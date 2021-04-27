@@ -12,9 +12,9 @@ describe('Search tests', () => {
     expect(inputElement).toBeInTheDocument();
   });
 
-  it('has a submit button', () => {
+  it('has a submit button with the text: search', () => {
     render(<Search />);
-    const submitButton = screen.getByRole('button', { name: /submit/i });
+    const submitButton = screen.getByRole('button', { name: /search/i });
     expect(submitButton).toBeInTheDocument();
   });
 });
