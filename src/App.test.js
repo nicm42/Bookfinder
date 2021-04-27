@@ -8,7 +8,7 @@ describe('App tests', () => {
 
   it('has a Search component', () => {
     render(<App />);
-    const inputElement = screen.getByRole('textbox');
+    const inputElement = screen.getByRole('searchbox');
     const submitButton = screen.getByRole('button', { name: /search/i });
     expect(inputElement).toBeInTheDocument();
     expect(submitButton).toBeInTheDocument();
