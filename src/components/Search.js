@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Label, Input, Submit } from './Search.styles';
 
 const Search = () => {
   const [searchText, setSearchText] = useState();
 
-  const runSearch = () => {
-    console.log(searchText);
-    //TODO send this to Google Books API
-  };
-
+  async function getData(search) {
+    try {
+      const response = await axios.get(
+        'https://www.googleapis.com/books/v1/volumes?q=' + search
+      );
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <>
       <Label htmlFor="search-input">Search for a book </Label>
@@ -20,7 +26,7 @@ const Search = () => {
         autocomplete="on"
         onChange={(e) => setSearchText(e.target.value)}
       />
-      <Submit onClick={runSearch}>Search</Submit>
+      <Submit onClick={() => getData(searchText)}>Search</Submit>
     </>
   );
 };
