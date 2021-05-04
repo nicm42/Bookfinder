@@ -20,7 +20,7 @@ const Search = () => {
     } */
   }
   return (
-    <>
+    <form>
       <Label htmlFor="search-input">Search for a book </Label>
       <Input
         type="search"
@@ -31,7 +31,7 @@ const Search = () => {
         onChange={(e) => setSearchText(e.target.value)}
       />
       <Submit onClick={() => getData(searchText)}>Search</Submit>
-    </>
+    </form>
   );
 };
 
