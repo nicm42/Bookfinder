@@ -5,19 +5,23 @@ const Books = () => {
   const cards = [
     {
       id: 'id 1',
-      cover: 'test image 1',
-      title: 'title 1',
-      author: 'author 1',
-      publisher: 'publisher 1',
-      link: 'link 1',
+      cover:
+        'http://books.google.com/books/content?id=f280CwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
+      title: 'Harry Potter: The Complete Collection (1-7)',
+      author: 'J.K. Rowling',
+      publisher: 'Pottermore Publishing',
+      link:
+        'https://play.google.com/store/books/details?id=f280CwAAQBAJ&source=gbs_api',
     },
     {
       id: 'id 2',
-      cover: 'test image 2',
-      title: 'title 2',
-      author: 'author 2',
-      publisher: 'publisher 2',
-      link: 'link 2',
+      cover:
+        'http://books.google.com/books/content?id=N6DeDQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
+      title: 'Harry Potter and the Deathly Hallows',
+      author: 'J. K. Rowling',
+      publisher: 'Bloomsbury Publishing',
+      link:
+        'http://books.google.co.uk/books?id=N6DeDQAAQBAJ&dq=harry+potter&hl=&source=gbs_api',
     },
   ];
 

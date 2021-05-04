@@ -6,14 +6,18 @@ const Search = () => {
   const [searchText, setSearchText] = useState();
 
   async function getData(search) {
-    try {
+    /* try {
       const response = await axios.get(
         'https://www.googleapis.com/books/v1/volumes?q=' + search
       );
-      console.log(response);
+      console.log(response.data.items[1].volumeInfo.imageLinks.thumbnail);
+      console.log(response.data.items[1].volumeInfo.title);
+      console.log(response.data.items[1].volumeInfo.authors[0]);
+      console.log(response.data.items[1].volumeInfo.publisher);
+      console.log(response.data.items[1].volumeInfo.infoLink);
     } catch (error) {
       console.error(error);
-    }
+    } */
   }
   return (
     <>
