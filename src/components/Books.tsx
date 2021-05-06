@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, Cover, Title, Author, Publisher } from './Books.styles';
 
 const Books = () => {

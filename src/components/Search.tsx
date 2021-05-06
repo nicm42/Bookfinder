@@ -5,10 +5,13 @@ import { Label, Input, Submit } from './Search.styles';
 const Search = () => {
   const [searchText, setSearchText] = useState<string>('');
 
-  async function getData(search: string) {
+  const getData = async (event: React.FormEvent<EventTarget>) => {
+    event.preventDefault();
+    console.log(searchText);
+    console.log(`https://www.googleapis.com/books/v1/volumes?q=${searchText}`);
     try {
       const response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q${search}`
+        `https://www.googleapis.com/books/v1/volumes?q=${searchText}`
       );
       console.log(response.data.items[1].volumeInfo.imageLinks.thumbnail);
       console.log(response.data.items[1].volumeInfo.title);
@@ -18,10 +21,10 @@ const Search = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
-    <form>
+    <form onSubmit={(e) => getData(e)}>
       <Label htmlFor="search-input">Search for a book </Label>
       <Input
         type="search"
@@ -32,7 +35,7 @@ const Search = () => {
           setSearchText(e.target.value)
         }
       />
-      <Submit onClick={() => getData(searchText)}>Search</Submit>
+      <Submit>Search</Submit>
     </form>
   );
 };

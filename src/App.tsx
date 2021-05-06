@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Search from './components/Search';
 import Books from './components/Books';
 

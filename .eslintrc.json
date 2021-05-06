@@ -1,6 +1,6 @@
 {
-  "extends": ["airbnb", "prettier", "plugin:import/typescript"],
-  "plugins": ["prettier", "import"],
+  "extends": ["airbnb", "airbnb/hooks", "plugin:import/typescript", "prettier"],
+  "plugins": ["import", "prettier"],
   "rules": {
     "prettier/prettier": "warn",
     "no-unused-vars": "warn",
@@ -9,6 +9,7 @@
     "spaced-comment": "off",
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
+    "no-useless-concat": "warn",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -22,26 +23,21 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [
-          ".tsx",
-          ".ts",
-          ".js",
-          ".jsx"
-        ]
+        "extensions": [".tsx", ".ts", ".js", ".jsx"]
       }
     ]
   },
-    "overrides": [
-      {
-        "files": [
-          "**/*.test.js",
-          "**/*.test.jsx",
-          "**/*.spec.js",
-          "**/*.spec.jsx"
-        ],
-        "env": {
-          "jest": true
-        }
+  "overrides": [
+    {
+      "files": [
+        "**/*.test.js",
+        "**/*.test.jsx",
+        "**/*.spec.js",
+        "**/*.spec.jsx"
+      ],
+      "env": {
+        "jest": true
       }
-    ]
+    }
+  ]
 }
