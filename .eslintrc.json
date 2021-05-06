@@ -1,6 +1,12 @@
 {
-  "extends": ["airbnb", "airbnb/hooks", "plugin:import/typescript", "prettier"],
-  "plugins": ["import", "prettier"],
+  "extends": [
+    "react-app",
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:import/typescript",
+    "prettier"
+  ],
+  "plugins": ["import", "jsx-a11y", "prettier"],
   "rules": {
     "prettier/prettier": "warn",
     "no-unused-vars": "warn",
@@ -10,8 +16,10 @@
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "no-useless-concat": "warn",
+    "import/prefer-default-export": "warn",
+    "no-use-before-define": "warn",
     "import/extensions": [
-      "error",
+      "warn",
       "ignorePackages",
       {
         "js": "never",
