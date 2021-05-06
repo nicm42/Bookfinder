@@ -13,6 +13,8 @@ const Search = () => {
       const response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=${searchText}`
       );
+      console.log(response.data.items.length);
+      console.log(response.data.items[1].id);
       console.log(response.data.items[1].volumeInfo.imageLinks.thumbnail);
       console.log(response.data.items[1].volumeInfo.title);
       console.log(response.data.items[1].volumeInfo.authors[0]);
