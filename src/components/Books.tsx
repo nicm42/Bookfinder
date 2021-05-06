@@ -22,6 +22,16 @@ const Books = () => {
       link:
         'http://books.google.co.uk/books?id=N6DeDQAAQBAJ&dq=harry+potter&hl=&source=gbs_api',
     },
+    {
+      id: 'u1mpBAAAQBAJ',
+      cover:
+        'http://books.google.com/books/content?id=u1mpBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
+      title: 'The Long Dark Tea-Time of the Soul',
+      author: 'Douglas Adams',
+      publisher: 'Simon and Schuster',
+      link:
+        'http://books.google.co.uk/books?id=u1mpBAAAQBAJ&dq=douglas+adams&hl=&source=gbs_api',
+    },
   ];
 
   return (
