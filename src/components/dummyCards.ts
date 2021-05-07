@@ -1,4 +1,4 @@
-export const cards = [
+const cardData = [
   {
     id: 'id 1',
     cover:
@@ -30,3 +30,5 @@ export const cards = [
       'http://books.google.co.uk/books?id=u1mpBAAAQBAJ&dq=douglas+adams&hl=&source=gbs_api',
   },
 ];
+
+export default cardData;

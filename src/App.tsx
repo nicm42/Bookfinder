@@ -1,16 +1,22 @@
 import { useEffect } from 'react';
 import Search from './components/Search';
-import Books from './components/Books';
+import Card from './components/Card';
+import { Books } from './App.style';
+import cardData from './components/dummyCards';
 
 const App = () => {
   useEffect(() => {
-    document.title = 'Bookfinder';
+    document.title = 'Book Finder';
   }, []);
 
   return (
     <>
       <Search />
-      <Books />
+      <Books>
+        {cardData.map((card) => (
+          <Card card={card} key={card.id} data-testid="card" />
+        ))}
+      </Books>
     </>
   );
 };
