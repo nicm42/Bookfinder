@@ -2,24 +2,39 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Label, Input, Submit } from './Search.styles';
 
-const Search = () => {
+interface SearchProps {
+  setCardData: Function;
+}
+
+const Search = ({ setCardData }: SearchProps) => {
   const [searchText, setSearchText] = useState<string>('');
 
   const getData = async (event: React.FormEvent<EventTarget>) => {
     event.preventDefault();
+    setSearchText(''); //clear input now we're submitting
     console.log(searchText);
     console.log(`https://www.googleapis.com/books/v1/volumes?q=${searchText}`);
+    setCardData([
+      {
+        id: '1',
+        cover: 'cover',
+        title: 'title',
+        author: 'author',
+        publisher: 'publisher',
+        link: 'link',
+      },
+    ]);
     try {
-      const response = await axios.get(
+      /* const response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=${searchText}`
-      );
-      console.log(response.data.items.length);
+      ); */
+      /* console.log(response.data.items.length);
       console.log(response.data.items[1].id);
       console.log(response.data.items[1].volumeInfo.imageLinks.thumbnail);
       console.log(response.data.items[1].volumeInfo.title);
       console.log(response.data.items[1].volumeInfo.authors[0]);
       console.log(response.data.items[1].volumeInfo.publisher);
-      console.log(response.data.items[1].volumeInfo.infoLink);
+      console.log(response.data.items[1].volumeInfo.infoLink); */
     } catch (error) {
       console.error(error);
     }
@@ -33,6 +48,7 @@ const Search = () => {
         id="search-input"
         name="search"
         required
+        value={searchText}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setSearchText(e.target.value)
         }
