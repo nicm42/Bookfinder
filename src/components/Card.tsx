@@ -10,20 +10,33 @@ type CardType = {
 };
 
 interface CardProps {
-  card: CardType;
+  card: any;
 }
 
 const Card = ({ card }: CardProps) => {
   console.log(card); //TODO it complains if I remove this but if I remove the return statement, App.tsx complains instead
+  //console.log(card.volumeInfo.imageLinks.thumbnail);
+  //TODO below, what if there's more than one author?
+  //TODO below, imageLinks doesn't always exist - it's missing one if you search for Douglas Adams
   return (
     <>
-      {card.cover && <Cover src={card.cover} />}
-      {card.title && <Title data-testid="title">{card.title}</Title>}
-      {card.author && <Author data-testid="author">{card.author}</Author>}
-      {card.publisher && (
-        <Publisher data-testid="publisher">{card.publisher}</Publisher>
+      {card.volumeInfo.imageLinks.thumbnail && (
+        <Cover src={card.volumeInfo.imageLinks.thumbnail} />
       )}
-      {card.link && <a href={card.link}>More information</a>}
+      {card.volumeInfo.title && (
+        <Title data-testid="title">{card.volumeInfo.title}</Title>
+      )}
+      {card.volumeInfo.authors[0] && (
+        <Author data-testid="author">{card.volumeInfo.authors[0]}</Author>
+      )}
+      {card.volumeInfo.publisher && (
+        <Publisher data-testid="publisher">
+          {card.volumeInfo.publisher}
+        </Publisher>
+      )}
+      {card.volumeInfo.infoLink && (
+        <a href={card.volumeInfo.infoLink}>More information</a>
+      )}
     </>
   );
 };
