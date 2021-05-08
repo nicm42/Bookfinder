@@ -12,22 +12,12 @@ const Search = ({ setCardData }: SearchProps) => {
   const getData = async (event: React.FormEvent<EventTarget>) => {
     event.preventDefault();
     setSearchText(''); //clear input now we're submitting
-    console.log(searchText);
-    console.log(`https://www.googleapis.com/books/v1/volumes?q=${searchText}`);
-    setCardData([
-      {
-        id: '1',
-        cover: 'cover',
-        title: 'title',
-        author: 'author',
-        publisher: 'publisher',
-        link: 'link',
-      },
-    ]);
+    //console.log(searchText);
+    //console.log(`https://www.googleapis.com/books/v1/volumes?q=${searchText}`);
     try {
-      /* const response = await axios.get(
+      const response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=${searchText}`
-      ); */
+      );
       /* console.log(response.data.items.length);
       console.log(response.data.items[1].id);
       console.log(response.data.items[1].volumeInfo.imageLinks.thumbnail);
@@ -35,6 +25,17 @@ const Search = ({ setCardData }: SearchProps) => {
       console.log(response.data.items[1].volumeInfo.authors[0]);
       console.log(response.data.items[1].volumeInfo.publisher);
       console.log(response.data.items[1].volumeInfo.infoLink); */
+      console.log(response.data.items);
+      setCardData([
+        {
+          id: response.data.items[1].id,
+          cover: response.data.items[1].volumeInfo.imageLinks.thumbnail,
+          title: response.data.items[1].volumeInfo.title,
+          author: response.data.items[1].volumeInfo.authors[0],
+          publisher: response.data.items[1].volumeInfo.publisher,
+          link: response.data.items[1].volumeInfo.infoLink,
+        },
+      ]);
     } catch (error) {
       console.error(error);
     }
