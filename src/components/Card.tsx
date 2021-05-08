@@ -17,11 +17,13 @@ const Card = ({ card }: CardProps) => {
   console.log(card); //TODO it complains if I remove this but if I remove the return statement, App.tsx complains instead
   return (
     <>
-      <Cover src={card.cover} />
-      <Title data-testid="title">{card.title}</Title>
-      <Author data-testid="author">{card.author}</Author>
-      <Publisher data-testid="publisher">{card.publisher}</Publisher>
-      <a href={card.link}>More information</a>
+      {card.cover && <Cover src={card.cover} />}
+      {card.title && <Title data-testid="title">{card.title}</Title>}
+      {card.author && <Author data-testid="author">{card.author}</Author>}
+      {card.publisher && (
+        <Publisher data-testid="publisher">{card.publisher}</Publisher>
+      )}
+      {card.link && <a href={card.link}>More information</a>}
     </>
   );
 };
