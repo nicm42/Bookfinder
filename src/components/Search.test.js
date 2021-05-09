@@ -1,4 +1,10 @@
-import { render, screen, waitFor, cleanup } from '@testing-library/react';
+import {
+  render,
+  screen,
+  fireEvent,
+  act,
+  cleanup,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import Search from './Search';
@@ -33,16 +39,40 @@ describe('Search tests', () => {
     expect(submitButton).toBeInTheDocument();
   });
 
-  it('calls axios when submit is clicked', async () => {
-    axios.get.mockResolvedValueOnce({ data: { greeting: 'hello world' } });
+  it.only('calls axios when submit is clicked', async () => {
     render(<Search />);
-    await whenStable;
+    const inputElement = screen.getByRole('searchbox');
     const submitButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.change(inputElement, { target: { value: 'test' } });
     userEvent.click(submitButton);
+    axios.get.mockResolvedValueOnce({
+      status: 200,
+      data: { greeting: 'hello world' },
+    });
+    await whenStable;
     expect(axios.get).toHaveBeenCalledTimes(1);
+    expect(axios.get).toHaveBeenCalledWith(
+      'https://www.googleapis.com/books/v1/volumes?q=test'
+    );
+  });
+
+  it('handles error on axios when submit is clicked', async () => {
+    render(<Search />);
+    const inputElement = screen.getByRole('searchbox');
+    const submitButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.change(inputElement, { target: { value: '' } });
+    userEvent.click(submitButton);
+    const error = new Error('timeout');
+    axios.get.mockRejectedValueOnce(error);
+    const logSpy = jest.spyOn(console, 'error');
+    //jest.spyOn(axios, 'get').mockRejectedValue(new Error('error'));
+    //await expect(whenStable()).rejects.toThrow('error');
+    //await whenStable;
     expect(axios.get).toHaveBeenCalledWith(
       'https://www.googleapis.com/books/v1/volumes?q='
     );
+    expect(logSpy).toHaveBeenCalledWith(error);
+    logSpy.mockRestore();
   });
   /* it('mocks axios', async () => {
     axios.get.mockResolvedValueOnce({ data: { greeting: 'hello there' } });

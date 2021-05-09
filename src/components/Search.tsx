@@ -12,11 +12,11 @@ const Search = ({ setCardData }: SearchProps) => {
   //TODO should this be in useEffect?
   const getData = async (event: React.FormEvent<EventTarget>) => {
     event.preventDefault();
-    setSearchText(''); //clear input now we're submitting
     try {
       const response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=${searchText}`
       );
+      //console.log(response.status);
       /* console.log(response.data.items.length);
       console.log(response.data.items[1].id);
       console.log(response.data.items[1].volumeInfo.imageLinks.thumbnail);
@@ -24,7 +24,12 @@ const Search = ({ setCardData }: SearchProps) => {
       console.log(response.data.items[1].volumeInfo.authors[0]);
       console.log(response.data.items[1].volumeInfo.publisher); 
       console.log(response.data.items[1].volumeInfo.infoLink); */
-      setCardData(response.data.items);
+      if (response.status === 200) {
+        setCardData(response.data.items);
+        setSearchText(''); //clear input now we're submitting
+      } else {
+        throw new Error('error');
+      }
     } catch (error) {
       console.error(error);
     }
