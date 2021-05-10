@@ -5,7 +5,6 @@ import {
   act,
   cleanup,
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import Search from './Search';
 
@@ -51,7 +50,7 @@ describe('Search tests', () => {
     const inputElement = screen.getByRole('searchbox');
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.change(inputElement, { target: { value: 'test' } });
-    userEvent.click(submitButton);
+    fireEvent.click(submitButton);
     axios.get.mockResolvedValueOnce({
       status: 200,
       data: { greeting: 'hello world' },
