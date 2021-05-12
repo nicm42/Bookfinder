@@ -22,7 +22,7 @@ const Card = ({ card }: CardProps) => {
   return (
     <>
       {card.volumeInfo.imageLinks.thumbnail && (
-        <Cover src={card.volumeInfo.imageLinks.thumbnail} />
+        <Cover src={card.volumeInfo.imageLinks.thumbnail} alt="TODO" />
       )}
       {card.volumeInfo.title && (
         <Title data-testid="title">{card.volumeInfo.title}</Title>
@@ -36,7 +36,9 @@ const Card = ({ card }: CardProps) => {
         </Publisher>
       )}
       {card.volumeInfo.infoLink && (
-        <a href={card.volumeInfo.infoLink}>More information</a>
+        <a data-testid="link" href={card.volumeInfo.infoLink}>
+          More information
+        </a>
       )}
     </>
   );
