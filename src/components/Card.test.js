@@ -11,7 +11,7 @@ const cardData = [
       title: 'Title 1',
       authors: ['Author 1'],
       publisher: 'Publisher 1',
-      infolink: 'https://www.dummylink1.com',
+      infoLink: 'https://www.dummylink1.com',
     },
   },
   {
@@ -23,30 +23,27 @@ const cardData = [
       title: 'Title 2',
       authors: ['Author 2'],
       publisher: 'Publisher 2',
-      infolink: 'https://www.dummylink2.com',
+      infoLink: 'https://www.dummylink2.com',
     },
   },
 ];
 
 describe('Search tests', () => {
-  it('renders a dummy test for now', () => {
-    expect(true).toBeTruthy();
-  });
   it('renders without crashing', () => {
     render(<Card card={cardData[0]} />);
   });
 
-  /* it('has all the expected information on the card', () => {
-    render(<Card card={cards[0]} />);
-    const coverImage = screen.getAllByRole('img');
-    const title = screen.getAllByTestId('title');
-    const author = screen.getAllByTestId('author');
-    const publisher = screen.getAllByTestId('publisher');
-    const moreInfo = screen.getAllByRole('link');
-    expect(coverImage).toHaveLength(1);
-    expect(title).toHaveLength(1);
-    expect(author).toHaveLength(1);
-    expect(publisher).toHaveLength(1);
-    expect(moreInfo).toHaveLength(1);
-  }); */
+  it('has all the expected information on the card', () => {
+    render(<Card card={cardData[0]} />);
+    const coverImage = screen.getByRole('img');
+    const title = screen.getByTestId('title');
+    const author = screen.getByTestId('author');
+    const publisher = screen.getByTestId('publisher');
+    const moreInfo = screen.getByTestId('link');
+    expect(coverImage).toBeInTheDocument();
+    expect(title).toBeInTheDocument();
+    expect(author).toBeInTheDocument();
+    expect(publisher).toBeInTheDocument();
+    expect(moreInfo).toBeInTheDocument();
+  });
 });
