@@ -16,8 +16,9 @@ interface CardProps {
 const Card = ({ card }: CardProps) => {
   console.log(card); //TODO it complains if I remove this but if I remove the return statement, App.tsx complains instead
   //console.log(card.volumeInfo.imageLinks.thumbnail);
-  //TODO below, what if there's more than one author?
+  //TODO below, what if there's more than one author? - maybe it'll just show them all
   //TODO below, imageLinks doesn't always exist - it's missing one if you search for Douglas Adams
+  // - maybe the && should be ternary operators instead, so it returns nothing if it doesn't exist
   return (
     <>
       {card.volumeInfo.imageLinks.thumbnail && (
