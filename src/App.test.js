@@ -5,23 +5,19 @@ import App from './App';
 const cardData = [
   {
     id: 'id 1',
-    cover:
-      'http://books.google.com/books/content?id=f280CwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-    title: 'Harry Potter: The Complete Collection (1-7)',
-    author: 'J.K. Rowling',
-    publisher: 'Pottermore Publishing',
-    link:
-      'https://play.google.com/store/books/details?id=f280CwAAQBAJ&source=gbs_api',
+    cover: 'http://www.dummycover1.com',
+    title: 'Title 1',
+    author: 'Author 1',
+    publisher: 'Publisher 1',
+    link: 'https://www.dummylink1.com',
   },
   {
     id: 'id 2',
-    cover:
-      'http://books.google.com/books/content?id=N6DeDQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-    title: 'Harry Potter and the Deathly Hallows',
-    author: 'J. K. Rowling',
-    publisher: 'Bloomsbury Publishing',
-    link:
-      'http://books.google.co.uk/books?id=N6DeDQAAQBAJ&dq=harry+potter&hl=&source=gbs_api',
+    cover: 'http://www.dummycover2.com',
+    title: 'Title 2',
+    author: 'Author 2',
+    publisher: 'Publisher 2',
+    link: 'https://www.dummylink2.com',
   },
 ];
 
@@ -57,10 +53,10 @@ describe('App tests with card data', () => {
     });
     try {
       expect(card).toHaveLength(2);
-      const cardTitle = getByText(
-        'Harry Potter: The Complete Collection (1-7)'
-      );
-      expect(cardTitle).toBeInTheDocument();
+      const cardTitle1 = getByText('Title1');
+      const cardTitle2 = getByText('Title2');
+      expect(cardTitle1).toBeInTheDocument();
+      expect(cardTitle2).toBeInTheDocument();
     } catch {
       console.log('caught');
     }
