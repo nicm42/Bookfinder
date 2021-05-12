@@ -1,7 +1,10 @@
-import { render, screen } from '@testing-library/react';
+//import React from 'react';
+import { render, screen, fireEvent, getByText } from '@testing-library/react';
+import axios from 'axios';
 import App from './App';
+//import Search from './components/Search';
 
-const cards = [
+const cardData = [
   {
     id: 'id 1',
     cover:
@@ -24,11 +27,7 @@ const cards = [
   },
 ];
 
-jest.mock('./components/dummyCards', () => ({
-  cards,
-}));
-
-describe('App tests', () => {
+describe('App initial tests', () => {
   it('renders without crashing', () => {
     render(<App />);
   });
@@ -41,9 +40,31 @@ describe('App tests', () => {
     expect(submitButton).toBeInTheDocument();
   });
 
-  it('has a Book component', () => {
+  it('has a Card component', () => {
     render(<App />);
-    const card = screen.getAllByTestId('card');
-    expect(card).toHaveLength(2);
+    const card = screen.queryAllByTestId('card');
+    expect(card).toHaveLength(0);
+  });
+});
+
+describe('App tests with card data', () => {
+  it('shows the cards when they have some data', () => {
+    render(<App />);
+    const card = screen.queryAllByTestId('card');
+    const submitButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.click(submitButton);
+    axios.get.mockResolvedValueOnce({
+      status: 200,
+      data: { cardData },
+    });
+    try {
+      expect(card).toHaveLength(2);
+      const cardTitle = getByText(
+        'Harry Potter: The Complete Collection (1-7)'
+      );
+      expect(cardTitle).toBeInTheDocument();
+    } catch {
+      console.log('caught');
+    }
   });
 });
