@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, getByText } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import axios from 'axios';
 import App from './App';
 
@@ -42,19 +42,20 @@ describe('App initial tests', () => {
 });
 
 describe('App tests with card data', () => {
+  const mockedAxios = axios as jest.Mocked<typeof axios>;
   it('shows the cards when they have some data', () => {
     render(<App />);
     const card = screen.queryAllByTestId('card');
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
-    axios.get.mockResolvedValueOnce({
+    mockedAxios.get.mockResolvedValueOnce({
       status: 200,
       data: { cardData },
     });
     try {
       expect(card).toHaveLength(2);
-      const cardTitle1 = getByText('Title1');
-      const cardTitle2 = getByText('Title2');
+      const cardTitle1 = screen.getByText('Title1');
+      const cardTitle2 = screen.getByText('Title2');
       expect(cardTitle1).toBeInTheDocument();
       expect(cardTitle2).toBeInTheDocument();
     } catch {
