@@ -29,7 +29,7 @@ const App = () => {
       <Search setCardData={setCardData} />
       <Books>
         {cardData.map((card) => (
-          <CardDiv key={card.id}>
+          <CardDiv key={card.id} data-testid="cardDiv">
             <Card card={card} key={card.id} data-testid="card" />
           </CardDiv>
         ))}

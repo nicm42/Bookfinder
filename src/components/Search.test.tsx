@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
   render,
   screen,
@@ -49,6 +50,11 @@ describe('Search tests', () => {
 
   it('calls axios when submit is clicked', async () => {
     const mockedAxios = axios as jest.Mocked<typeof axios>;
+    const setState = jest.fn();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const useStateMock: any = (initState: any) => [initState, setState];
+    jest.spyOn(React, 'useState').mockImplementation(useStateMock);
+
     render(<Search setCardData={setCardData} />);
     const inputElement = screen.getByRole('searchbox');
     const submitButton = screen.getByRole('button', { name: /search/i });
@@ -56,7 +62,7 @@ describe('Search tests', () => {
     fireEvent.click(submitButton);
     mockedAxios.get.mockResolvedValueOnce({
       status: 200,
-      data: { greeting: 'hello world' },
+      data: { items: 'hello world' },
     });
 
     try {
@@ -65,10 +71,31 @@ describe('Search tests', () => {
       expect(axios.get).toHaveBeenCalledWith(
         'https://www.googleapis.com/books/v1/volumes?q=test'
       );
+      expect(setState).toHaveBeenCalledTimes(1);
+    } catch (error) {
+      expect(error).toEqual(error);
+    }
+  });
+
+  it('calls axios with an error when submit is clicked', async () => {
+    const mockedAxios = axios as jest.Mocked<typeof axios>;
+
+    render(<Search setCardData={setCardData} />);
+    const inputElement = screen.getByRole('searchbox');
+    const submitButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.change(inputElement, { target: { value: 'test' } });
+    fireEvent.click(submitButton);
+    mockedAxios.get.mockResolvedValueOnce({
+      status: 400,
+      data: {},
+    });
+
+    try {
+      await whenStable;
     } catch (error) {
       const logSpy = jest.spyOn(console, 'log');
       expect(axios.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q='
+        'https://www.googleapis.com/books/v1/volumes?q=test'
       );
       expect(error).toEqual(error);
       expect(logSpy).toEqual(error);

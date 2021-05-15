@@ -1,25 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import axios from 'axios';
 import App from './App';
-
-const cardData = [
-  {
-    id: 'id 1',
-    cover: 'http://www.dummycover1.com',
-    title: 'Title 1',
-    author: 'Author 1',
-    publisher: 'Publisher 1',
-    link: 'https://www.dummylink1.com',
-  },
-  {
-    id: 'id 2',
-    cover: 'http://www.dummycover2.com',
-    title: 'Title 2',
-    author: 'Author 2',
-    publisher: 'Publisher 2',
-    link: 'https://www.dummylink2.com',
-  },
-];
+import cardData from './dummyCardData';
 
 describe('App initial tests', () => {
   it('renders without crashing', () => {
@@ -36,6 +18,8 @@ describe('App initial tests', () => {
 
   it('has a Card component', () => {
     render(<App />);
+    const cardDiv = screen.queryAllByTestId('cardDiv');
+    expect(cardDiv).toHaveLength(0);
     const card = screen.queryAllByTestId('card');
     expect(card).toHaveLength(0);
   });
@@ -45,6 +29,7 @@ describe('App tests with card data', () => {
   const mockedAxios = axios as jest.Mocked<typeof axios>;
   it('shows the cards when they have some data', () => {
     render(<App />);
+    const cardDiv = screen.queryAllByTestId('cardDiv');
     const card = screen.queryAllByTestId('card');
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
@@ -53,6 +38,7 @@ describe('App tests with card data', () => {
       data: { cardData },
     });
     try {
+      expect(cardDiv).toHaveLength(2);
       expect(card).toHaveLength(2);
       const cardTitle1 = screen.getByText('Title1');
       const cardTitle2 = screen.getByText('Title2');

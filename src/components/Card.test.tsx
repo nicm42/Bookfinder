@@ -1,29 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import Card from './Card';
-
-const cardData = [
-  {
-    id: 'id 1',
-    volumeInfo: {
-      imageLinks: {
-        thumbnail: 'http://www.dummycover1.com',
-      },
-      title: 'Title 1',
-      authors: ['Author 1'],
-      publisher: 'Publisher 1',
-      infoLink: 'https://www.dummylink1.com',
-    },
-  },
-  {
-    id: 'id 2',
-    volumeInfo: {
-      title: 'Title 2',
-      authors: ['Author 2', 'Author 3'],
-      publisher: 'Publisher 2',
-      infoLink: 'https://www.dummylink2.com',
-    },
-  },
-];
+import cardData from '../dummyCardData';
 
 describe('Search tests', () => {
   it('renders without crashing', () => {

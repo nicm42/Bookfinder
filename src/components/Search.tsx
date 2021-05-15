@@ -22,7 +22,7 @@ const Search = ({ setCardData }: SearchProps) => {
       const response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=${search}`
       );
-      console.log(response.data.totalItems);
+      //console.log(response.data.totalItems);
       /* console.log(response.data.items[1].id);
       console.log(response.data.items[1].volumeInfo.imageLinks.thumbnail);
       console.log(response.data.items[1].volumeInfo.title);
