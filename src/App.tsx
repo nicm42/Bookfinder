@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Search from './components/Search';
 import Card from './components/Card';
-import { Books } from './App.style';
+import { Books, CardDiv } from './App.style';
 //import cardData from './components/dummyCards';
 
 /* interface cards {
@@ -29,7 +29,9 @@ const App = () => {
       <Search setCardData={setCardData} />
       <Books>
         {cardData.map((card) => (
-          <Card card={card} key={card.id} data-testid="card" />
+          <CardDiv key={card.id}>
+            <Card card={card} key={card.id} data-testid="card" />
+          </CardDiv>
         ))}
       </Books>
     </>

@@ -17,7 +17,7 @@ const Card = ({ card }: CardProps) => {
   console.log(card); //TODO it complains if I remove this but if I remove the return statement, App.tsx complains instead
   //below, imageLinks doesn't always exist - it's missing one if you search for The Illustrated Hitchhiker's Guide to the Galaxy
   // - maybe the && should be ternary operators instead, so it returns nothing if it doesn't exist
-  // it works now but we might need ternary operators to show something instead of missing information
+  // it works now but we might need ternary operators to show something intead of missing information
   return (
     <>
       {/* {card.volumeInfo.imageLinks ? (
