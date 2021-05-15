@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Label, Input, Submit } from './Search.styles';
 
@@ -50,6 +51,10 @@ const Search = ({ setCardData }: SearchProps) => {
       <Submit>Search</Submit>
     </form>
   );
+};
+
+Search.propTypes = {
+  setCardData: PropTypes.func.isRequired,
 };
 
 export default Search;

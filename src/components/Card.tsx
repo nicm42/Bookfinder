@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Cover, Title, Author, Publisher } from './Card.styles';
 //import cardData from './dummyCards';
 
@@ -48,6 +49,10 @@ const Card = ({ card }: CardProps) => {
       )}
     </>
   );
+};
+
+Card.propTypes = {
+  card: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Card;
