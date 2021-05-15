@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import Search from './components/Search';
 import Card from './components/Card';
 import { Loading, Books, CardDiv } from './App.style';
+//import cards from './dummyCardData'; //uncomment to load cards without using API
 
 const App = () => {
   const [cardData, setCardData] = useState<any[]>([]);
+  //const [cardData, setCardData] = useState<any[]>(cards);  //uncomment to load cards without using API
   const [isLoading, setIsLoading] = useState<Boolean>(false);
 
   useEffect(() => {
@@ -14,6 +16,8 @@ const App = () => {
   useEffect(() => {
     if (cardData.length > 0) {
       setIsLoading(false);
+    } else {
+      setIsLoading(true);
     }
   }, [cardData]);
 

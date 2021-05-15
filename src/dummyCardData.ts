@@ -1,4 +1,4 @@
-const cardData = [
+const cards = [
   {
     id: 'id 1',
     volumeInfo: {
@@ -26,4 +26,4 @@ const cardData = [
   },
 ];
 
-export default cardData;
+export default cards;

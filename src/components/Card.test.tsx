@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import Card from './Card';
-import cardData from '../dummyCardData';
+import cards from '../dummyCardData';
 
 describe('Search tests', () => {
   it('renders without crashing', () => {
-    render(<Card card={cardData[0]} />);
+    render(<Card card={cards[0]} />);
   });
 
   it('has all the expected information on the card', () => {
-    render(<Card card={cardData[0]} />);
+    render(<Card card={cards[0]} />);
     const coverImage = screen.getByRole('img');
     const title = screen.getByTestId('title');
     const author = screen.getByTestId('author');
@@ -22,7 +22,7 @@ describe('Search tests', () => {
   });
 
   it('has all the expected text', () => {
-    render(<Card card={cardData[0]} />);
+    render(<Card card={cards[0]} />);
     const coverImage = screen.getByRole('img');
     const title = screen.getByText('Title 1');
     const author = screen.getByText('Author 1');
@@ -39,7 +39,7 @@ describe('Search tests', () => {
   });
 
   it('has can cope with multiple authors', () => {
-    render(<Card card={cardData[1]} />);
+    render(<Card card={cards[1]} />);
     const author2 = screen.getByText('Author 2', { exact: false });
     const author3 = screen.getByText('Author 3', { exact: false });
     expect(author2).toBeInTheDocument();
@@ -47,7 +47,7 @@ describe('Search tests', () => {
   });
 
   it('has can cope with missing information', () => {
-    render(<Card card={cardData[2]} />);
+    render(<Card card={cards[2]} />);
     const coverImage = screen.queryByRole('img');
     const title = screen.queryByText('Title 2');
     const author2 = screen.queryByText('Author 2');

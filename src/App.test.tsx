@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import axios from 'axios';
 import App from './App';
-import cardData from './dummyCardData';
+import cards from './dummyCardData';
 
 describe('App initial tests', () => {
   it('renders without crashing', () => {
@@ -28,10 +28,6 @@ describe('App initial tests', () => {
 
 describe('App tests with card data', () => {
   const mockedAxios = axios as jest.Mocked<typeof axios>;
-  const setState = jest.fn();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const useStateMock: any = (initState: any) => [initState, setState];
-  jest.spyOn(React, 'useState').mockImplementation(useStateMock);
 
   it('shows the cards when they have some data', () => {
     render(<App />);
@@ -43,11 +39,10 @@ describe('App tests with card data', () => {
     fireEvent.click(submitButton);
     mockedAxios.get.mockResolvedValueOnce({
       status: 200,
-      data: { cardData },
+      data: { cards },
     });
     try {
       expect(loading).toBeInTheDocument();
-      expect(setState).toHaveBeenCalledTimes(1);
       expect(cardDiv).toHaveLength(2);
       expect(card).toHaveLength(2);
       const cardTitle1 = screen.getByText('Title1');
