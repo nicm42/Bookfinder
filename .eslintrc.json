@@ -18,6 +18,9 @@
     "no-useless-concat": "warn",
     "import/prefer-default-export": "warn",
     "no-use-before-define": "warn",
+    // note you must disable the base rule as it can report incorrect errors
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["warn"],
     "import/extensions": [
       "warn",
       "ignorePackages",
