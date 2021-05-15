@@ -15,6 +15,7 @@ const Search = ({ setCardData, setIsLoading }: SearchProps) => {
   const getData = async (event: React.FormEvent<EventTarget>) => {
     event.preventDefault();
     setIsLoading(true);
+    setCardData([]); //in case this is another search, clear the results from the previous search
     const search = searchText;
     setSearchText(''); //clear input now we're submitting
     try {
