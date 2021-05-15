@@ -1,14 +1,14 @@
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import { Cover, Title, Author, Publisher } from './Card.styles';
 //import cardData from './dummyCards';
 
-type CardType = {
+/* type CardType = {
   cover: string;
   title: string;
   author: string;
   publisher: string;
   link: string;
-};
+}; */
 
 interface CardProps {
   card: any;
@@ -26,7 +26,9 @@ const Card = ({ card }: CardProps) => {
           src={card.volumeInfo.imageLinks.thumbnail}
           alt={card.volumeInfo.title}
         />
-      ) : null} */}
+      ) : (
+        'image missing'
+      )} */}
       {card.volumeInfo.imageLinks && (
         <Cover
           src={card.volumeInfo.imageLinks.thumbnail}
@@ -52,7 +54,17 @@ const Card = ({ card }: CardProps) => {
 };
 
 Card.propTypes = {
-  card: PropTypes.arrayOf(PropTypes.string).isRequired,
+  card: PropTypes.shape({
+    volumeInfo: PropTypes.shape({
+      imageLinks: PropTypes.shape({
+        thumbnail: PropTypes.string,
+      }),
+      title: PropTypes.string,
+      authors: PropTypes.arrayOf(string),
+      publisher: PropTypes.string,
+      infoLink: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 export default Card;
