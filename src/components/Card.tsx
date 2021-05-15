@@ -15,12 +15,18 @@ interface CardProps {
 
 const Card = ({ card }: CardProps) => {
   console.log(card); //TODO it complains if I remove this but if I remove the return statement, App.tsx complains instead
-  //console.log(card.volumeInfo.imageLinks.thumbnail);
-  //TODO below, imageLinks doesn't always exist - it's missing one if you search for Douglas Adams
+  //below, imageLinks doesn't always exist - it's missing one if you search for The Illustrated Hitchhiker's Guide to the Galaxy
   // - maybe the && should be ternary operators instead, so it returns nothing if it doesn't exist
+  // it works now but we might need ternary operators to show something instead of missing information
   return (
     <>
-      {card.volumeInfo.imageLinks.thumbnail && (
+      {/* {card.volumeInfo.imageLinks ? (
+        <Cover
+          src={card.volumeInfo.imageLinks.thumbnail}
+          alt={card.volumeInfo.title}
+        />
+      ) : null} */}
+      {card.volumeInfo.imageLinks && (
         <Cover
           src={card.volumeInfo.imageLinks.thumbnail}
           alt={card.volumeInfo.title}

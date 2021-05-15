@@ -15,9 +15,13 @@ const Search = ({ setCardData }: SearchProps) => {
     const search = searchText;
     setSearchText(''); //clear input now we're submitting
     try {
+      //TODO will need to repeat this if there are more than 10 results
+      //Although how many do we want to show on the page? Maybe a link to get more books?
+      //Or just get 10 at a time
       const response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=${search}`
       );
+      console.log(response.data.totalItems);
       /* console.log(response.data.items[1].id);
       console.log(response.data.items[1].volumeInfo.imageLinks.thumbnail);
       console.log(response.data.items[1].volumeInfo.title);
