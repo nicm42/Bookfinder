@@ -21,7 +21,7 @@ describe('Search tests', () => {
     expect(moreInfo).toBeInTheDocument();
   });
 
-  it('has all the expected text (first card)', () => {
+  it('has all the expected text', () => {
     render(<Card card={cardData[0]} />);
     const coverImage = screen.getByRole('img');
     const title = screen.getByText('Title 1');
@@ -38,21 +38,27 @@ describe('Search tests', () => {
     expect(link).toHaveAttribute('href', 'https://www.dummylink1.com');
   });
 
-  it('has all the expected text (two authors, missing image link)', () => {
+  it('has can cope with multiple authors', () => {
     render(<Card card={cardData[1]} />);
-    const coverImage = screen.queryByRole('img');
-    const title = screen.getByText('Title 2');
     const author2 = screen.getByText('Author 2', { exact: false });
     const author3 = screen.getByText('Author 3', { exact: false });
-    const publisher = screen.getByText('Publisher 2');
-    const moreInfo = screen.getByText('More information');
-    const link = screen.getByRole('link');
-    expect(coverImage).not.toBeInTheDocument();
-    expect(title).toBeInTheDocument();
     expect(author2).toBeInTheDocument();
     expect(author3).toBeInTheDocument();
-    expect(publisher).toBeInTheDocument();
-    expect(moreInfo).toBeInTheDocument();
-    expect(link).toHaveAttribute('href', 'https://www.dummylink2.com');
+  });
+
+  it('has can cope with missing information', () => {
+    render(<Card card={cardData[2]} />);
+    const coverImage = screen.queryByRole('img');
+    const title = screen.queryByText('Title 2');
+    const author2 = screen.queryByText('Author 2');
+    const publisher = screen.queryByText('Publisher 2');
+    const moreInfo = screen.queryByText('More information');
+    const link = screen.queryByRole('link');
+    expect(coverImage).not.toBeInTheDocument();
+    expect(title).not.toBeInTheDocument();
+    expect(author2).not.toBeInTheDocument();
+    expect(publisher).not.toBeInTheDocument();
+    expect(moreInfo).not.toBeInTheDocument();
+    expect(link).not.toBeInTheDocument();
   });
 });

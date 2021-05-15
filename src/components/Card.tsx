@@ -15,36 +15,38 @@ interface CardProps {
 }
 
 const Card = ({ card }: CardProps) => (
-  //console.log(card);
-  //below, imageLinks doesn't always exist - it's missing one if you search for The Illustrated Hitchhiker's Guide to the Galaxy
-  // - maybe the && should be ternary operators instead, so it returns nothing if it doesn't exist
-  // it works now but we might need ternary operators to show something intead of missing information
   <>
-    {/* {card.volumeInfo.imageLinks ? (
-        <Cover
-          src={card.volumeInfo.imageLinks.thumbnail}
-          alt={card.volumeInfo.title}
-        />
-      ) : (
-        'image missing'
-      )} */}
-    {card.volumeInfo.imageLinks && (
+    {card.volumeInfo.imageLinks ? (
       <Cover
         src={card.volumeInfo.imageLinks.thumbnail}
         alt={card.volumeInfo.title}
       />
+    ) : (
+      'image missing TODO'
     )}
-    {card.volumeInfo.title && (
+
+    {card.volumeInfo.title ? (
       <Title data-testid="title">{card.volumeInfo.title}</Title>
+    ) : (
+      'title missing TODO'
     )}
-    {card.volumeInfo.authors[0] && (
+
+    {card.volumeInfo.authors ? (
       <Author data-testid="author">{card.volumeInfo.authors}</Author>
+    ) : (
+      'authors missing TODO'
     )}
-    {card.volumeInfo.publisher && (
+
+    {card.volumeInfo.publisher ? (
       <Publisher data-testid="publisher">{card.volumeInfo.publisher}</Publisher>
+    ) : (
+      'publisher missing TODO'
     )}
-    {card.volumeInfo.infoLink && (
+
+    {card.volumeInfo.infoLink ? (
       <a href={card.volumeInfo.infoLink}>More information</a>
+    ) : (
+      'link missing TODO'
     )}
   </>
 );
