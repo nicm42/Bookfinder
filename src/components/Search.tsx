@@ -5,14 +5,16 @@ import { Label, Input, Submit } from './Search.styles';
 
 interface SearchProps {
   setCardData: Function;
+  setIsLoading: Function;
 }
 
-const Search = ({ setCardData }: SearchProps) => {
+const Search = ({ setCardData, setIsLoading }: SearchProps) => {
   const [searchText, setSearchText] = useState<string>('');
 
   //TODO should this be in useEffect?
   const getData = async (event: React.FormEvent<EventTarget>) => {
     event.preventDefault();
+    setIsLoading(true);
     const search = searchText;
     setSearchText(''); //clear input now we're submitting
     try {
@@ -30,6 +32,7 @@ const Search = ({ setCardData }: SearchProps) => {
       console.log(response.data.items[1].volumeInfo.publisher); 
       console.log(response.data.items[1].volumeInfo.infoLink); */
       setCardData(response.data.items);
+      //setIsLoading(false);
     } catch (error) {
       console.log(error);
     }

@@ -1,32 +1,27 @@
 import { useState, useEffect } from 'react';
 import Search from './components/Search';
 import Card from './components/Card';
-import { Books, CardDiv } from './App.style';
-//import cardData from './components/dummyCards';
-
-/* interface cards {
-  id: string;
-  cover: string;
-  title: string;
-  author: string;
-  publisher: string;
-  link: string;
-} */
+import { Loading, Books, CardDiv } from './App.style';
 
 const App = () => {
-  /* const [cardData, setCardData] = useState([
-    { id: 'id', cover: '', title: '', author: '', publisher: '', link: '' },
-  ]);*/
   const [cardData, setCardData] = useState<any[]>([]);
-  //const [cardData, setCardData] = useState<null | { id: string }>([]);
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
 
   useEffect(() => {
     document.title = 'Book Finder';
   }, []);
 
+  useEffect(() => {
+    if (cardData.length > 0) {
+      setIsLoading(false);
+    }
+  }, [cardData]);
+
   return (
     <>
-      <Search setCardData={setCardData} />
+      <Search setCardData={setCardData} setIsLoading={setIsLoading} />
+      {isLoading && <Loading data-testid="loading">Loading</Loading>}{' '}
+      {/* TODO replace this text with an animation */}
       <Books>
         {cardData.map((card) => (
           <CardDiv key={card.id} data-testid="cardDiv">
