@@ -6,9 +6,10 @@ import { Label, Input, Submit } from './Search.styles';
 interface SearchProps {
   setCardData: Function;
   setIsLoading: Function;
+  setSearchedFor: Function;
 }
 
-const Search = ({ setCardData, setIsLoading }: SearchProps) => {
+const Search = ({ setCardData, setIsLoading, setSearchedFor }: SearchProps) => {
   const [searchText, setSearchText] = useState<string>('');
 
   //TODO should this be in useEffect?
@@ -17,6 +18,7 @@ const Search = ({ setCardData, setIsLoading }: SearchProps) => {
     setIsLoading(true);
     setCardData([]); //in case this is another search, clear the results from the previous search
     const search = searchText;
+    setSearchedFor(searchText);
     setSearchText(''); //clear input now we're submitting
     try {
       //TODO will need to repeat this if there are more than 10 results

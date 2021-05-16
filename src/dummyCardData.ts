@@ -27,3 +27,5 @@ const cards = [
 ];
 
 export default cards;
+
+export const noCards = [false];

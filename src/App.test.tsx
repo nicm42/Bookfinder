@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import axios from 'axios';
 import App from './App';
-import cards from './dummyCardData';
+import cards, { noCards } from './dummyCardData';
 
 describe('App initial tests', () => {
   it('renders without crashing', () => {
@@ -57,16 +57,22 @@ describe('App tests with card data', () => {
   it('shows a message when there is no data', () => {
     render(<App />);
     const card = screen.queryAllByTestId('card');
-    const noResult = screen.queryByTestId('noResult');
+    const noResult = screen.queryByText(
+      'No books were found, { exact: false }'
+    );
     expect(noResult).not.toBeInTheDocument();
+    const inputElement = screen.getByRole('searchbox');
     const submitButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.change(inputElement, { target: { value: 'test' } });
     fireEvent.click(submitButton);
+    const noResultSearchedFor = screen.queryByText('test');
     mockedAxios.get.mockResolvedValueOnce({
       status: 200,
-      data: {},
+      data: { noCards },
     });
     try {
       expect(noResult).toBeInTheDocument();
+      expect(noResultSearchedFor).toBeInTheDocument();
       expect(card).toHaveLength(0);
     } catch {
       console.log('caught');

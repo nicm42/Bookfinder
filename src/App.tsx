@@ -9,6 +9,7 @@ const App = () => {
   //const [cardData, setCardData] = useState<any[]>(cards);  //uncomment to load cards without using API
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [isData, setIsData] = useState<Boolean>(true);
+  const [searchedFor, setSearchedFor] = useState<string>('');
 
   useEffect(() => {
     document.title = 'Book Finder';
@@ -22,19 +23,21 @@ const App = () => {
       } else {
         setIsData(true);
       }
-    } else {
-      //setIsLoading(true);
     }
   }, [cardData]);
 
   return (
     <>
-      <Search setCardData={setCardData} setIsLoading={setIsLoading} />
+      <Search
+        setCardData={setCardData}
+        setIsLoading={setIsLoading}
+        setSearchedFor={setSearchedFor}
+      />
       {isLoading && <Loading data-testid="loading">Loading</Loading>}{' '}
       {/* TODO replace this text with an animation */}
       {!isData && (
-        <NoResult data-testid="noResult">
-          No books were found :( Please try a different search
+        <NoResult>
+          No books were found for {searchedFor} :( Please try a different search
         </NoResult>
       )}
       {cardData[0] !== false && (
