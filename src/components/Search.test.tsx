@@ -20,14 +20,14 @@ const whenStable = async () => {
 describe('Search tests', () => {
   const setCardData = jest.fn();
   const setIsLoading = jest.fn();
-  const setSearchedFor = jest.fn();
+  const setIsError = jest.fn();
 
   it('renders without crashing', () => {
     render(
       <Search
         setCardData={setCardData}
         setIsLoading={setIsLoading}
-        setSearchedFor={setSearchedFor}
+        setIsError={setIsError}
       />
     );
   });
@@ -37,7 +37,7 @@ describe('Search tests', () => {
       <Search
         setCardData={setCardData}
         setIsLoading={setIsLoading}
-        setSearchedFor={setSearchedFor}
+        setIsError={setIsError}
       />
     );
     const inputElement = screen.getByRole('searchbox');
@@ -51,7 +51,7 @@ describe('Search tests', () => {
       <Search
         setCardData={setCardData}
         setIsLoading={setIsLoading}
-        setSearchedFor={setSearchedFor}
+        setIsError={setIsError}
       />
     );
     const submitButton = screen.getByRole('button', { name: /search/i });
@@ -63,7 +63,7 @@ describe('Search tests', () => {
       <Search
         setCardData={setCardData}
         setIsLoading={setIsLoading}
-        setSearchedFor={setSearchedFor}
+        setIsError={setIsError}
       />
     );
     const inputElement = screen.getByRole('searchbox') as HTMLInputElement;
@@ -85,7 +85,7 @@ describe('Search tests', () => {
       <Search
         setCardData={setCardData}
         setIsLoading={setIsLoading}
-        setSearchedFor={setSearchedFor}
+        setIsError={setIsError}
       />
     );
     const inputElement = screen.getByRole('searchbox');
@@ -116,12 +116,10 @@ describe('Search tests', () => {
       <Search
         setCardData={setCardData}
         setIsLoading={setIsLoading}
-        setSearchedFor={setSearchedFor}
+        setIsError={setIsError}
       />
     );
-    const inputElement = screen.getByRole('searchbox');
     const submitButton = screen.getByRole('button', { name: /search/i });
-    fireEvent.change(inputElement, { target: { value: 'test' } });
     fireEvent.click(submitButton);
     mockedAxios.get.mockResolvedValueOnce({
       status: 400,

@@ -1,5 +1,11 @@
 import * as React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import {
+  render,
+  screen,
+  fireEvent,
+  act,
+  cleanup,
+} from '@testing-library/react';
 import axios from 'axios';
 import App from './App';
 import cards, { noCards } from './dummyCardData';
@@ -28,8 +34,15 @@ describe('App initial tests', () => {
 
 describe('App tests with card data', () => {
   const mockedAxios = axios as jest.Mocked<typeof axios>;
+  const whenStable = async () => {
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+  };
 
-  it('shows the cards when they have some data', () => {
+  afterEach(cleanup);
+
+  it('shows the cards when they have some data', async () => {
     render(<App />);
     const loading = screen.queryByTestId('Loading');
     expect(loading).not.toBeInTheDocument();
@@ -42,6 +55,7 @@ describe('App tests with card data', () => {
       data: { cards },
     });
     try {
+      await whenStable;
       expect(loading).toBeInTheDocument();
       expect(cardDiv).toHaveLength(2);
       expect(card).toHaveLength(2);
@@ -54,13 +68,11 @@ describe('App tests with card data', () => {
     }
   });
 
-  it('shows a message when there is no data', () => {
+  it('shows a message when there is no data', async () => {
     render(<App />);
     const card = screen.queryAllByTestId('card');
-    const noResult = screen.queryByText(
-      'No books were found, { exact: false }'
-    );
-    expect(noResult).not.toBeInTheDocument();
+    const error = screen.queryByTestId('error');
+    expect(error).not.toBeInTheDocument();
     const inputElement = screen.getByRole('searchbox');
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.change(inputElement, { target: { value: 'test' } });
@@ -71,11 +83,31 @@ describe('App tests with card data', () => {
       data: { noCards },
     });
     try {
-      expect(noResult).toBeInTheDocument();
+      await whenStable;
+      expect(error).toBeInTheDocument();
       expect(noResultSearchedFor).toBeInTheDocument();
       expect(card).toHaveLength(0);
     } catch {
       console.log('caught');
+    }
+  });
+
+  it('shows a message when there is an error', async () => {
+    render(<App />);
+    const card = screen.queryAllByTestId('card');
+    const error = screen.queryByTestId('error');
+    expect(error).not.toBeInTheDocument();
+    const submitButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.click(submitButton);
+    mockedAxios.get.mockResolvedValueOnce({
+      status: 400,
+      data: {},
+    });
+    try {
+      await whenStable;
+    } catch {
+      expect(error).toBeInTheDocument();
+      expect(card).toHaveLength(0);
     }
   });
 });

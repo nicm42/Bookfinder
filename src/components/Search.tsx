@@ -6,10 +6,10 @@ import { Label, Input, Submit } from './Search.styles';
 interface SearchProps {
   setCardData: Function;
   setIsLoading: Function;
-  setSearchedFor: Function;
+  setIsError: Function;
 }
 
-const Search = ({ setCardData, setIsLoading, setSearchedFor }: SearchProps) => {
+const Search = ({ setCardData, setIsLoading, setIsError }: SearchProps) => {
   const [searchText, setSearchText] = useState<string>('');
 
   //TODO should this be in useEffect?
@@ -18,7 +18,6 @@ const Search = ({ setCardData, setIsLoading, setSearchedFor }: SearchProps) => {
     setIsLoading(true);
     setCardData([]); //in case this is another search, clear the results from the previous search
     const search = searchText;
-    setSearchedFor(searchText);
     setSearchText(''); //clear input now we're submitting
     try {
       //TODO will need to repeat this if there are more than 10 results
@@ -35,10 +34,11 @@ const Search = ({ setCardData, setIsLoading, setSearchedFor }: SearchProps) => {
       console.log(response.data.items[1].volumeInfo.publisher); 
       console.log(response.data.items[1].volumeInfo.infoLink); */
       setCardData(response.data.items);
-      //setCardData([false]); //uncomment to test nothing returned from API
-      //setIsLoading(false);
+      //setIsError(`No books were found for ${search} :(`); //uncomment to test nothing returned from API
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
+      setIsError(error); //TODO why does this line make Jest App test unhappy?
     }
   };
 
