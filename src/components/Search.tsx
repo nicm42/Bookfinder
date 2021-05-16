@@ -33,6 +33,7 @@ const Search = ({ setCardData, setIsLoading }: SearchProps) => {
       console.log(response.data.items[1].volumeInfo.publisher); 
       console.log(response.data.items[1].volumeInfo.infoLink); */
       setCardData(response.data.items);
+      //setCardData([false]); //uncomment to test nothing returned from API
       //setIsLoading(false);
     } catch (error) {
       console.log(error);

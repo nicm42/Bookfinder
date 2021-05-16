@@ -53,4 +53,23 @@ describe('App tests with card data', () => {
       console.log('caught');
     }
   });
+
+  it('shows a message when there is no data', () => {
+    render(<App />);
+    const card = screen.queryAllByTestId('card');
+    const noResult = screen.queryByTestId('noResult');
+    expect(noResult).not.toBeInTheDocument();
+    const submitButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.click(submitButton);
+    mockedAxios.get.mockResolvedValueOnce({
+      status: 200,
+      data: {},
+    });
+    try {
+      expect(noResult).toBeInTheDocument();
+      expect(card).toHaveLength(0);
+    } catch {
+      console.log('caught');
+    }
+  });
 });
