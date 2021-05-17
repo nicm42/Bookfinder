@@ -8,7 +8,7 @@ const App = () => {
   const [cardData, setCardData] = useState<any[]>([]);
   //const [cardData, setCardData] = useState<any[]>(cards);  //uncomment to load cards without using API
   const [isLoading, setIsLoading] = useState<Boolean>(false);
-  const [isError, setIsError] = useState<string>();
+  const [errorMessage, setErrorMessage] = useState<string>();
 
   useEffect(() => {
     document.title = 'Book Finder';
@@ -18,9 +18,9 @@ const App = () => {
     if (cardData.length > 0) {
       setIsLoading(false);
       if (cardData[0] === false) {
-        setIsError(true);
+        seterrorMessage(true);
       } else {
-        setIsError(false);
+        seterrorMessage(false);
       }
     }
   }, [cardData]); */
@@ -35,6 +35,7 @@ const App = () => {
       const response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=${search}`
       );
+      //const response = await axios.get(`http://httpstat.us/400`); //Uncomment to test API errors
       //console.log(response.data.totalItems);
       /* console.log(response.data.items[1].id);
       console.log(response.data.items[1].volumeInfo.imageLinks.thumbnail);
@@ -43,12 +44,14 @@ const App = () => {
       console.log(response.data.items[1].volumeInfo.publisher); 
       console.log(response.data.items[1].volumeInfo.infoLink); */
       setCardData(response.data.items);
-      //setIsError(`No books were found for ${search} :(`); //uncomment to test nothing returned from API
-      setIsLoading(false);
+      //setErrorMessage(`No books were found for ${search} :(`); //uncomment to test nothing returned from API
     } catch (error) {
-      console.log(error);
-      setIsError(error); //TODO why does this line make Jest App test unhappy?
+      console.log(error.response);
+      setErrorMessage(
+        `Something went wrong :( Please speak to the developer with the search term: '${search}' and the error message: '${error.response.status} ${error.response.statusText}'`
+      );
     }
+    setIsLoading(false);
   };
 
   return (
@@ -56,7 +59,7 @@ const App = () => {
       <Search getData={getData} />
       {isLoading && <Loading data-testid="loading">Loading</Loading>}{' '}
       {/* TODO replace this text with an animation */}
-      {isError && <Error data-testid="error">{isError}</Error>}
+      {errorMessage && <Error data-testid="error">{errorMessage}</Error>}
       <Books>
         {cardData.map((card) => (
           <CardDiv key={card.id} data-testid="cardDiv">
