@@ -130,6 +130,7 @@ describe('App tests with card data', () => {
   it('shows a message when there is an error', async () => {
     render(<App />);
     const card = screen.queryAllByTestId('card');
+    const cardDiv = screen.queryAllByTestId('cardDiv');
     const errorDiv = screen.queryByTestId('error');
     expect(errorDiv).not.toBeInTheDocument();
     const submitButton = screen.getByRole('button', { name: /search/i });
@@ -141,8 +142,20 @@ describe('App tests with card data', () => {
     try {
       await whenStable;
     } catch (err) {
-      expect(errorDiv).toBeInTheDocument();
       expect(card).toHaveLength(0);
+      expect(cardDiv).toHaveLength(0);
+      expect(errorDiv).toBeInTheDocument();
+      if (err.message === 'timeout of 2ms exceeded') {
+        const errTimeOut = screen.getByText(
+          'The request timed out. Please try again later'
+        );
+        expect(errTimeOut).toBeInTheDocument();
+      } else {
+        const errText = screen.getByText('Something went wrong :(', {
+          exact: false,
+        });
+        expect(errText).toBeInTheDocument();
+      }
     }
   });
 });
