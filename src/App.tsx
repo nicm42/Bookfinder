@@ -33,10 +33,13 @@ const App = () => {
       //Although how many do we want to show on the page? Maybe a link to get more books?
       //Or just get 10 at a time
       const response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${search}`
-      );
-      //const response = await axios.get(`http://httpstat.us/400`); //Uncomment to test API errors
-      //console.log(response.data.totalItems);
+        `https://www.googleapis.com/books/v1/volumes?q=${search}, {
+        timeout: 2`
+      ); //Uncomment to test API timeout //console.log(response.data.totalItems);
+      //const response = await axios.get(`http://httpstat.us/404`); //Uncomment to test API errors
+      /* const response = await axios.get(`http://httpstat.us/504`, {
+        timeout: 2,
+      }); */
       /* console.log(response.data.items[1].id);
       console.log(response.data.items[1].volumeInfo.imageLinks.thumbnail);
       console.log(response.data.items[1].volumeInfo.title);
@@ -46,10 +49,17 @@ const App = () => {
       setCardData(response.data.items);
       //setErrorMessage(`No books were found for ${search} :(`); //uncomment to test nothing returned from API
     } catch (error) {
-      console.log(error.response);
-      setErrorMessage(
+      console.log(error);
+      /* setErrorMessage(
         `Something went wrong :( Please speak to the developer with the search term: '${search}' and the error message: '${error.response.status} ${error.response.statusText}'`
-      );
+      ); */
+      if (error.message === 'timeout of 2ms exceeded') {
+        setErrorMessage('The request timed out. Please try again later');
+      } else {
+        setErrorMessage(
+          `Something went wrong :( Please speak to the developer with the search term: '${search}' and the error message: '${error.response.status} ${error.response.statusText}'`
+        );
+      }
     }
     setIsLoading(false);
   };
