@@ -18,28 +18,14 @@ const whenStable = async () => {
 };
 
 describe('Search tests', () => {
-  const setCardData = jest.fn();
-  const setIsLoading = jest.fn();
-  const setIsError = jest.fn();
+  const getData = jest.fn();
 
   it('renders without crashing', () => {
-    render(
-      <Search
-        setCardData={setCardData}
-        setIsLoading={setIsLoading}
-        setIsError={setIsError}
-      />
-    );
+    render(<Search getData={getData} />);
   });
 
   it('has an input element with a label', () => {
-    render(
-      <Search
-        setCardData={setCardData}
-        setIsLoading={setIsLoading}
-        setIsError={setIsError}
-      />
-    );
+    render(<Search getData={getData} />);
     const inputElement = screen.getByRole('searchbox');
     const label = screen.getByText('Search for a book');
     expect(inputElement).toBeInTheDocument();
@@ -47,94 +33,18 @@ describe('Search tests', () => {
   });
 
   it('has a submit button with the text: search', () => {
-    render(
-      <Search
-        setCardData={setCardData}
-        setIsLoading={setIsLoading}
-        setIsError={setIsError}
-      />
-    );
+    render(<Search getData={getData} />);
     const submitButton = screen.getByRole('button', { name: /search/i });
     expect(submitButton).toBeInTheDocument();
   });
 
   it('checks the input is blank after submit is clicked', () => {
-    render(
-      <Search
-        setCardData={setCardData}
-        setIsLoading={setIsLoading}
-        setIsError={setIsError}
-      />
-    );
+    render(<Search getData={getData} />);
     const inputElement = screen.getByRole('searchbox') as HTMLInputElement;
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.change(inputElement, { target: { value: 'test' } });
     expect(inputElement.value).toBe('test');
     fireEvent.click(submitButton);
     expect(inputElement.value).toBe('');
-  });
-
-  it('calls axios when submit is clicked', async () => {
-    const mockedAxios = axios as jest.Mocked<typeof axios>;
-    const setState = jest.fn();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const useStateMock: any = (initState: any) => [initState, setState];
-    jest.spyOn(React, 'useState').mockImplementation(useStateMock);
-
-    render(
-      <Search
-        setCardData={setCardData}
-        setIsLoading={setIsLoading}
-        setIsError={setIsError}
-      />
-    );
-    const inputElement = screen.getByRole('searchbox');
-    const submitButton = screen.getByRole('button', { name: /search/i });
-    fireEvent.change(inputElement, { target: { value: 'test' } });
-    fireEvent.click(submitButton);
-    mockedAxios.get.mockResolvedValueOnce({
-      status: 200,
-      data: { items: 'hello world' },
-    });
-
-    try {
-      await whenStable;
-      expect(axios.get).toHaveBeenCalledTimes(1);
-      expect(axios.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=test'
-      );
-      expect(setState).toHaveBeenCalledTimes(1);
-    } catch (error) {
-      expect(error).toEqual(error);
-    }
-  });
-
-  it('calls axios with an error when submit is clicked', async () => {
-    const mockedAxios = axios as jest.Mocked<typeof axios>;
-
-    render(
-      <Search
-        setCardData={setCardData}
-        setIsLoading={setIsLoading}
-        setIsError={setIsError}
-      />
-    );
-    const submitButton = screen.getByRole('button', { name: /search/i });
-    fireEvent.click(submitButton);
-    mockedAxios.get.mockResolvedValueOnce({
-      status: 400,
-      data: {},
-    });
-
-    try {
-      await whenStable;
-    } catch (error) {
-      const logSpy = jest.spyOn(console, 'log');
-      expect(axios.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=test'
-      );
-      expect(error).toEqual(error);
-      expect(logSpy).toEqual(error);
-    }
   });
 });

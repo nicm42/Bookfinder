@@ -18,8 +18,8 @@ describe('App initial tests', () => {
   it('has a Search component', () => {
     render(<App />);
     const inputElement = screen.getByRole('searchbox');
-    const submitButton = screen.getByRole('button', { name: /search/i });
     expect(inputElement).toBeInTheDocument();
+    const submitButton = screen.getByRole('button', { name: /search/i });
     expect(submitButton).toBeInTheDocument();
   });
 
@@ -36,7 +36,7 @@ describe('App tests with card data', () => {
   const mockedAxios = axios as jest.Mocked<typeof axios>;
   const whenStable = async () => {
     await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     });
   };
 
@@ -46,33 +46,68 @@ describe('App tests with card data', () => {
     render(<App />);
     const loading = screen.queryByTestId('Loading');
     expect(loading).not.toBeInTheDocument();
+    const errorDiv = screen.queryByTestId('error');
+    expect(errorDiv).not.toBeInTheDocument();
+
     const cardDiv = screen.queryAllByTestId('cardDiv');
     const card = screen.queryAllByTestId('card');
     const submitButton = screen.getByRole('button', { name: /search/i });
+
     fireEvent.click(submitButton);
+
     mockedAxios.get.mockResolvedValueOnce({
       status: 200,
       data: { cards },
     });
+
     try {
-      await whenStable;
       expect(loading).toBeInTheDocument();
+      await whenStable;
+
+      expect(axios.get).toHaveBeenCalledTimes(1);
+      expect(axios.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=test'
+      );
       expect(cardDiv).toHaveLength(2);
       expect(card).toHaveLength(2);
+      expect(loading).not.toBeInTheDocument();
+      expect(errorDiv).not.toBeInTheDocument();
+
       const cardTitle1 = screen.getByText('Title1');
       const cardTitle2 = screen.getByText('Title2');
       expect(cardTitle1).toBeInTheDocument();
       expect(cardTitle2).toBeInTheDocument();
-    } catch {
-      console.log('caught');
+    } catch (err) {
+      expect(err).toEqual(err);
+    }
+  });
+
+  it('calls axios with an error when submit is clicked', async () => {
+    render(<App />);
+    const submitButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.click(submitButton);
+    mockedAxios.get.mockResolvedValueOnce({
+      status: 400,
+      data: {},
+    });
+
+    try {
+      await whenStable;
+    } catch (err) {
+      const logSpy = jest.spyOn(console, 'log');
+      expect(axios.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=test'
+      );
+      expect(err).toEqual(err);
+      expect(logSpy).toEqual(err);
     }
   });
 
   it('shows a message when there is no data', async () => {
     render(<App />);
     const card = screen.queryAllByTestId('card');
-    const error = screen.queryByTestId('error');
-    expect(error).not.toBeInTheDocument();
+    const errorDiv = screen.queryByTestId('error');
+    expect(errorDiv).not.toBeInTheDocument();
     const inputElement = screen.getByRole('searchbox');
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.change(inputElement, { target: { value: 'test' } });
@@ -84,10 +119,10 @@ describe('App tests with card data', () => {
     });
     try {
       await whenStable;
-      expect(error).toBeInTheDocument();
+      expect(errorDiv).toBeInTheDocument();
       expect(noResultSearchedFor).toBeInTheDocument();
       expect(card).toHaveLength(0);
-    } catch {
+    } catch (err) {
       console.log('caught');
     }
   });
@@ -95,8 +130,8 @@ describe('App tests with card data', () => {
   it('shows a message when there is an error', async () => {
     render(<App />);
     const card = screen.queryAllByTestId('card');
-    const error = screen.queryByTestId('error');
-    expect(error).not.toBeInTheDocument();
+    const errorDiv = screen.queryByTestId('error');
+    expect(errorDiv).not.toBeInTheDocument();
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
     mockedAxios.get.mockResolvedValueOnce({
@@ -105,8 +140,8 @@ describe('App tests with card data', () => {
     });
     try {
       await whenStable;
-    } catch {
-      expect(error).toBeInTheDocument();
+    } catch (err) {
+      expect(errorDiv).toBeInTheDocument();
       expect(card).toHaveLength(0);
     }
   });
