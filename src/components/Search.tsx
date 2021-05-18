@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 //import axios from 'axios';
-import { Label, Input, Submit } from './Search.styles';
+import { Label, Input, Select, Submit } from './Search.styles';
 
 interface SearchProps {
   /* setCardData: Function;
@@ -12,17 +12,18 @@ interface SearchProps {
 
 const Search = ({ getData }: SearchProps) => {
   const [searchText, setSearchText] = useState<string>('');
+  const [searchType, setSearchType] = useState<string>('');
 
   const submitSearch = async (event: React.FormEvent<EventTarget>) => {
     event.preventDefault();
     const search = searchText;
     setSearchText(''); //clear input now we're submitting
-    getData(search);
+    getData(search, searchType);
   };
 
   return (
     <form onSubmit={(e) => submitSearch(e)}>
-      <Label htmlFor="search-input">Search for a book </Label>
+      <Label htmlFor="search-input">Search for a book by title or author</Label>
       <Input
         type="search"
         id="search-input"
@@ -33,6 +34,13 @@ const Search = ({ getData }: SearchProps) => {
           setSearchText(e.target.value)
         }
       />
+      <Select required onChange={(e) => setSearchType(e.target.value)}>
+        <option value="Choose" className="hide">
+          Title or author
+        </option>
+        <option value="intitle">Title</option>
+        <option value="inauthor">Author</option>
+      </Select>
       <Submit>Search</Submit>
     </form>
   );
