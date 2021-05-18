@@ -34,7 +34,13 @@ const Search = ({ getData }: SearchProps) => {
           setSearchText(e.target.value)
         }
       />
-      <Select required onChange={(e) => setSearchType(e.target.value)}>
+      <Select
+        required
+        data-testid="select"
+        onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+          setSearchType(e.target.value)
+        }
+      >
         <option value="Choose" className="hide">
           Title or author
         </option>

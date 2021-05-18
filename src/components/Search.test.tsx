@@ -27,7 +27,7 @@ describe('Search tests', () => {
   it('has an input element with a label', () => {
     render(<Search getData={getData} />);
     const inputElement = screen.getByRole('searchbox');
-    const label = screen.getByText('Search for a book');
+    const label = screen.getByText('Search for a book by title or author');
     expect(inputElement).toBeInTheDocument();
     expect(label).toBeInTheDocument();
   });
@@ -36,6 +36,16 @@ describe('Search tests', () => {
     render(<Search getData={getData} />);
     const submitButton = screen.getByRole('button', { name: /search/i });
     expect(submitButton).toBeInTheDocument();
+  });
+
+  it('has a select dropdown with options', () => {
+    render(<Search getData={getData} />);
+    const dropDown = screen.getByTestId('select');
+    expect(dropDown).toBeInTheDocument();
+    const title = screen.getByRole('option', { name: /title/i });
+    expect(title).toBeInTheDocument();
+    const author = screen.getByRole('option', { name: /author/i });
+    expect(author).toBeInTheDocument();
   });
 
   it('checks the input is blank after submit is clicked', () => {
