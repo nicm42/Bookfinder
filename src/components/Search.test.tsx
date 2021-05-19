@@ -1,21 +1,5 @@
-import * as React from 'react';
-import {
-  render,
-  screen,
-  fireEvent,
-  act,
-  cleanup,
-} from '@testing-library/react';
-import axios from 'axios';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Search from './Search';
-
-afterEach(cleanup);
-
-const whenStable = async () => {
-  await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 0));
-  });
-};
 
 describe('Search tests', () => {
   const getData = jest.fn();
