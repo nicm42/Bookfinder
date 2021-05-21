@@ -49,20 +49,26 @@ describe('App tests with card data', () => {
   it.only('tests axios', async () => {
     mockedAxios.get.mockResolvedValueOnce(mockData);
     render(<App />);
-    //const inputElement = screen.getByRole('searchbox');
-    //fireEvent.change(inputElement, { target: { value: 'test' } });
-    //const dropDown = screen.getByTestId('select');
-    //fireEvent.change(dropDown, { target: { value: 'intitle' } });
+    const inputElement = screen.getByRole('searchbox');
+    fireEvent.change(inputElement, { target: { value: 'test' } });
+    const dropDown = screen.getByTestId('select');
+    fireEvent.change(dropDown, { target: { value: 'intitle' } });
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
     await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(1));
-    //above now passes!
+    await waitFor(() =>
+      expect(mockedAxios.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22'
+      )
+    );
+    const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
+    expect(cardDiv).toHaveLength(3);
     try {
       //const response = mockedAxios.get.mockResolvedValueOnce(mockData);
       //console.log(response);
       //await waitFor(() => whenStable);
       //we need the waitFor here so Jest doesn't complain about setIsLoading not being wrapped in act
-      //await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(20)); //TODO why is this passing whatever number I put in it?
+      //await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(20)); //why is this passing whatever number I put in it?
       //await waitFor(() => expect(mockedAxios.get).toHaveBeenCalled());
       /* await waitFor(() =>
         expect(mockedAxios.get).toHaveBeenCalledWith('something')

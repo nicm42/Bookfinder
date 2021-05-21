@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { convertToObject } from 'typescript';
 import Search from './components/Search';
 import Card from './components/Card';
 import { Loading, Error, Books, CardDiv } from './App.style';
@@ -28,14 +29,14 @@ const App = () => {
   const getData = async (search: string, type: string) => {
     setIsLoading(true);
     setCardData([]); //in case this is another search, clear the results from the previous search
-    console.log(`Running getData with ${search} and ${type}`);
+    //console.log(`Running getData with ${search} and ${type}`);
     try {
       //TODO will need to repeat this if there are more than 10 results
       //Although how many do we want to show on the page? Maybe a link to get more books?
       //Or just get 10 at a time
       const api = 'https://www.googleapis.com/books/v1/volumes?q=';
       const response = await axios.get(`${api}${type}:%22${search}%22`);
-      //console.log(response.data.items);
+      console.log(response.data.items);
 
       //Uncomment line below to test API errors
       //const response = await axios.get(`http://httpstat.us/404`);
