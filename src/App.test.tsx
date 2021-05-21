@@ -5,6 +5,7 @@ import {
   fireEvent,
   act,
   cleanup,
+  waitFor,
 } from '@testing-library/react';
 import axios from 'axios';
 import App from './App';
@@ -33,7 +34,9 @@ describe('App initial tests', () => {
 });
 
 describe('App tests with card data', () => {
+  jest.mock('axios');
   const mockedAxios = axios as jest.Mocked<typeof axios>;
+  const mockData = { data: cards };
   const whenStable = async () => {
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -41,6 +44,36 @@ describe('App tests with card data', () => {
   };
 
   afterEach(cleanup);
+
+  //This has fixed all the messages in Jest, but it always runs the error bit from App
+  it.only('tests axios', async () => {
+    mockedAxios.get.mockResolvedValueOnce(mockData);
+    render(<App />);
+    //const inputElement = screen.getByRole('searchbox');
+    //fireEvent.change(inputElement, { target: { value: 'test' } });
+    //const dropDown = screen.getByTestId('select');
+    //fireEvent.change(dropDown, { target: { value: 'intitle' } });
+    const submitButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.click(submitButton);
+    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(1));
+    //above now passes!
+    try {
+      //const response = mockedAxios.get.mockResolvedValueOnce(mockData);
+      //console.log(response);
+      //await waitFor(() => whenStable);
+      //we need the waitFor here so Jest doesn't complain about setIsLoading not being wrapped in act
+      //await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(20)); //TODO why is this passing whatever number I put in it?
+      //await waitFor(() => expect(mockedAxios.get).toHaveBeenCalled());
+      /* await waitFor(() =>
+        expect(mockedAxios.get).toHaveBeenCalledWith('something')
+      ); */
+      //const card = waitFor(() => screen.queryAllByTestId('card'));
+      //expect(card).toHaveLength(20); //this is also passing no matter what number I put in it
+      //console.log(cards);
+    } catch (error) {
+      //there's an error
+    }
+  });
 
   it('shows the cards when they have some data', async () => {
     render(<App />);
@@ -55,14 +88,16 @@ describe('App tests with card data', () => {
 
     fireEvent.click(submitButton);
 
-    mockedAxios.get.mockResolvedValueOnce({
-      status: 200,
-      data: { cards },
-    });
+    /* mockedAxios.get.mockResolvedValueOnce(() => {
+      Promise.resolve({
+        status: 200,
+        data: { cards },
+      });
+    }); */
 
     try {
       expect(loading).toBeInTheDocument();
-      await whenStable;
+      //await whenStable;
 
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(axios.get).toHaveBeenCalledWith(
@@ -87,6 +122,7 @@ describe('App tests with card data', () => {
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
     mockedAxios.get.mockResolvedValueOnce({
+      //TODO should be mockRejectedValueOnce
       status: 400,
       data: {},
     });
