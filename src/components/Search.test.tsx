@@ -4,6 +4,10 @@ import Search from './Search';
 describe('Search tests', () => {
   const getData = jest.fn();
 
+  it('does a dummy test so it collects coverage', () => {
+    expect(true).toBeTruthy();
+  });
+
   it('renders without crashing', () => {
     render(<Search getData={getData} />);
   });
@@ -32,13 +36,20 @@ describe('Search tests', () => {
     expect(author).toBeInTheDocument();
   });
 
-  it('checks the input is blank after submit is clicked', () => {
+  it('checks the input and dropdown are blank after submit is clicked', () => {
     render(<Search getData={getData} />);
     const inputElement = screen.getByRole('searchbox') as HTMLInputElement;
-    const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.change(inputElement, { target: { value: 'test' } });
     expect(inputElement.value).toBe('test');
+
+    const dropDown = screen.getByTestId('select') as HTMLInputElement;
+    fireEvent.change(dropDown, { target: { value: 'intitle' } });
+    expect(dropDown.value).toBe('intitle');
+
+    const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
+
     expect(inputElement.value).toBe('');
+    expect(dropDown.value).toBe('Choose');
   });
 });

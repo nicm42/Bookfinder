@@ -17,8 +17,10 @@ const Search = ({ getData }: SearchProps) => {
   const submitSearch = async (event: React.FormEvent<EventTarget>) => {
     event.preventDefault();
     const search = searchText;
+    const type = searchType;
     setSearchText(''); //clear input now we're submitting
-    getData(search, searchType);
+    setSearchType(''); //clear dropdown now we're submitting
+    getData(search, type);
   };
 
   return (
@@ -40,6 +42,7 @@ const Search = ({ getData }: SearchProps) => {
         onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
           setSearchType(e.target.value)
         }
+        value={searchType}
       >
         <option value="Choose" className="hide">
           Title or author
