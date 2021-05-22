@@ -50,6 +50,6 @@ describe('Search tests', () => {
     fireEvent.click(submitButton);
 
     expect(inputElement.value).toBe('');
-    expect(dropDown.value).toBe('Choose');
+    expect(dropDown.value).toBe('');
   });
 });

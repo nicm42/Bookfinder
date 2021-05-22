@@ -8,7 +8,7 @@ interface CardProps {
 
 const Card = ({ card }: CardProps) => {
   //If there's more than one author, we need to format them
-  //otherwise it puts the names right next to each other with no comma
+  //otherwise it puts the names right next to each other with no comma or space
   const { authors } = card.volumeInfo;
   let formattedAuthors = '';
   if (authors) {
