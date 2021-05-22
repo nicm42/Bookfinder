@@ -2,14 +2,6 @@ import PropTypes, { string } from 'prop-types';
 import { Cover, Title, Author, Publisher } from './Card.styles';
 //import cardData from './dummyCards';
 
-/* type CardType = {
-  cover: string;
-  title: string;
-  author: string;
-  publisher: string;
-  link: string;
-}; */
-
 interface CardProps {
   card: any;
 }

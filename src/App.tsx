@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { convertToObject } from 'typescript';
 import Search from './components/Search';
 import Card from './components/Card';
 import { Loading, Error, Books, CardDiv } from './App.style';
@@ -14,17 +13,6 @@ const App = () => {
   useEffect(() => {
     document.title = 'Book Finder';
   }, []);
-
-  /* useEffect(() => {
-    if (cardData.length > 0) {
-      setIsLoading(false);
-      if (cardData[0] === false) {
-        seterrorMessage(true);
-      } else {
-        seterrorMessage(false);
-      }
-    }
-  }, [cardData]); */
 
   const getData = async (search: string, type: string) => {
     setIsLoading(true);
