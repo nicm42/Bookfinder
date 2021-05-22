@@ -36,7 +36,7 @@ const App = () => {
       //Or just get 10 at a time
       const api = 'https://www.googleapis.com/books/v1/volumes?q=';
       const response = await axios.get(`${api}${type}:%22${search}%22`);
-      console.log(response.data.items);
+      //console.log(response.data.items);
 
       //Uncomment line below to test API errors
       //const response = await axios.get(`http://httpstat.us/404`);
@@ -58,17 +58,16 @@ const App = () => {
       //setErrorMessage(`No books were found for ${search} :(`); //uncomment to test nothing returned from API
     } catch (error) {
       console.log(error);
-      //TODO uncomment below once Jest isn't unhappy about it
       /* setErrorMessage(
         `Something went wrong :( Please speak to the developer with the search term: '${search}' and the error message: '${error.response.status} ${error.response.statusText}'`
       ); */
-      /* if (error.message === 'timeout of 2ms exceeded') {
+      if (error.message === 'timeout of 2ms exceeded') {
         setErrorMessage('The request timed out. Please try again later');
       } else {
         setErrorMessage(
           `Something went wrong :( Please speak to the developer with the search term: '${search}' and the error message: '${error.response.status} ${error.response.statusText}'`
         );
-      } */
+      }
     } finally {
       setIsLoading(false);
     }
