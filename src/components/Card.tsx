@@ -6,42 +6,62 @@ interface CardProps {
   card: any;
 }
 
-const Card = ({ card }: CardProps) => (
-  <>
-    {card.volumeInfo.imageLinks ? (
-      <Cover
-        src={card.volumeInfo.imageLinks.thumbnail}
-        alt={card.volumeInfo.title}
-      />
-    ) : (
-      'image missing TODO'
-    )}
+const Card = ({ card }: CardProps) => {
+  //If there's more than one author, we need to format them
+  //otherwise it puts the names right next to each other with no comma
+  const { authors } = card.volumeInfo;
+  let formattedAuthors = '';
+  if (authors) {
+    formattedAuthors = authors.map((author: string[], index: number) => {
+      if (index > 0) {
+        if (index === authors.length - 1) {
+          return ` & ${author}`;
+        }
+        return `, ${author}`;
+      }
+      return author;
+    });
+  }
 
-    {card.volumeInfo.title ? (
-      <Title data-testid="title">{card.volumeInfo.title}</Title>
-    ) : (
-      'title missing TODO'
-    )}
+  return (
+    <>
+      {card.volumeInfo.imageLinks ? (
+        <Cover
+          src={card.volumeInfo.imageLinks.thumbnail}
+          alt={card.volumeInfo.title}
+        />
+      ) : (
+        'image missing TODO'
+      )}
 
-    {card.volumeInfo.authors ? (
-      <Author data-testid="author">{card.volumeInfo.authors}</Author>
-    ) : (
-      'authors missing TODO'
-    )}
+      {card.volumeInfo.title ? (
+        <Title data-testid="title">{card.volumeInfo.title}</Title>
+      ) : (
+        'title missing TODO'
+      )}
 
-    {card.volumeInfo.publisher ? (
-      <Publisher data-testid="publisher">{card.volumeInfo.publisher}</Publisher>
-    ) : (
-      'publisher missing TODO'
-    )}
+      {card.volumeInfo.authors ? (
+        <Author data-testid="author">{formattedAuthors}</Author>
+      ) : (
+        'authors missing TODO'
+      )}
 
-    {card.volumeInfo.infoLink ? (
-      <a href={card.volumeInfo.infoLink}>More information</a>
-    ) : (
-      'link missing TODO'
-    )}
-  </>
-);
+      {card.volumeInfo.publisher ? (
+        <Publisher data-testid="publisher">
+          {card.volumeInfo.publisher}
+        </Publisher>
+      ) : (
+        'publisher missing TODO'
+      )}
+
+      {card.volumeInfo.infoLink ? (
+        <a href={card.volumeInfo.infoLink}>More information</a>
+      ) : (
+        'link missing TODO'
+      )}
+    </>
+  );
+};
 
 Card.propTypes = {
   card: PropTypes.shape({

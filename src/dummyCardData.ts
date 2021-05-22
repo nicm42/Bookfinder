@@ -25,6 +25,12 @@ const cards = {
       id: 'id 3',
       volumeInfo: {},
     },
+    {
+      id: 'id 4',
+      volumeInfo: {
+        authors: ['Author 4', 'Author 5', 'Author 6'],
+      },
+    },
   ],
 };
 

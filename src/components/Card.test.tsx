@@ -38,12 +38,22 @@ describe('Search tests', () => {
     expect(link).toHaveAttribute('href', 'https://www.dummylink1.com');
   });
 
-  it('has can cope with multiple authors', () => {
+  it('has can cope with two authors', () => {
     render(<Card card={cards.items[1]} />);
     const author2 = screen.getByText('Author 2', { exact: false });
-    const author3 = screen.getByText('Author 3', { exact: false });
+    const author3 = screen.getByText(' & Author 3', { exact: false });
     expect(author2).toBeInTheDocument();
     expect(author3).toBeInTheDocument();
+  });
+
+  it('has can cope with three authors', () => {
+    render(<Card card={cards.items[3]} />);
+    const author4 = screen.getByText('Author 4', { exact: false });
+    const author5 = screen.getByText(', Author 5', { exact: false });
+    const author6 = screen.getByText(' & Author 6', { exact: false });
+    expect(author4).toBeInTheDocument();
+    expect(author5).toBeInTheDocument();
+    expect(author6).toBeInTheDocument();
   });
 
   it('has can cope with missing information', () => {

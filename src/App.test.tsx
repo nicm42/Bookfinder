@@ -76,7 +76,7 @@ describe('App tests with card data', () => {
       )
     );
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
-    expect(cardDiv).toHaveLength(3);
+    expect(cardDiv).toHaveLength(4);
     const cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
     const cardTitle2 = await waitFor(() => screen.getByText('Title 2'));
     expect(cardTitle1).toBeInTheDocument();
