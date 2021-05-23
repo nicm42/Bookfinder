@@ -36,4 +36,6 @@ const cards = {
 
 export default cards;
 
-export const noCards = [false];
+export const noCards = {
+  totalItems: 0,
+};

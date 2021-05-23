@@ -35,6 +35,7 @@ describe('App tests with card data', () => {
   jest.mock('axios');
   const mockedAxios = axios as jest.Mocked<typeof axios>;
   const mockData = { data: cards };
+  const noData = { data: noCards };
   const errorData = {
     response: {
       status: 400,
@@ -54,7 +55,7 @@ describe('App tests with card data', () => {
 
   afterEach(cleanup);
 
-  it('tests when axios works', async () => {
+  it('tests when axios works for title', async () => {
     mockedAxios.get.mockResolvedValueOnce(mockData);
     render(<App />);
     const loadingDiv = screen.queryByTestId('Loading');
@@ -73,6 +74,39 @@ describe('App tests with card data', () => {
     await waitFor(() =>
       expect(mockedAxios.get).toHaveBeenCalledWith(
         'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22'
+      )
+    );
+    const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
+    expect(cardDiv).toHaveLength(4);
+    const cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
+    const cardTitle2 = await waitFor(() => screen.getByText('Title 2'));
+    expect(cardTitle1).toBeInTheDocument();
+    expect(cardTitle2).toBeInTheDocument();
+    const loading = await waitFor(() => screen.queryByTestId('Loading'));
+    expect(loading).not.toBeInTheDocument();
+    const error = await waitFor(() => screen.queryByTestId('error'));
+    expect(error).not.toBeInTheDocument();
+  });
+
+  it('tests when axios works for author', async () => {
+    mockedAxios.get.mockResolvedValueOnce(mockData);
+    render(<App />);
+    const loadingDiv = screen.queryByTestId('Loading');
+    expect(loadingDiv).not.toBeInTheDocument();
+    const errorDiv = screen.queryByTestId('error');
+    expect(errorDiv).not.toBeInTheDocument();
+
+    const inputElement = screen.getByRole('searchbox');
+    fireEvent.change(inputElement, { target: { value: 'test' } });
+    const dropDown = screen.getByTestId('select');
+    fireEvent.change(dropDown, { target: { value: 'inauthor' } });
+    const submitButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(1));
+    await waitFor(() =>
+      expect(mockedAxios.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=inauthor:%22test%22'
       )
     );
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
@@ -145,6 +179,70 @@ describe('App tests with card data', () => {
     expect(loading).not.toBeInTheDocument();
     const error = await waitFor(() =>
       screen.queryByText('The request timed out', { exact: false })
+    );
+    expect(error).toBeInTheDocument();
+  });
+
+  it('tests when no data found on title search', async () => {
+    mockedAxios.get.mockResolvedValueOnce(noData);
+    render(<App />);
+    const loadingDiv = screen.queryByTestId('Loading');
+    expect(loadingDiv).not.toBeInTheDocument();
+    const errorDiv = screen.queryByTestId('error');
+    expect(errorDiv).not.toBeInTheDocument();
+
+    const inputElement = screen.getByRole('searchbox');
+    fireEvent.change(inputElement, { target: { value: 'test' } });
+    const dropDown = screen.getByTestId('select');
+    fireEvent.change(dropDown, { target: { value: 'intitle' } });
+    const submitButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(1));
+    await waitFor(() =>
+      expect(mockedAxios.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22'
+      )
+    );
+    const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
+    expect(cardDiv).toHaveLength(0);
+    const loading = await waitFor(() => screen.queryByTestId('Loading'));
+    expect(loading).not.toBeInTheDocument();
+    const error = await waitFor(() =>
+      screen.queryByText('No books were found with the title', { exact: false })
+    );
+    expect(error).toBeInTheDocument();
+  });
+
+  it('tests when no data found on author search', async () => {
+    mockedAxios.get.mockResolvedValueOnce(noData);
+    render(<App />);
+    const loadingDiv = screen.queryByTestId('Loading');
+    expect(loadingDiv).not.toBeInTheDocument();
+    const errorDiv = screen.queryByTestId('error');
+    expect(errorDiv).not.toBeInTheDocument();
+
+    const inputElement = screen.getByRole('searchbox');
+    fireEvent.change(inputElement, { target: { value: 'test' } });
+    const dropDown = screen.getByTestId('select');
+    fireEvent.change(dropDown, { target: { value: 'inauthor' } });
+    const submitButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(1));
+    await waitFor(() =>
+      expect(mockedAxios.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=inauthor:%22test%22'
+      )
+    );
+    const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
+    expect(cardDiv).toHaveLength(0);
+    const loading = await waitFor(() => screen.queryByTestId('Loading'));
+    expect(loading).not.toBeInTheDocument();
+    const error = await waitFor(() =>
+      screen.queryByText('No books were found with the author', {
+        exact: false,
+      })
     );
     expect(error).toBeInTheDocument();
   });

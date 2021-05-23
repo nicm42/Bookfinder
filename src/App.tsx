@@ -17,6 +17,7 @@ const App = () => {
   const getData = async (search: string, type: string) => {
     setIsLoading(true);
     setCardData([]); //in case this is another search, clear the results from the previous search
+    setErrorMessage(''); //in case this is search, clear the error message
     //console.log(`Running getData with ${search} and ${type}`);
     try {
       //TODO will need to repeat this if there are more than 10 results
@@ -24,7 +25,7 @@ const App = () => {
       //Or just get 10 at a time
       const api = 'https://www.googleapis.com/books/v1/volumes?q=';
       const response = await axios.get(`${api}${type}:%22${search}%22`);
-      //console.log(response.data.items);
+      console.log(response.data.totalItems);
 
       //Uncomment line below to test API errors
       //const response = await axios.get(`http://httpstat.us/404`);
@@ -41,9 +42,16 @@ const App = () => {
       console.log(response.data.items[1].volumeInfo.publisher); 
       console.log(response.data.items[1].volumeInfo.infoLink); */
 
-      //setCardData(response.data.items);
-      setCardData(response.data.items);
-      //setErrorMessage(`No books were found for ${search} :(`); //uncomment to test nothing returned from API
+      if (response.data.totalItems === 0) {
+        if (type === 'intitle') {
+          setErrorMessage(`No books were found with the title ${search} :(`);
+        }
+        if (type === 'inauthor') {
+          setErrorMessage(`No books were found with the author ${search} :(`);
+        }
+      } else {
+        setCardData(response.data.items);
+      }
     } catch (error) {
       console.log(error);
       /* setErrorMessage(
@@ -68,11 +76,12 @@ const App = () => {
       {/* TODO replace this text with an animation */}
       {errorMessage && <Error data-testid="error">{errorMessage}</Error>}
       <Books>
-        {cardData.map((card) => (
-          <CardDiv key={card.id} data-testid="cardDiv">
-            <Card card={card} key={card.id} data-testid="card" />
-          </CardDiv>
-        ))}
+        {cardData &&
+          cardData.map((card) => (
+            <CardDiv key={card.id} data-testid="cardDiv">
+              <Card card={card} key={card.id} data-testid="card" />
+            </CardDiv>
+          ))}
       </Books>
     </>
   );
