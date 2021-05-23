@@ -6,4 +6,6 @@ export const Error = styled.div``;
 
 export const Books = styled.div``;
 
+export const ResultsCount = styled.div``;
+
 export const CardDiv = styled.div``;

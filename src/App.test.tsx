@@ -62,6 +62,8 @@ describe('App tests with card data', () => {
     expect(loadingDiv).not.toBeInTheDocument();
     const errorDiv = screen.queryByTestId('error');
     expect(errorDiv).not.toBeInTheDocument();
+    const resultDiv = screen.queryByTestId('results');
+    expect(resultDiv).not.toBeInTheDocument();
 
     const inputElement = screen.getByRole('searchbox');
     fireEvent.change(inputElement, { target: { value: 'test' } });
@@ -76,6 +78,10 @@ describe('App tests with card data', () => {
         'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22'
       )
     );
+    const results = await waitFor(() =>
+      screen.getByText('Number of books = 4')
+    );
+    expect(results).toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(4);
     const cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
@@ -95,6 +101,8 @@ describe('App tests with card data', () => {
     expect(loadingDiv).not.toBeInTheDocument();
     const errorDiv = screen.queryByTestId('error');
     expect(errorDiv).not.toBeInTheDocument();
+    const resultDiv = screen.queryByTestId('results');
+    expect(resultDiv).not.toBeInTheDocument();
 
     const inputElement = screen.getByRole('searchbox');
     fireEvent.change(inputElement, { target: { value: 'test' } });
@@ -109,6 +117,10 @@ describe('App tests with card data', () => {
         'https://www.googleapis.com/books/v1/volumes?q=inauthor:%22test%22'
       )
     );
+    const results = await waitFor(() =>
+      screen.getByText('Number of books = 4')
+    );
+    expect(results).toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(4);
     const cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
@@ -128,6 +140,8 @@ describe('App tests with card data', () => {
     expect(loadingDiv).not.toBeInTheDocument();
     const errorDiv = screen.queryByTestId('error');
     expect(errorDiv).not.toBeInTheDocument();
+    const resultDiv = screen.queryByTestId('results');
+    expect(resultDiv).not.toBeInTheDocument();
 
     const inputElement = screen.getByRole('searchbox');
     fireEvent.change(inputElement, { target: { value: 'test' } });
@@ -142,6 +156,10 @@ describe('App tests with card data', () => {
         'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22'
       )
     );
+    const results = await waitFor(() =>
+      screen.queryByText('Number of books', { exact: false })
+    );
+    expect(results).not.toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(0);
     const loading = await waitFor(() => screen.queryByTestId('Loading'));
@@ -159,6 +177,8 @@ describe('App tests with card data', () => {
     expect(loadingDiv).not.toBeInTheDocument();
     const errorDiv = screen.queryByTestId('error');
     expect(errorDiv).not.toBeInTheDocument();
+    const resultDiv = screen.queryByTestId('results');
+    expect(resultDiv).not.toBeInTheDocument();
 
     const inputElement = screen.getByRole('searchbox');
     fireEvent.change(inputElement, { target: { value: 'test' } });
@@ -173,6 +193,10 @@ describe('App tests with card data', () => {
         'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22'
       )
     );
+    const results = await waitFor(() =>
+      screen.queryByText('Number of books', { exact: false })
+    );
+    expect(results).not.toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(0);
     const loading = await waitFor(() => screen.queryByTestId('Loading'));
@@ -190,6 +214,8 @@ describe('App tests with card data', () => {
     expect(loadingDiv).not.toBeInTheDocument();
     const errorDiv = screen.queryByTestId('error');
     expect(errorDiv).not.toBeInTheDocument();
+    const resultDiv = screen.queryByTestId('results');
+    expect(resultDiv).not.toBeInTheDocument();
 
     const inputElement = screen.getByRole('searchbox');
     fireEvent.change(inputElement, { target: { value: 'test' } });
@@ -204,6 +230,10 @@ describe('App tests with card data', () => {
         'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22'
       )
     );
+    const results = await waitFor(() =>
+      screen.queryByText('Number of books', { exact: false })
+    );
+    expect(results).not.toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(0);
     const loading = await waitFor(() => screen.queryByTestId('Loading'));
@@ -221,6 +251,8 @@ describe('App tests with card data', () => {
     expect(loadingDiv).not.toBeInTheDocument();
     const errorDiv = screen.queryByTestId('error');
     expect(errorDiv).not.toBeInTheDocument();
+    const resultDiv = screen.queryByTestId('results');
+    expect(resultDiv).not.toBeInTheDocument();
 
     const inputElement = screen.getByRole('searchbox');
     fireEvent.change(inputElement, { target: { value: 'test' } });
@@ -235,6 +267,10 @@ describe('App tests with card data', () => {
         'https://www.googleapis.com/books/v1/volumes?q=inauthor:%22test%22'
       )
     );
+    const results = await waitFor(() =>
+      screen.queryByText('Number of books', { exact: false })
+    );
+    expect(results).not.toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(0);
     const loading = await waitFor(() => screen.queryByTestId('Loading'));

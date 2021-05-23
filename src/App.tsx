@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Search from './components/Search';
 import Card from './components/Card';
-import { Loading, Error, Books, CardDiv } from './App.style';
+import { Loading, Error, Books, ResultsCount, CardDiv } from './App.style';
 
 const App = () => {
   const [cardData, setCardData] = useState<any[]>([]);
   //const [cardData, setCardData] = useState<any[]>(cards);  //uncomment to load cards without using API
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
+  const [resultCount, setResultCount] = useState<number>();
 
   useEffect(() => {
     document.title = 'Book Finder';
@@ -51,6 +52,7 @@ const App = () => {
         }
       } else {
         setCardData(response.data.items);
+        setResultCount(response.data.totalItems);
       }
     } catch (error) {
       console.log(error);
@@ -76,6 +78,11 @@ const App = () => {
       {/* TODO replace this text with an animation */}
       {errorMessage && <Error data-testid="error">{errorMessage}</Error>}
       <Books>
+        {resultCount && (
+          <ResultsCount data-testid="results">
+            Number of books = {resultCount}
+          </ResultsCount>
+        )}
         {cardData &&
           cardData.map((card) => (
             <CardDiv key={card.id} data-testid="cardDiv">

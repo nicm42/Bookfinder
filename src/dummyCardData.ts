@@ -1,4 +1,5 @@
 const cards = {
+  totalItems: 4,
   items: [
     {
       id: 'id 1',
