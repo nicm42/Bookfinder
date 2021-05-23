@@ -97,12 +97,6 @@ describe('App tests with card data', () => {
   it('tests when axios works for author', async () => {
     mockedAxios.get.mockResolvedValueOnce(mockData);
     render(<App />);
-    const loadingDiv = screen.queryByTestId('Loading');
-    expect(loadingDiv).not.toBeInTheDocument();
-    const errorDiv = screen.queryByTestId('error');
-    expect(errorDiv).not.toBeInTheDocument();
-    const resultDiv = screen.queryByTestId('results');
-    expect(resultDiv).not.toBeInTheDocument();
 
     const inputElement = screen.getByRole('searchbox');
     fireEvent.change(inputElement, { target: { value: 'test' } });
@@ -111,37 +105,22 @@ describe('App tests with card data', () => {
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
 
-    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(1));
     await waitFor(() =>
       expect(mockedAxios.get).toHaveBeenCalledWith(
         'https://www.googleapis.com/books/v1/volumes?q=inauthor:%22test%22'
       )
     );
-    const results = await waitFor(() =>
-      screen.getByText('Number of books = 4')
-    );
-    expect(results).toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(4);
     const cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
     const cardTitle2 = await waitFor(() => screen.getByText('Title 2'));
     expect(cardTitle1).toBeInTheDocument();
     expect(cardTitle2).toBeInTheDocument();
-    const loading = await waitFor(() => screen.queryByTestId('Loading'));
-    expect(loading).not.toBeInTheDocument();
-    const error = await waitFor(() => screen.queryByTestId('error'));
-    expect(error).not.toBeInTheDocument();
   });
 
   it('tests when axios errors', async () => {
     mockedAxios.get.mockRejectedValueOnce(errorData);
     render(<App />);
-    const loadingDiv = screen.queryByTestId('Loading');
-    expect(loadingDiv).not.toBeInTheDocument();
-    const errorDiv = screen.queryByTestId('error');
-    expect(errorDiv).not.toBeInTheDocument();
-    const resultDiv = screen.queryByTestId('results');
-    expect(resultDiv).not.toBeInTheDocument();
 
     const inputElement = screen.getByRole('searchbox');
     fireEvent.change(inputElement, { target: { value: 'test' } });
@@ -150,12 +129,6 @@ describe('App tests with card data', () => {
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
 
-    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(1));
-    await waitFor(() =>
-      expect(mockedAxios.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22'
-      )
-    );
     const results = await waitFor(() =>
       screen.queryByText('Number of books', { exact: false })
     );
@@ -173,12 +146,6 @@ describe('App tests with card data', () => {
   it('tests when axios times out', async () => {
     mockedAxios.get.mockRejectedValueOnce(timeOutData);
     render(<App />);
-    const loadingDiv = screen.queryByTestId('Loading');
-    expect(loadingDiv).not.toBeInTheDocument();
-    const errorDiv = screen.queryByTestId('error');
-    expect(errorDiv).not.toBeInTheDocument();
-    const resultDiv = screen.queryByTestId('results');
-    expect(resultDiv).not.toBeInTheDocument();
 
     const inputElement = screen.getByRole('searchbox');
     fireEvent.change(inputElement, { target: { value: 'test' } });
@@ -187,12 +154,6 @@ describe('App tests with card data', () => {
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
 
-    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(1));
-    await waitFor(() =>
-      expect(mockedAxios.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22'
-      )
-    );
     const results = await waitFor(() =>
       screen.queryByText('Number of books', { exact: false })
     );
@@ -210,12 +171,6 @@ describe('App tests with card data', () => {
   it('tests when no data found on title search', async () => {
     mockedAxios.get.mockResolvedValueOnce(noData);
     render(<App />);
-    const loadingDiv = screen.queryByTestId('Loading');
-    expect(loadingDiv).not.toBeInTheDocument();
-    const errorDiv = screen.queryByTestId('error');
-    expect(errorDiv).not.toBeInTheDocument();
-    const resultDiv = screen.queryByTestId('results');
-    expect(resultDiv).not.toBeInTheDocument();
 
     const inputElement = screen.getByRole('searchbox');
     fireEvent.change(inputElement, { target: { value: 'test' } });
@@ -224,12 +179,6 @@ describe('App tests with card data', () => {
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
 
-    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(1));
-    await waitFor(() =>
-      expect(mockedAxios.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22'
-      )
-    );
     const results = await waitFor(() =>
       screen.queryByText('Number of books', { exact: false })
     );
@@ -247,12 +196,6 @@ describe('App tests with card data', () => {
   it('tests when no data found on author search', async () => {
     mockedAxios.get.mockResolvedValueOnce(noData);
     render(<App />);
-    const loadingDiv = screen.queryByTestId('Loading');
-    expect(loadingDiv).not.toBeInTheDocument();
-    const errorDiv = screen.queryByTestId('error');
-    expect(errorDiv).not.toBeInTheDocument();
-    const resultDiv = screen.queryByTestId('results');
-    expect(resultDiv).not.toBeInTheDocument();
 
     const inputElement = screen.getByRole('searchbox');
     fireEvent.change(inputElement, { target: { value: 'test' } });
@@ -261,20 +204,8 @@ describe('App tests with card data', () => {
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
 
-    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(1));
-    await waitFor(() =>
-      expect(mockedAxios.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=inauthor:%22test%22'
-      )
-    );
-    const results = await waitFor(() =>
-      screen.queryByText('Number of books', { exact: false })
-    );
-    expect(results).not.toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(0);
-    const loading = await waitFor(() => screen.queryByTestId('Loading'));
-    expect(loading).not.toBeInTheDocument();
     const error = await waitFor(() =>
       screen.queryByText('No books were found with the author', {
         exact: false,
