@@ -82,6 +82,10 @@ describe('App tests with card data', () => {
       screen.getByText('Number of books = 4')
     );
     expect(results).toBeInTheDocument();
+    const books = await waitFor(() =>
+      screen.getByText('Showing books', { exact: false })
+    );
+    expect(books).toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(4);
     const cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
@@ -133,6 +137,10 @@ describe('App tests with card data', () => {
       screen.queryByText('Number of books', { exact: false })
     );
     expect(results).not.toBeInTheDocument();
+    const books = await waitFor(() =>
+      screen.queryByText('Showing books', { exact: false })
+    );
+    expect(books).not.toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(0);
     const loading = await waitFor(() => screen.queryByTestId('Loading'));
@@ -158,6 +166,10 @@ describe('App tests with card data', () => {
       screen.queryByText('Number of books', { exact: false })
     );
     expect(results).not.toBeInTheDocument();
+    const books = await waitFor(() =>
+      screen.queryByText('Showing books', { exact: false })
+    );
+    expect(books).not.toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(0);
     const loading = await waitFor(() => screen.queryByTestId('Loading'));
@@ -183,6 +195,10 @@ describe('App tests with card data', () => {
       screen.queryByText('Number of books', { exact: false })
     );
     expect(results).not.toBeInTheDocument();
+    const books = await waitFor(() =>
+      screen.queryByText('Showing books', { exact: false })
+    );
+    expect(books).not.toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(0);
     const loading = await waitFor(() => screen.queryByTestId('Loading'));

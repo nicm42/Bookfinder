@@ -2,7 +2,15 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Search from './components/Search';
 import Card from './components/Card';
-import { Loading, Error, Books, ResultsCount, CardDiv } from './App.style';
+import {
+  Loading,
+  Error,
+  Books,
+  ResultsCount,
+  ResultsTotal,
+  ResultsCurrent,
+  CardDiv,
+} from './App.style';
 
 const App = () => {
   const [cardData, setCardData] = useState<any[]>([]);
@@ -80,7 +88,8 @@ const App = () => {
       <Books>
         {resultCount && (
           <ResultsCount data-testid="results">
-            Number of books = {resultCount}
+            <ResultsTotal>Number of books = {resultCount}</ResultsTotal>
+            <ResultsCurrent>Showing books 1-10</ResultsCurrent>
           </ResultsCount>
         )}
         {cardData &&

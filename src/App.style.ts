@@ -8,4 +8,8 @@ export const Books = styled.div``;
 
 export const ResultsCount = styled.div``;
 
+export const ResultsTotal = styled.div``;
+
+export const ResultsCurrent = styled.div``;
+
 export const CardDiv = styled.div``;
