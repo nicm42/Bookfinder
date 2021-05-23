@@ -31,13 +31,16 @@ const App = () => {
     setIsLoading(true);
     setCardData([]); //in case this is another search, clear the results from the previous search
     setErrorMessage(''); //in case this is search, clear the error message
+    const start = resultStart - 1;
     //console.log(`Running getData with ${search} and ${type}`);
     try {
       //TODO will need to repeat this if there are more than 10 results
       //Although how many do we want to show on the page? Maybe a link to get more books?
       //Or just get 10 at a time
       const api = 'https://www.googleapis.com/books/v1/volumes?q=';
-      const response = await axios.get(`${api}${type}:%22${search}%22`);
+      const response = await axios.get(
+        `${api}${type}:%22${search}%22&startIndex=${start}`
+      );
       //console.log(response.data.totalItems);
 
       //Uncomment line below to test API errors

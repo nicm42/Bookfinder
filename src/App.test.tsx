@@ -79,7 +79,7 @@ describe('App tests with card data', () => {
     await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(1));
     await waitFor(() =>
       expect(mockedAxios.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22'
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0'
       )
     );
     const results = await waitFor(() =>
@@ -117,7 +117,7 @@ describe('App tests with card data', () => {
 
     await waitFor(() =>
       expect(mockedAxios.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=inauthor:%22test%22'
+        'https://www.googleapis.com/books/v1/volumes?q=inauthor:%22test%22&startIndex=0'
       )
     );
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
