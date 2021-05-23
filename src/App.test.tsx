@@ -251,8 +251,10 @@ describe('App tests with card data', () => {
 
 describe('App tests with card data with more than 10 cards', () => {
   jest.mock('axios');
+  const mockedAxios = axios as jest.Mocked<typeof axios>;
   const mockedAxios1 = axios as jest.Mocked<typeof axios>;
   const mockedAxios2 = axios as jest.Mocked<typeof axios>;
+  const mockData = { data: cards };
   const mockData1 = { data: manyCards1 };
   const mockData2 = { data: manyCards2 };
 
@@ -299,6 +301,55 @@ describe('App tests with card data with more than 10 cards', () => {
     moreResults = (await waitFor(() =>
       screen.queryByRole('button', { name: /get more results/i })
     )) as HTMLElement;
-    expect(moreResults).toBeInTheDocument();
+    expect(moreResults).not.toBeInTheDocument();
+  });
+
+  it('tests more than 10 cards followed by a new search', async () => {
+    mockedAxios1.get.mockResolvedValueOnce(mockData1);
+    mockedAxios2.get.mockResolvedValueOnce(mockData2);
+    mockedAxios.get.mockResolvedValueOnce(mockData);
+    render(<App />);
+
+    const inputElement = screen.getByRole('searchbox');
+    fireEvent.change(inputElement, { target: { value: 'test' } });
+    const dropDown = screen.getByTestId('select');
+    fireEvent.change(dropDown, { target: { value: 'intitle' } });
+    const submitButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.click(submitButton);
+
+    await waitFor(() =>
+      expect(mockedAxios1.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0'
+      )
+    );
+    let results = await waitFor(() => screen.getByText('Number of books = 14'));
+    expect(results).toBeInTheDocument();
+    let books = await waitFor(() => screen.getByText('Showing books 1-10'));
+    expect(books).toBeInTheDocument();
+    const moreResults = await waitFor(() =>
+      screen.getByRole('button', { name: /get more results/i })
+    );
+
+    fireEvent.click(moreResults);
+    await waitFor(() =>
+      expect(mockedAxios2.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=9'
+      )
+    );
+    books = await waitFor(() => screen.getByText('Showing books 11-14'));
+    expect(books).toBeInTheDocument();
+
+    fireEvent.change(inputElement, { target: { value: 'test' } });
+    fireEvent.change(dropDown, { target: { value: 'intitle' } });
+    fireEvent.click(submitButton);
+    await waitFor(() =>
+      expect(mockedAxios.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0'
+      )
+    );
+    results = await waitFor(() => screen.getByText('Number of books = 4'));
+    expect(results).toBeInTheDocument();
+    books = await waitFor(() => screen.getByText('Showing books 1-4'));
+    expect(books).toBeInTheDocument();
   });
 });

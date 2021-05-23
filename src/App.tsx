@@ -23,30 +23,40 @@ const App = () => {
   const [searchType, setSearchType] = useState<string>('');
 
   const [resultCount, setResultCount] = useState<number>();
-  const [resultPages, setResultPages] = useState<number>(0);
-  const [resultStart, setResultStart] = useState<number>(1);
+  //const [resultPages, setResultPages] = useState<number>(0);
+  const [isMoreResults, setIsMoreResults] = useState<boolean>(false);
+  const [resultStart, setResultStart] = useState<number>(-9);
   const [resultEnd, setResultEnd] = useState<number>(0);
+  const [lastSearch, setLastSearch] = useState<number>(0);
 
   useEffect(() => {
     document.title = 'Book Finder';
   }, []);
 
   const searchAgain = () => {
-    setResultStart((previousValue) => previousValue + 10); //TODO
-    getData(searchText, searchType, 9);
+    const startIndex = lastSearch * 10 - 1;
+    getData(searchText, searchType, startIndex);
   };
 
   const getData = async (search: string, type: string, start: number) => {
+    //Need to re-set everything if this is a new search
+    if (start === 0) {
+      setResultStart(-9);
+      setResultEnd(0);
+      setLastSearch(0);
+      setIsMoreResults(false);
+    }
+
+    //set these two, so we can use them for another search
     setSearchText(search);
     setSearchType(type);
+
     setIsLoading(true);
     setCardData([]); //in case this is another search, clear the results from the previous search
-    setErrorMessage(''); //in case this is search, clear the error message
+    setErrorMessage(''); //in case this is another search, clear the error message
     //console.log(`Running getData with ${search} and ${type}`);
+
     try {
-      //TODO will need to repeat this if there are more than 10 results
-      //Although how many do we want to show on the page? Maybe a link to get more books?
-      //Or just get 10 at a time
       const api = 'https://www.googleapis.com/books/v1/volumes?q=';
       const response = await axios.get(
         `${api}${type}:%22${search}%22&startIndex=${start}`
@@ -77,28 +87,30 @@ const App = () => {
           setErrorMessage(`No books were found with the author ${search} :(`);
         }
       } else {
+        //There is data!
         setCardData(response.data.items);
         setResultCount(response.data.totalItems);
+        setResultStart((previousValue) => previousValue + 10);
         if (response.data.totalItems > 10) {
           const pages = Math.ceil(response.data.totalItems / 10);
-          setResultPages(pages);
-          const itemsOnThisPage = response.data.totalItems - (start + 10) * 10;
+          //setResultPages(pages);
           if (resultEnd + 10 < response.data.totalItems) {
             setResultEnd((previousValue) => previousValue + 10);
+            setIsMoreResults(true);
           } else {
             setResultEnd(response.data.totalItems);
+            setIsMoreResults(false);
           }
         } else {
-          setResultPages(1);
+          //setResultPages(1);
+          setIsMoreResults(false);
           setResultEnd(response.data.totalItems);
         }
       }
+      setLastSearch((previousValue) => previousValue + 1);
       //console.log(resultPages);
     } catch (error) {
       console.log(error);
-      /* setErrorMessage(
-        `Something went wrong :( Please speak to the developer with the search term: '${search}' and the error message: '${error.response.status} ${error.response.statusText}'`
-      ); */
       if (error.message === 'timeout of 2ms exceeded') {
         setErrorMessage('The request timed out. Please try again later');
       } else {
@@ -132,7 +144,7 @@ const App = () => {
               <Card card={card} key={card.id} data-testid="card" />
             </CardDiv>
           ))}
-        {resultPages > 1 && (
+        {isMoreResults && (
           <MoreResults onClick={searchAgain}>Get more results</MoreResults>
         )}
       </Books>
