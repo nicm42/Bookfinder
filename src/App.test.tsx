@@ -7,7 +7,7 @@ import {
 } from '@testing-library/react';
 import axios from 'axios';
 import App from './App';
-import cards, { noCards, manyCards } from './dummyCardData';
+import cards, { noCards, manyCards1, manyCards2 } from './dummyCardData';
 
 describe('App initial tests', () => {
   it('renders without crashing', () => {
@@ -251,13 +251,16 @@ describe('App tests with card data', () => {
 
 describe('App tests with card data with more than 10 cards', () => {
   jest.mock('axios');
-  const mockedAxios = axios as jest.Mocked<typeof axios>;
-  const mockData = { data: manyCards };
+  const mockedAxios1 = axios as jest.Mocked<typeof axios>;
+  const mockedAxios2 = axios as jest.Mocked<typeof axios>;
+  const mockData1 = { data: manyCards1 };
+  const mockData2 = { data: manyCards2 };
 
   afterEach(cleanup);
 
   it('tests more than 10 cards', async () => {
-    mockedAxios.get.mockResolvedValueOnce(mockData);
+    mockedAxios1.get.mockResolvedValueOnce(mockData1);
+    mockedAxios2.get.mockResolvedValueOnce(mockData2);
     render(<App />);
 
     const inputElement = screen.getByRole('searchbox');
@@ -267,15 +270,35 @@ describe('App tests with card data with more than 10 cards', () => {
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
 
+    await waitFor(() =>
+      expect(mockedAxios1.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0'
+      )
+    );
+
     const results = await waitFor(() =>
       screen.getByText('Number of books = 14')
     );
     expect(results).toBeInTheDocument();
-    const books = await waitFor(() => screen.getByText('Showing books 1-10'));
+    let books = await waitFor(() => screen.getByText('Showing books 1-10'));
     expect(books).toBeInTheDocument();
-    const moreResults = await waitFor(() =>
+    let moreResults = await waitFor(() =>
       screen.getByRole('button', { name: /get more results/i })
     );
+    expect(moreResults).toBeInTheDocument();
+
+    fireEvent.click(moreResults);
+    await waitFor(() =>
+      expect(mockedAxios2.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=9'
+      )
+    );
+    expect(results).toBeInTheDocument();
+    books = await waitFor(() => screen.getByText('Showing books 11-14'));
+    expect(books).toBeInTheDocument();
+    moreResults = (await waitFor(() =>
+      screen.queryByRole('button', { name: /get more results/i })
+    )) as HTMLElement;
     expect(moreResults).toBeInTheDocument();
   });
 });

@@ -18,20 +18,30 @@ const App = () => {
   //const [cardData, setCardData] = useState<any[]>(cards);  //uncomment to load cards without using API
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
+
+  const [searchText, setSearchText] = useState<string>('');
+  const [searchType, setSearchType] = useState<string>('');
+
   const [resultCount, setResultCount] = useState<number>();
   const [resultPages, setResultPages] = useState<number>(0);
   const [resultStart, setResultStart] = useState<number>(1);
-  const [resultEnd, setResultEnd] = useState<number>();
+  const [resultEnd, setResultEnd] = useState<number>(0);
 
   useEffect(() => {
     document.title = 'Book Finder';
   }, []);
 
-  const getData = async (search: string, type: string) => {
+  const searchAgain = () => {
+    setResultStart((previousValue) => previousValue + 10); //TODO
+    getData(searchText, searchType, 9);
+  };
+
+  const getData = async (search: string, type: string, start: number) => {
+    setSearchText(search);
+    setSearchType(type);
     setIsLoading(true);
     setCardData([]); //in case this is another search, clear the results from the previous search
     setErrorMessage(''); //in case this is search, clear the error message
-    const start = resultStart - 1;
     //console.log(`Running getData with ${search} and ${type}`);
     try {
       //TODO will need to repeat this if there are more than 10 results
@@ -41,6 +51,7 @@ const App = () => {
       const response = await axios.get(
         `${api}${type}:%22${search}%22&startIndex=${start}`
       );
+      //console.log(`${api}${type}:%22${search}%22&startIndex=${start}`);
       //console.log(response.data.totalItems);
 
       //Uncomment line below to test API errors
@@ -71,7 +82,12 @@ const App = () => {
         if (response.data.totalItems > 10) {
           const pages = Math.ceil(response.data.totalItems / 10);
           setResultPages(pages);
-          setResultEnd(10);
+          const itemsOnThisPage = response.data.totalItems - (start + 10) * 10;
+          if (resultEnd + 10 < response.data.totalItems) {
+            setResultEnd((previousValue) => previousValue + 10);
+          } else {
+            setResultEnd(response.data.totalItems);
+          }
         } else {
           setResultPages(1);
           setResultEnd(response.data.totalItems);
@@ -116,7 +132,9 @@ const App = () => {
               <Card card={card} key={card.id} data-testid="card" />
             </CardDiv>
           ))}
-        {resultPages > 1 && <MoreResults>Get more results</MoreResults>}
+        {resultPages > 1 && (
+          <MoreResults onClick={searchAgain}>Get more results</MoreResults>
+        )}
       </Books>
     </>
   );

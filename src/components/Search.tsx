@@ -20,7 +20,7 @@ const Search = ({ getData }: SearchProps) => {
     const type = searchType;
     setSearchText(''); //clear input now we're submitting
     setSearchType(''); //clear dropdown now we're submitting
-    getData(search, type);
+    getData(search, type, 0);
   };
 
   return (

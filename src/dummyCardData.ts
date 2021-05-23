@@ -41,7 +41,7 @@ export const noCards = {
   totalItems: 0,
 };
 
-export const manyCards = {
+export const manyCards1 = {
   totalItems: 14,
   items: [
     {
@@ -84,6 +84,12 @@ export const manyCards = {
       id: 'id 10',
       volumeInfo: {},
     },
+  ],
+};
+
+export const manyCards2 = {
+  totalItems: 14,
+  items: [
     {
       id: 'id 11',
       volumeInfo: {},
