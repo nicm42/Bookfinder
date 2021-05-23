@@ -20,6 +20,8 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState<string>();
   const [resultCount, setResultCount] = useState<number>();
   const [resultPages, setResultPages] = useState<number>(0);
+  const [resultStart, setResultStart] = useState<number>(1);
+  const [resultEnd, setResultEnd] = useState<number>();
 
   useEffect(() => {
     document.title = 'Book Finder';
@@ -66,8 +68,10 @@ const App = () => {
         if (response.data.totalItems > 10) {
           const pages = Math.ceil(response.data.totalItems / 10);
           setResultPages(pages);
+          setResultEnd(10);
         } else {
           setResultPages(1);
+          setResultEnd(response.data.totalItems);
         }
       }
       //console.log(resultPages);
@@ -98,7 +102,9 @@ const App = () => {
         {resultCount && (
           <ResultsCount data-testid="results">
             <ResultsTotal>Number of books = {resultCount}</ResultsTotal>
-            <ResultsCurrent>Showing books 1-10</ResultsCurrent>
+            <ResultsCurrent>
+              Showing books {resultStart}-{resultEnd}
+            </ResultsCurrent>
           </ResultsCount>
         )}
         {cardData &&

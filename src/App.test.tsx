@@ -86,9 +86,7 @@ describe('App tests with card data', () => {
       screen.getByText('Number of books = 4')
     );
     expect(results).toBeInTheDocument();
-    const books = await waitFor(() =>
-      screen.getByText('Showing books', { exact: false })
-    );
+    const books = await waitFor(() => screen.getByText('Showing books 1-4'));
     expect(books).toBeInTheDocument();
     const moreResults = await waitFor(() =>
       screen.queryByRole('button', { name: /get more results/i })
@@ -273,9 +271,7 @@ describe('App tests with card data with more than 10 cards', () => {
       screen.getByText('Number of books = 14')
     );
     expect(results).toBeInTheDocument();
-    const books = await waitFor(() =>
-      screen.getByText('Showing books', { exact: false })
-    );
+    const books = await waitFor(() => screen.getByText('Showing books 1-10'));
     expect(books).toBeInTheDocument();
     const moreResults = await waitFor(() =>
       screen.getByRole('button', { name: /get more results/i })
