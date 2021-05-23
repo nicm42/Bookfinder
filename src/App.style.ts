@@ -13,3 +13,5 @@ export const ResultsTotal = styled.div``;
 export const ResultsCurrent = styled.div``;
 
 export const CardDiv = styled.div``;
+
+export const MoreResults = styled.button``;

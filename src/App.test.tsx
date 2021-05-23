@@ -7,7 +7,7 @@ import {
 } from '@testing-library/react';
 import axios from 'axios';
 import App from './App';
-import cards, { noCards } from './dummyCardData';
+import cards, { noCards, manyCards } from './dummyCardData';
 
 describe('App initial tests', () => {
   it('renders without crashing', () => {
@@ -64,6 +64,10 @@ describe('App tests with card data', () => {
     expect(errorDiv).not.toBeInTheDocument();
     const resultDiv = screen.queryByTestId('results');
     expect(resultDiv).not.toBeInTheDocument();
+    const moreResultsDiv = screen.queryByRole('button', {
+      name: /get more results/i,
+    });
+    expect(moreResultsDiv).not.toBeInTheDocument();
 
     const inputElement = screen.getByRole('searchbox');
     fireEvent.change(inputElement, { target: { value: 'test' } });
@@ -86,6 +90,10 @@ describe('App tests with card data', () => {
       screen.getByText('Showing books', { exact: false })
     );
     expect(books).toBeInTheDocument();
+    const moreResults = await waitFor(() =>
+      screen.queryByRole('button', { name: /get more results/i })
+    );
+    expect(moreResults).not.toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(4);
     const cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
@@ -137,6 +145,10 @@ describe('App tests with card data', () => {
       screen.queryByText('Number of books', { exact: false })
     );
     expect(results).not.toBeInTheDocument();
+    const moreResults = await waitFor(() =>
+      screen.queryByRole('button', { name: /get more results/i })
+    );
+    expect(moreResults).not.toBeInTheDocument();
     const books = await waitFor(() =>
       screen.queryByText('Showing books', { exact: false })
     );
@@ -166,6 +178,10 @@ describe('App tests with card data', () => {
       screen.queryByText('Number of books', { exact: false })
     );
     expect(results).not.toBeInTheDocument();
+    const moreResults = await waitFor(() =>
+      screen.queryByRole('button', { name: /get more results/i })
+    );
+    expect(moreResults).not.toBeInTheDocument();
     const books = await waitFor(() =>
       screen.queryByText('Showing books', { exact: false })
     );
@@ -195,6 +211,10 @@ describe('App tests with card data', () => {
       screen.queryByText('Number of books', { exact: false })
     );
     expect(results).not.toBeInTheDocument();
+    const moreResults = await waitFor(() =>
+      screen.queryByRole('button', { name: /get more results/i })
+    );
+    expect(moreResults).not.toBeInTheDocument();
     const books = await waitFor(() =>
       screen.queryByText('Showing books', { exact: false })
     );
@@ -228,5 +248,38 @@ describe('App tests with card data', () => {
       })
     );
     expect(error).toBeInTheDocument();
+  });
+});
+
+describe('App tests with card data with more than 10 cards', () => {
+  jest.mock('axios');
+  const mockedAxios = axios as jest.Mocked<typeof axios>;
+  const mockData = { data: manyCards };
+
+  afterEach(cleanup);
+
+  it('tests more than 10 cards', async () => {
+    mockedAxios.get.mockResolvedValueOnce(mockData);
+    render(<App />);
+
+    const inputElement = screen.getByRole('searchbox');
+    fireEvent.change(inputElement, { target: { value: 'test' } });
+    const dropDown = screen.getByTestId('select');
+    fireEvent.change(dropDown, { target: { value: 'intitle' } });
+    const submitButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.click(submitButton);
+
+    const results = await waitFor(() =>
+      screen.getByText('Number of books = 14')
+    );
+    expect(results).toBeInTheDocument();
+    const books = await waitFor(() =>
+      screen.getByText('Showing books', { exact: false })
+    );
+    expect(books).toBeInTheDocument();
+    const moreResults = await waitFor(() =>
+      screen.getByRole('button', { name: /get more results/i })
+    );
+    expect(moreResults).toBeInTheDocument();
   });
 });

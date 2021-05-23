@@ -10,6 +10,7 @@ import {
   ResultsTotal,
   ResultsCurrent,
   CardDiv,
+  MoreResults,
 } from './App.style';
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
   const [resultCount, setResultCount] = useState<number>();
+  const [resultPages, setResultPages] = useState<number>(0);
 
   useEffect(() => {
     document.title = 'Book Finder';
@@ -34,7 +36,7 @@ const App = () => {
       //Or just get 10 at a time
       const api = 'https://www.googleapis.com/books/v1/volumes?q=';
       const response = await axios.get(`${api}${type}:%22${search}%22`);
-      console.log(response.data.totalItems);
+      //console.log(response.data.totalItems);
 
       //Uncomment line below to test API errors
       //const response = await axios.get(`http://httpstat.us/404`);
@@ -61,7 +63,14 @@ const App = () => {
       } else {
         setCardData(response.data.items);
         setResultCount(response.data.totalItems);
+        if (response.data.totalItems > 10) {
+          const pages = Math.ceil(response.data.totalItems / 10);
+          setResultPages(pages);
+        } else {
+          setResultPages(1);
+        }
       }
+      //console.log(resultPages);
     } catch (error) {
       console.log(error);
       /* setErrorMessage(
@@ -98,6 +107,7 @@ const App = () => {
               <Card card={card} key={card.id} data-testid="card" />
             </CardDiv>
           ))}
+        {resultPages > 1 && <MoreResults>Get more results</MoreResults>}
       </Books>
     </>
   );
