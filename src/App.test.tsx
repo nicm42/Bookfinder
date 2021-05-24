@@ -9,6 +9,8 @@ import axios from 'axios';
 import App from './App';
 import cards, { noCards, manyCards1, manyCards2 } from './dummyCardData';
 
+window.scrollTo = jest.fn();
+
 describe('App initial tests', () => {
   it('renders without crashing', () => {
     render(<App />);
@@ -284,6 +286,8 @@ describe('App tests with card data with more than 10 cards', () => {
     expect(results).toBeInTheDocument();
     let books = await waitFor(() => screen.getByText('Showing books 1-10'));
     expect(books).toBeInTheDocument();
+    let cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
+    expect(cardTitle1).toBeInTheDocument();
     let previous = await waitFor(() =>
       screen.queryByRole('button', { name: /Previous/i })
     );
@@ -302,6 +306,8 @@ describe('App tests with card data with more than 10 cards', () => {
     expect(results).toBeInTheDocument();
     books = await waitFor(() => screen.getByText('Showing books 11-14'));
     expect(books).toBeInTheDocument();
+    const cardTitle11 = await waitFor(() => screen.getByText('Title 11'));
+    expect(cardTitle11).toBeInTheDocument();
     previous = await waitFor(() =>
       screen.getByRole('button', { name: /Previous/i })
     );
@@ -310,6 +316,19 @@ describe('App tests with card data with more than 10 cards', () => {
       screen.queryByRole('button', { name: /Next/i })
     )) as HTMLElement;
     expect(next).not.toBeInTheDocument();
+
+    fireEvent.click(previous);
+    expect(results).toBeInTheDocument();
+    books = await waitFor(() => screen.getByText('Showing books 1-10'));
+    cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
+    expect(cardTitle1).toBeInTheDocument();
+    expect(books).toBeInTheDocument();
+    previous = await waitFor(() =>
+      screen.queryByRole('button', { name: /Previous/i })
+    );
+    expect(previous).not.toBeInTheDocument();
+    next = await waitFor(() => screen.getByRole('button', { name: /Next/i }));
+    expect(next).toBeInTheDocument();
   });
 
   it('tests more than 10 cards followed by a new search', async () => {

@@ -46,7 +46,9 @@ export const manyCards1 = {
   items: [
     {
       id: 'id 1',
-      volumeInfo: {},
+      volumeInfo: {
+        title: 'Title 1',
+      },
     },
     {
       id: 'id 2',
@@ -92,7 +94,9 @@ export const manyCards2 = {
   items: [
     {
       id: 'id 11',
-      volumeInfo: {},
+      volumeInfo: {
+        title: 'Title 11',
+      },
     },
     {
       id: 'id 12',

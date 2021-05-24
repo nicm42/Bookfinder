@@ -17,6 +17,7 @@ import {
 const App = () => {
   const [cardData, setCardData] = useState<any[]>([]);
   //const [cardData, setCardData] = useState<any[]>(cards);  //uncomment to load cards without using API
+  const [results, setResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
 
@@ -24,9 +25,9 @@ const App = () => {
   const [searchType, setSearchType] = useState<string>('');
 
   const [resultCount, setResultCount] = useState<number>();
-  //const [resultPages, setResultPages] = useState<number>(0);
-  const [isPreviousResults, setisPreviousResults] = useState<boolean>(false);
+  const [isPreviousResults, setIsPreviousResults] = useState<boolean>(false);
   const [isMoreResults, setIsMoreResults] = useState<boolean>(false);
+  const [pageNumber, setPageNumber] = useState<number>(0);
 
   const [resultStart, setResultStart] = useState<number>(-9);
   const [resultEnd, setResultEnd] = useState<number>(0);
@@ -36,9 +37,32 @@ const App = () => {
     document.title = 'Book Finder';
   }, []);
 
+  useEffect(() => {
+    if (pageNumber === 1) {
+      setIsPreviousResults(false);
+    }
+  }, [pageNumber]);
+
   const searchAgain = () => {
+    setPageNumber((previousValue) => previousValue + 1);
     const startIndex = lastSearch * 10 - 1;
     getData(searchText, searchType, startIndex);
+  };
+
+  const goBack = () => {
+    //window.scrollTo(0, 0); //scroll back up, otherwise it's not clear anything has changed
+    window.scrollTo({ top: 0 });
+    setCardData(results[pageNumber - 2]);
+    setIsMoreResults(true);
+    setPageNumber((previousValue) => previousValue - 1);
+    setResultStart((previousValue) => previousValue - 10);
+    //Take the last set of results and round it down to the nearest 10
+    //But if it's 10, 20, 30 etc then just need to take 10 off it
+    if (resultEnd % 10 === 0) {
+      setResultEnd((previousValue) => previousValue - 10);
+    } else {
+      setResultEnd((previousValue) => Math.floor(previousValue / 10) * 10);
+    }
   };
 
   const getData = async (search: string, type: string, start: number) => {
@@ -46,10 +70,12 @@ const App = () => {
     if (start === 0) {
       setResultStart(-9);
       setResultEnd(0);
-      setLastSearch(0);
+      setPageNumber(1);
       setIsMoreResults(false);
+      setIsPreviousResults(false);
+      setLastSearch(0);
     } else {
-      setisPreviousResults(true);
+      setIsPreviousResults(true);
     }
 
     //set these two, so we can use them for another search
@@ -96,9 +122,10 @@ const App = () => {
         setCardData(response.data.items);
         setResultCount(response.data.totalItems);
         setResultStart((previousValue) => previousValue + 10);
+        //Save these results so we can use them later if we need to go back to them
+        setResults((arr) => [...arr, response.data.items]);
         if (response.data.totalItems > 10) {
-          //const pages = Math.ceil(response.data.totalItems / 10);
-          //setResultPages(pages);
+          //Save these results so we can use them later if we need to go back to them
           if (resultEnd + 10 < response.data.totalItems) {
             setResultEnd((previousValue) => previousValue + 10);
             setIsMoreResults(true);
@@ -107,13 +134,11 @@ const App = () => {
             setIsMoreResults(false);
           }
         } else {
-          //setResultPages(1);
           setIsMoreResults(false);
           setResultEnd(response.data.totalItems);
         }
       }
       setLastSearch((previousValue) => previousValue + 1);
-      //console.log(resultPages);
     } catch (error) {
       console.log(error);
       if (error.message === 'timeout of 2ms exceeded') {
@@ -149,7 +174,7 @@ const App = () => {
               <Card card={card} key={card.id} data-testid="card" />
             </CardDiv>
           ))}
-        {isPreviousResults && <Previous>Previous</Previous>}
+        {isPreviousResults && <Previous onClick={goBack}>Previous</Previous>}
         {isMoreResults && <Next onClick={searchAgain}>Next</Next>}
       </Books>
     </>
