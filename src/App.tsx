@@ -10,7 +10,8 @@ import {
   ResultsTotal,
   ResultsCurrent,
   CardDiv,
-  MoreResults,
+  Previous,
+  Next,
 } from './App.style';
 
 const App = () => {
@@ -24,7 +25,9 @@ const App = () => {
 
   const [resultCount, setResultCount] = useState<number>();
   //const [resultPages, setResultPages] = useState<number>(0);
+  const [isPreviousResults, setisPreviousResults] = useState<boolean>(false);
   const [isMoreResults, setIsMoreResults] = useState<boolean>(false);
+
   const [resultStart, setResultStart] = useState<number>(-9);
   const [resultEnd, setResultEnd] = useState<number>(0);
   const [lastSearch, setLastSearch] = useState<number>(0);
@@ -45,6 +48,8 @@ const App = () => {
       setResultEnd(0);
       setLastSearch(0);
       setIsMoreResults(false);
+    } else {
+      setisPreviousResults(true);
     }
 
     //set these two, so we can use them for another search
@@ -92,7 +97,7 @@ const App = () => {
         setResultCount(response.data.totalItems);
         setResultStart((previousValue) => previousValue + 10);
         if (response.data.totalItems > 10) {
-          const pages = Math.ceil(response.data.totalItems / 10);
+          //const pages = Math.ceil(response.data.totalItems / 10);
           //setResultPages(pages);
           if (resultEnd + 10 < response.data.totalItems) {
             setResultEnd((previousValue) => previousValue + 10);
@@ -144,9 +149,8 @@ const App = () => {
               <Card card={card} key={card.id} data-testid="card" />
             </CardDiv>
           ))}
-        {isMoreResults && (
-          <MoreResults onClick={searchAgain}>Get more results</MoreResults>
-        )}
+        {isPreviousResults && <Previous>Previous</Previous>}
+        {isMoreResults && <Next onClick={searchAgain}>Next</Next>}
       </Books>
     </>
   );

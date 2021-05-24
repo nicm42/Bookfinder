@@ -14,4 +14,6 @@ export const ResultsCurrent = styled.div``;
 
 export const CardDiv = styled.div``;
 
-export const MoreResults = styled.button``;
+export const Previous = styled.button``;
+
+export const Next = styled.button``;

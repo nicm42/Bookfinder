@@ -65,7 +65,7 @@ describe('App tests with card data', () => {
     const resultDiv = screen.queryByTestId('results');
     expect(resultDiv).not.toBeInTheDocument();
     const moreResultsDiv = screen.queryByRole('button', {
-      name: /get more results/i,
+      name: /Next/i,
     });
     expect(moreResultsDiv).not.toBeInTheDocument();
 
@@ -89,7 +89,7 @@ describe('App tests with card data', () => {
     const books = await waitFor(() => screen.getByText('Showing books 1-4'));
     expect(books).toBeInTheDocument();
     const moreResults = await waitFor(() =>
-      screen.queryByRole('button', { name: /get more results/i })
+      screen.queryByRole('button', { name: /Next/i })
     );
     expect(moreResults).not.toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
@@ -144,7 +144,7 @@ describe('App tests with card data', () => {
     );
     expect(results).not.toBeInTheDocument();
     const moreResults = await waitFor(() =>
-      screen.queryByRole('button', { name: /get more results/i })
+      screen.queryByRole('button', { name: /Next/i })
     );
     expect(moreResults).not.toBeInTheDocument();
     const books = await waitFor(() =>
@@ -177,7 +177,7 @@ describe('App tests with card data', () => {
     );
     expect(results).not.toBeInTheDocument();
     const moreResults = await waitFor(() =>
-      screen.queryByRole('button', { name: /get more results/i })
+      screen.queryByRole('button', { name: /Next/i })
     );
     expect(moreResults).not.toBeInTheDocument();
     const books = await waitFor(() =>
@@ -210,7 +210,7 @@ describe('App tests with card data', () => {
     );
     expect(results).not.toBeInTheDocument();
     const moreResults = await waitFor(() =>
-      screen.queryByRole('button', { name: /get more results/i })
+      screen.queryByRole('button', { name: /Next/i })
     );
     expect(moreResults).not.toBeInTheDocument();
     const books = await waitFor(() =>
@@ -284,12 +284,16 @@ describe('App tests with card data with more than 10 cards', () => {
     expect(results).toBeInTheDocument();
     let books = await waitFor(() => screen.getByText('Showing books 1-10'));
     expect(books).toBeInTheDocument();
-    let moreResults = await waitFor(() =>
-      screen.getByRole('button', { name: /get more results/i })
+    let previous = await waitFor(() =>
+      screen.queryByRole('button', { name: /Previous/i })
     );
-    expect(moreResults).toBeInTheDocument();
+    expect(previous).not.toBeInTheDocument();
+    let next = await waitFor(() =>
+      screen.getByRole('button', { name: /Next/i })
+    );
+    expect(next).toBeInTheDocument();
 
-    fireEvent.click(moreResults);
+    fireEvent.click(next);
     await waitFor(() =>
       expect(mockedAxios2.get).toHaveBeenCalledWith(
         'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=9'
@@ -298,10 +302,14 @@ describe('App tests with card data with more than 10 cards', () => {
     expect(results).toBeInTheDocument();
     books = await waitFor(() => screen.getByText('Showing books 11-14'));
     expect(books).toBeInTheDocument();
-    moreResults = (await waitFor(() =>
-      screen.queryByRole('button', { name: /get more results/i })
+    previous = await waitFor(() =>
+      screen.getByRole('button', { name: /Previous/i })
+    );
+    expect(previous).toBeInTheDocument();
+    next = (await waitFor(() =>
+      screen.queryByRole('button', { name: /Next/i })
     )) as HTMLElement;
-    expect(moreResults).not.toBeInTheDocument();
+    expect(next).not.toBeInTheDocument();
   });
 
   it('tests more than 10 cards followed by a new search', async () => {
@@ -327,7 +335,7 @@ describe('App tests with card data with more than 10 cards', () => {
     let books = await waitFor(() => screen.getByText('Showing books 1-10'));
     expect(books).toBeInTheDocument();
     const moreResults = await waitFor(() =>
-      screen.getByRole('button', { name: /get more results/i })
+      screen.getByRole('button', { name: /Next/i })
     );
 
     fireEvent.click(moreResults);
