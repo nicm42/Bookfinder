@@ -7,7 +7,12 @@ import {
 } from '@testing-library/react';
 import axios from 'axios';
 import App from './App';
-import cards, { noCards, manyCards1, manyCards2 } from './dummyCardData';
+import cards, {
+  noCards,
+  manyCards1,
+  manyCards2,
+  manyCards3,
+} from './dummyCardData';
 
 window.scrollTo = jest.fn();
 
@@ -256,15 +261,18 @@ describe('App tests with card data with more than 10 cards', () => {
   const mockedAxios = axios as jest.Mocked<typeof axios>;
   const mockedAxios1 = axios as jest.Mocked<typeof axios>;
   const mockedAxios2 = axios as jest.Mocked<typeof axios>;
+  const mockedAxios3 = axios as jest.Mocked<typeof axios>;
   const mockData = { data: cards };
   const mockData1 = { data: manyCards1 };
   const mockData2 = { data: manyCards2 };
+  const mockData3 = { data: manyCards3 };
 
   afterEach(cleanup);
 
   it('tests more than 10 cards', async () => {
     mockedAxios1.get.mockResolvedValueOnce(mockData1);
     mockedAxios2.get.mockResolvedValueOnce(mockData2);
+    mockedAxios2.get.mockResolvedValueOnce(mockData3);
     render(<App />);
 
     const inputElement = screen.getByRole('searchbox');
@@ -281,7 +289,7 @@ describe('App tests with card data with more than 10 cards', () => {
     );
 
     const results = await waitFor(() =>
-      screen.getByText('Number of books = 14')
+      screen.getByText('Number of books = 24')
     );
     expect(results).toBeInTheDocument();
     let books = await waitFor(() => screen.getByText('Showing books 1-10'));
@@ -304,7 +312,7 @@ describe('App tests with card data with more than 10 cards', () => {
       )
     );
     expect(results).toBeInTheDocument();
-    books = await waitFor(() => screen.getByText('Showing books 11-14'));
+    books = await waitFor(() => screen.getByText('Showing books 11-20'));
     expect(books).toBeInTheDocument();
     const cardTitle11 = await waitFor(() => screen.getByText('Title 11'));
     expect(cardTitle11).toBeInTheDocument();
@@ -315,7 +323,40 @@ describe('App tests with card data with more than 10 cards', () => {
     next = (await waitFor(() =>
       screen.queryByRole('button', { name: /Next/i })
     )) as HTMLElement;
+    expect(next).toBeInTheDocument();
+
+    fireEvent.click(next);
+    await waitFor(() =>
+      expect(mockedAxios3.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=19'
+      )
+    );
+    expect(results).toBeInTheDocument();
+    books = await waitFor(() => screen.getByText('Showing books 21-24'));
+    expect(books).toBeInTheDocument();
+    const cardTitle21 = await waitFor(() => screen.getByText('Title 21'));
+    expect(cardTitle21).toBeInTheDocument();
+    previous = await waitFor(() =>
+      screen.getByRole('button', { name: /Previous/i })
+    );
+    expect(previous).toBeInTheDocument();
+    next = (await waitFor(() =>
+      screen.queryByRole('button', { name: /Next/i })
+    )) as HTMLElement;
     expect(next).not.toBeInTheDocument();
+
+    fireEvent.click(previous);
+    expect(results).toBeInTheDocument();
+    books = await waitFor(() => screen.getByText('Showing books 11-20'));
+    cardTitle1 = await waitFor(() => screen.getByText('Title 11'));
+    expect(cardTitle1).toBeInTheDocument();
+    expect(books).toBeInTheDocument();
+    previous = await waitFor(() =>
+      screen.getByRole('button', { name: /Previous/i })
+    );
+    expect(previous).toBeInTheDocument();
+    next = await waitFor(() => screen.getByRole('button', { name: /Next/i }));
+    expect(next).toBeInTheDocument();
 
     fireEvent.click(previous);
     expect(results).toBeInTheDocument();
@@ -349,7 +390,7 @@ describe('App tests with card data with more than 10 cards', () => {
         'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0'
       )
     );
-    let results = await waitFor(() => screen.getByText('Number of books = 14'));
+    let results = await waitFor(() => screen.getByText('Number of books = 24'));
     expect(results).toBeInTheDocument();
     let books = await waitFor(() => screen.getByText('Showing books 1-10'));
     expect(books).toBeInTheDocument();
@@ -363,7 +404,7 @@ describe('App tests with card data with more than 10 cards', () => {
         'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=9'
       )
     );
-    books = await waitFor(() => screen.getByText('Showing books 11-14'));
+    books = await waitFor(() => screen.getByText('Showing books 11-20'));
     expect(books).toBeInTheDocument();
 
     fireEvent.change(inputElement, { target: { value: 'test' } });

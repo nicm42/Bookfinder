@@ -42,7 +42,7 @@ export const noCards = {
 };
 
 export const manyCards1 = {
-  totalItems: 14,
+  totalItems: 24,
   items: [
     {
       id: 'id 1',
@@ -90,7 +90,7 @@ export const manyCards1 = {
 };
 
 export const manyCards2 = {
-  totalItems: 14,
+  totalItems: 24,
   items: [
     {
       id: 'id 11',
@@ -108,6 +108,54 @@ export const manyCards2 = {
     },
     {
       id: 'id 14',
+      volumeInfo: {},
+    },
+    {
+      id: 'id 15',
+      volumeInfo: {},
+    },
+    {
+      id: 'id 16',
+      volumeInfo: {},
+    },
+    {
+      id: 'id 17',
+      volumeInfo: {},
+    },
+    {
+      id: 'id 18',
+      volumeInfo: {},
+    },
+    {
+      id: 'id 19',
+      volumeInfo: {},
+    },
+    {
+      id: 'id 20',
+      volumeInfo: {},
+    },
+  ],
+};
+
+export const manyCards3 = {
+  totalItems: 24,
+  items: [
+    {
+      id: 'id 21',
+      volumeInfo: {
+        title: 'Title 21',
+      },
+    },
+    {
+      id: 'id 22',
+      volumeInfo: {},
+    },
+    {
+      id: 'id 23',
+      volumeInfo: {},
+    },
+    {
+      id: 'id 24',
       volumeInfo: {},
     },
   ],
