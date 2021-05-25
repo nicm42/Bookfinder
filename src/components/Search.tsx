@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-//import axios from 'axios';
 import { Label, Input, Select, Submit } from './Search.styles';
 
 interface SearchProps {
-  /* setCardData: Function;
-  setIsLoading: Function;
-  setIsError: Function; */
   getData: Function;
 }
 
@@ -54,10 +50,6 @@ const Search = ({ getData }: SearchProps) => {
     </form>
   );
 };
-
-/* Search.propTypes = {
-  setCardData: PropTypes.func.isRequired,
-}; */
 
 Search.propTypes = {
   getData: PropTypes.func.isRequired,
