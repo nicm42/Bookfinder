@@ -21,6 +21,12 @@ describe('App initial tests', () => {
     render(<App />);
   });
 
+  it('has a header', () => {
+    render(<App />);
+    const heading = screen.getByRole('heading');
+    expect(heading).toBeInTheDocument();
+  });
+
   it('has a Search component', () => {
     render(<App />);
     const inputElement = screen.getByRole('searchbox');
