@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Label, Input, Select, Submit } from './Search.styles';
+import { Form, Label, Input, Select, Submit } from './Search.styles';
 
 interface SearchProps {
   getData: Function;
@@ -20,7 +20,7 @@ const Search = ({ getData }: SearchProps) => {
   };
 
   return (
-    <form onSubmit={(e) => submitSearch(e)}>
+    <Form onSubmit={(e) => submitSearch(e)}>
       <Label htmlFor="search-input">Search for a book by title or author</Label>
       <Select
         required
@@ -47,7 +47,7 @@ const Search = ({ getData }: SearchProps) => {
         }
       />
       <Submit>Search</Submit>
-    </form>
+    </Form>
   );
 };
 
