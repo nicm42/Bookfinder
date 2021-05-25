@@ -58,17 +58,19 @@ describe('Search tests', () => {
 
   it('has can cope with missing information', () => {
     render(<Card card={cards.items[2]} />);
-    const coverImage = screen.queryByRole('img');
-    const title = screen.queryByText('Title 2');
-    const author2 = screen.queryByText('Author 2');
-    const publisher = screen.queryByText('Publisher 2');
-    const moreInfo = screen.queryByText('More information');
+    const coverImage = screen.getByRole('img');
+    const title = screen.getByText('Title missing');
+    const author = screen.getByText('Author missing');
+    const publisher = screen.getByText('Publisher missing');
+    const moreInfo = screen.getByText('Link missing');
     const link = screen.queryByRole('link');
-    expect(coverImage).not.toBeInTheDocument();
-    expect(title).not.toBeInTheDocument();
-    expect(author2).not.toBeInTheDocument();
-    expect(publisher).not.toBeInTheDocument();
-    expect(moreInfo).not.toBeInTheDocument();
+    expect(coverImage).toBeInTheDocument();
+    expect(coverImage).toHaveAttribute('src', 'generic-book-cover.jpg');
+    expect(coverImage).toHaveAttribute('alt', 'Book');
+    expect(title).toBeInTheDocument();
+    expect(author).toBeInTheDocument();
+    expect(publisher).toBeInTheDocument();
+    expect(moreInfo).toBeInTheDocument();
     expect(link).not.toBeInTheDocument();
   });
 });

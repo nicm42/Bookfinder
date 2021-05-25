@@ -1,5 +1,6 @@
 import PropTypes, { string } from 'prop-types';
 import { Cover, Title, Author, Publisher } from './Card.styles';
+import cover from '../generic-book-cover.jpg';
 
 interface CardProps {
   card: any;
@@ -24,39 +25,33 @@ const Card = ({ card }: CardProps) => {
 
   return (
     <>
-      {card.volumeInfo.imageLinks ? (
-        <Cover
-          src={card.volumeInfo.imageLinks.thumbnail}
-          alt={card.volumeInfo.title}
-        />
-      ) : (
-        'image missing TODO'
-      )}
+      <Cover
+        src={
+          card.volumeInfo.imageLinks
+            ? card.volumeInfo.imageLinks.thumbnail
+            : cover
+        }
+        alt={card.volumeInfo.title ? card.volumeInfo.title : 'Book'}
+      />
 
-      {card.volumeInfo.title ? (
-        <Title data-testid="title">{card.volumeInfo.title}</Title>
-      ) : (
-        'title missing TODO'
-      )}
+      <Title data-testid="title">
+        {card.volumeInfo.title ? card.volumeInfo.title : 'Title missing'}
+      </Title>
 
-      {card.volumeInfo.authors ? (
-        <Author data-testid="author">{formattedAuthors}</Author>
-      ) : (
-        'authors missing TODO'
-      )}
+      <Author data-testid="author">
+        {card.volumeInfo.authors ? formattedAuthors : 'Author missing'}
+      </Author>
 
-      {card.volumeInfo.publisher ? (
-        <Publisher data-testid="publisher">
-          {card.volumeInfo.publisher}
-        </Publisher>
-      ) : (
-        'publisher missing TODO'
-      )}
+      <Publisher data-testid="publisher">
+        {card.volumeInfo.publisher
+          ? card.volumeInfo.publisher
+          : 'Publisher missing'}
+      </Publisher>
 
       {card.volumeInfo.infoLink ? (
         <a href={card.volumeInfo.infoLink}>More information</a>
       ) : (
-        'link missing TODO'
+        'Link missing'
       )}
     </>
   );
