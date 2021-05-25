@@ -86,15 +86,12 @@ const App = () => {
     setIsLoading(true);
     setCardData([]); //in case this is another search, clear the results from the previous search
     setErrorMessage(''); //in case this is another search, clear the error message
-    //console.log(`Running getData with ${search} and ${type}`);
 
     try {
       const api = 'https://www.googleapis.com/books/v1/volumes?q=';
       const response = await axios.get(
         `${api}${type}:%22${search}%22&startIndex=${start}`
       );
-      //console.log(`${api}${type}:%22${search}%22&startIndex=${start}`);
-      //console.log(response.data.totalItems);
 
       //Uncomment line below to test API errors
       //const response = await axios.get(`http://httpstat.us/404`);
@@ -102,14 +99,6 @@ const App = () => {
       /* const response = await axios.get(`http://httpstat.us/504`, {
         timeout: 2,
       }); */
-
-      //console.log(response.data.totalItems);
-      /* console.log(response.data.items[1].id);
-      console.log(response.data.items[1].volumeInfo.imageLinks.thumbnail);
-      console.log(response.data.items[1].volumeInfo.title);
-      console.log(response.data.items[1].volumeInfo.authors[0]);
-      console.log(response.data.items[1].volumeInfo.publisher); 
-      console.log(response.data.items[1].volumeInfo.infoLink); */
 
       if (response.data.totalItems === 0) {
         if (type === 'intitle') {
