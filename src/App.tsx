@@ -19,7 +19,7 @@ const App = () => {
   const [cardData, setCardData] = useState<any[]>([]);
   //const [cardData, setCardData] = useState<any[]>(cards);  //uncomment to load cards without using API
   const [results, setResults] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState<Boolean>(false);
+  const [isLoading, setIsLoading] = useState<Boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>();
 
   const [searchText, setSearchText] = useState<string>('');
@@ -147,8 +147,7 @@ const App = () => {
     <>
       <Header>Bookfinder</Header>
       <Search getData={getData} />
-      {isLoading && <Loading data-testid="loading">Loading</Loading>}{' '}
-      {/* TODO replace this text with an animation */}
+      {isLoading && <Loading data-testid="loading" />}
       {errorMessage && <Error data-testid="error">{errorMessage}</Error>}
       <Books>
         {resultCount && (
