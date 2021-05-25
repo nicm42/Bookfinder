@@ -1,4 +1,6 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
+
+export const Header = styled.h1``;
 
 export const Loading = styled.div``;
 
