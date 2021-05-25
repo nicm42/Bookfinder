@@ -3,6 +3,7 @@ import axios from 'axios';
 import Search from './components/Search';
 import Card from './components/Card';
 import {
+  Header,
   Loading,
   Error,
   Books,
@@ -155,6 +156,7 @@ const App = () => {
 
   return (
     <>
+      <Header>Bookfinder</Header>
       <Search getData={getData} />
       {isLoading && <Loading data-testid="loading">Loading</Loading>}{' '}
       {/* TODO replace this text with an animation */}
