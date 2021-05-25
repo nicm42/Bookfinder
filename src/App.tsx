@@ -19,7 +19,7 @@ const App = () => {
   const [cardData, setCardData] = useState<any[]>([]);
   //const [cardData, setCardData] = useState<any[]>(cards);  //uncomment to load cards without using API
   const [results, setResults] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState<Boolean>(true);
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
 
   const [searchText, setSearchText] = useState<string>('');
@@ -145,7 +145,7 @@ const App = () => {
 
   return (
     <>
-      <Header>Bookfinder</Header>
+      <Header>Book Search</Header>
       <Search getData={getData} />
       {isLoading && <Loading data-testid="loading" />}
       {errorMessage && <Error data-testid="error">{errorMessage}</Error>}

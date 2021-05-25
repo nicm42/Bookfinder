@@ -1,7 +1,10 @@
 import styled from 'styled-components/macro';
 import { colours } from './constants';
 
-export const Header = styled.h1``;
+export const Header = styled.h1`
+  text-align: center;
+  font-size: 2.5rem;
+`;
 
 export const Loading = styled.div`
   /* Spinner from https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
@@ -14,7 +17,7 @@ export const Loading = styled.div`
     #0000 calc(100% - 0.33em),
     #000 0
   );
-  /* animation: spinner 1s infinite linear; */
+  animation: spinner 1s infinite linear;
 
   @keyframes spinner {
     to {
