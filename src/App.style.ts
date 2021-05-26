@@ -19,6 +19,10 @@ export const Loading = styled.div`
   );
   animation: spinner 1s infinite linear;
 
+  @media (prefers-reduced-motion) {
+    animation: none;
+  }
+
   @keyframes spinner {
     to {
       transform: rotate(1turn);
