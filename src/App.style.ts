@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { colours } from './constants';
+import { colours, shapes } from './constants';
 
 export const Header = styled.h1`
   padding-bottom: 0.5em;
@@ -40,7 +40,13 @@ export const Error = styled.div`
   text-align: center;
 `;
 
-export const Books = styled.div``;
+export const Books = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  padding: 0.5em;
+`;
 
 export const ResultsCount = styled.div``;
 
@@ -48,7 +54,14 @@ export const ResultsTotal = styled.div``;
 
 export const ResultsCurrent = styled.div``;
 
-export const CardDiv = styled.div``;
+export const CardDiv = styled.div`
+  max-width: 90%;
+  width: 50ch;
+  padding: 1em;
+  border: 1px solid #dedede;
+  border-radius: ${shapes.borderRadius};
+  box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
+`;
 
 export const Previous = styled.button``;
 
