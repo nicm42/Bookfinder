@@ -7,6 +7,13 @@ interface CardProps {
 }
 
 const Card = ({ card }: CardProps) => {
+  //The covers automatically have a curled edge, which I don't like
+  //so we'll remove it
+  let bookCover;
+  if (card.volumeInfo.imageLinks) {
+    bookCover = card.volumeInfo.imageLinks.thumbnail.replace('&edge=curl', '');
+  }
+
   //If there's more than one author, we need to format them
   //otherwise it puts the names right next to each other with no comma or space
   const { authors } = card.volumeInfo;
@@ -26,11 +33,7 @@ const Card = ({ card }: CardProps) => {
   return (
     <>
       <Cover
-        src={
-          card.volumeInfo.imageLinks
-            ? card.volumeInfo.imageLinks.thumbnail
-            : cover
-        }
+        src={card.volumeInfo.imageLinks ? bookCover : cover}
         alt={card.volumeInfo.title ? card.volumeInfo.title : 'Book'}
       />
 
