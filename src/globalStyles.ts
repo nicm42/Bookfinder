@@ -19,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${colours.text};
     font-family: 'Poppins', sans-serif;
     font-size: 100%;
-    line-height: 1.6;
+    line-height: 1.3;
   }
 
 `;

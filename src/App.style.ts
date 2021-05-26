@@ -61,10 +61,10 @@ export const CardDiv = styled.div`
   border: 1px solid #dedede;
   border-radius: ${shapes.borderRadius};
   box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
+  text-align: center;
 
   a {
     color: ${colours.link};
-    line-height: 2.5;
   }
 
   a:visited {
