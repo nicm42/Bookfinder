@@ -64,4 +64,9 @@ export const Submit = styled.button`
     outline: ${focussing.border};
     border-radius: ${focussing.radius};
   }
+
+  &:active {
+    position: relative;
+    top: 0.125em;
+  }
 `;
