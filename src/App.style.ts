@@ -7,13 +7,18 @@ export const Header = styled.h1`
   text-align: center;
 `;
 
+export const LoadingDiv = styled.div`
+  display: grid;
+  place-content: center;
+  margin-top: 2em;
+`;
+
 export const Loading = styled.div`
   /* Spinner from https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
+  display: grid;
+  place-content: center;
   width: 2.5em;
   height: 2.5em;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
   border-radius: 50%;
   background: conic-gradient(#0000 10%, ${colours.highlight});
   -webkit-mask: radial-gradient(

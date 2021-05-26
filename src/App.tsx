@@ -4,6 +4,7 @@ import Search from './components/Search';
 import Card from './components/Card';
 import {
   Header,
+  LoadingDiv,
   Loading,
   Error,
   Books,
@@ -149,7 +150,6 @@ const App = () => {
     <>
       <Header>Book Search</Header>
       <Search getData={getData} />
-      {isLoading && <Loading data-testid="loading" />}
       {errorMessage && <Error data-testid="error">{errorMessage}</Error>}
       {resultCount && (
         <ResultsCount data-testid="results">
@@ -163,6 +163,11 @@ const App = () => {
         {isPreviousResults && <Previous onClick={goBack}>Previous</Previous>}
         {isMoreResults && <Next onClick={searchAgain}>Next</Next>}
       </PrevNext>
+      {isLoading && (
+        <LoadingDiv>
+          <Loading data-testid="loading" />
+        </LoadingDiv>
+      )}
       <Books>
         {cardData &&
           cardData.map((card) => (
