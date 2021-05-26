@@ -2,14 +2,18 @@ import styled from 'styled-components/macro';
 import { colours } from './constants';
 
 export const Header = styled.h1`
-  text-align: center;
+  padding-bottom: 0.5em;
   font-size: 2.5rem;
+  text-align: center;
 `;
 
 export const Loading = styled.div`
   /* Spinner from https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
   width: 2.5em;
   height: 2.5em;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
   border-radius: 50%;
   background: conic-gradient(#0000 10%, ${colours.highlight});
   -webkit-mask: radial-gradient(
@@ -30,7 +34,11 @@ export const Loading = styled.div`
   }
 `;
 
-export const Error = styled.div``;
+export const Error = styled.div`
+  font-size: 1.5rem;
+  color: ${colours.error};
+  text-align: center;
+`;
 
 export const Books = styled.div``;
 

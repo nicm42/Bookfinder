@@ -20,7 +20,7 @@ const App = () => {
   //const [cardData, setCardData] = useState<any[]>(cards);  //uncomment to load cards without using API
   const [results, setResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>();
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const [searchText, setSearchText] = useState<string>('');
   const [searchType, setSearchType] = useState<string>('');
