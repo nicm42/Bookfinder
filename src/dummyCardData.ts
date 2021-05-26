@@ -1,3 +1,4 @@
+/* used for tests */
 const cards = {
   totalItems: 4,
   items: [
@@ -160,3 +161,43 @@ export const manyCards3 = {
     },
   ],
 };
+
+/* used for displaying cards to create/check layout */
+export const testCards = [
+  {
+    id: 'id 1',
+    volumeInfo: {
+      title: 'The Meaning of Liff',
+      authors: ['Douglas Adams', 'John Lloyd'],
+      publisher: 'Pan Macmillan',
+      imageLinks: {
+        thumbnail:
+          'http://books.google.com/books/content?id=-VMnAAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
+      },
+      infoLink:
+        'http://books.google.co.uk/books?id=-VMnAAAAQBAJ&dq=intitle:%22the+meaning+of+liff%22&hl=&source=gbs_api',
+    },
+  },
+  {
+    id: 'id 2',
+    volumeInfo: {
+      title: "Dirk Gently's Holistic Detective Agency",
+      authors: ['Douglas Adams'],
+      publisher: 'Simon and Schuster',
+      imageLinks: {
+        thumbnail:
+          'http://books.google.com/books/content?id=4FmpBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
+      },
+      infoLink: '#',
+    },
+  },
+  {
+    id: 'id 3',
+    volumeInfo: {
+      title: 'Title',
+      authors: ['Author'],
+      publisher: 'Publisher',
+      infoLink: '#',
+    },
+  },
+];
