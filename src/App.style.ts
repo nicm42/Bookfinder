@@ -61,6 +61,31 @@ export const CardDiv = styled.div`
   border: 1px solid #dedede;
   border-radius: ${shapes.borderRadius};
   box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
+
+  a {
+    color: ${colours.link};
+    line-height: 2.5;
+  }
+
+  a:visited {
+    color: ${colours.linkVisited};
+  }
+
+  a:hover,
+  a:focus,
+  a:active,
+  a:visited:focus,
+  a:visited:hover,
+  a:visited:active {
+    color: ${colours.linkDarker};
+    text-decoration-thickness: 0.125em;
+    text-underline-offset: 0.125em;
+  }
+
+  a:active {
+    outline: 0.1em dashed ${colours.linkDarker};
+    outline-offset: 0.25em;
+  }
 `;
 
 export const Previous = styled.button``;

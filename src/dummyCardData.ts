@@ -195,9 +195,9 @@ export const testCards = [
     id: 'id 3',
     volumeInfo: {
       title: 'Title',
-      authors: ['Author'],
+      authors: ['Author 1', 'Author 2', 'Author 3'],
       publisher: 'Publisher',
-      infoLink: '#',
+      infoLink: 'http://www.dummylink.com',
     },
   },
 ];

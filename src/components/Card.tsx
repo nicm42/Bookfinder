@@ -39,12 +39,15 @@ const Card = ({ card }: CardProps) => {
       </Title>
 
       <Author data-testid="author">
+        {/* if I put the 'by' into the ternary operator with formatted authors
+        it adds a random comma for some reason. Giving it its own ternary doesn't */}
+        {card.volumeInfo.authors ? 'by ' : ''}
         {card.volumeInfo.authors ? formattedAuthors : 'Author missing'}
       </Author>
 
       <Publisher data-testid="publisher">
         {card.volumeInfo.publisher
-          ? card.volumeInfo.publisher
+          ? `Publisher: ${card.volumeInfo.publisher}`
           : 'Publisher missing'}
       </Publisher>
 

@@ -3,6 +3,9 @@ export const colours = {
   text: 'hsla(233, 24%, 19%, 1)',
   highlight: 'hsla(210, 77%, 81%, 1)',
   error: 'hsla(9, 76%, 35%, 1)',
+  link: 'hsla(210 ,77%, 34%, 1)',
+  linkDarker: 'hsla(210, 77%, 44%, 1)',
+  linkVisited: 'hsla(145, 81%, 33%, 1)',
 };
 
 export const focussing = {
