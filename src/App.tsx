@@ -11,6 +11,7 @@ import {
   ResultsTotal,
   ResultsCurrent,
   CardDiv,
+  PrevNext,
   Previous,
   Next,
 } from './App.style';
@@ -150,6 +151,10 @@ const App = () => {
       <Search getData={getData} />
       {isLoading && <Loading data-testid="loading" />}
       {errorMessage && <Error data-testid="error">{errorMessage}</Error>}
+      <PrevNext>
+        {isPreviousResults && <Previous onClick={goBack}>Previous</Previous>}
+        {isMoreResults && <Next onClick={searchAgain}>Next</Next>}
+      </PrevNext>
       <Books>
         {resultCount && (
           <ResultsCount data-testid="results">
@@ -165,9 +170,11 @@ const App = () => {
               <Card card={card} key={card.id} data-testid="card" />
             </CardDiv>
           ))}
+      </Books>
+      <PrevNext>
         {isPreviousResults && <Previous onClick={goBack}>Previous</Previous>}
         {isMoreResults && <Next onClick={searchAgain}>Next</Next>}
-      </Books>
+      </PrevNext>
     </>
   );
 };

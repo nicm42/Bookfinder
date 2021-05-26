@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { colours, shapes } from './constants';
+import { colours, shapes, focussing } from './constants';
 
 export const Header = styled.h1`
   padding-bottom: 0.5em;
@@ -88,6 +88,33 @@ export const CardDiv = styled.div`
   }
 `;
 
-export const Previous = styled.button``;
+export const PrevNext = styled.div`
+  text-align: center;
+`;
 
-export const Next = styled.button``;
+export const Previous = styled.button`
+  border: none;
+  margin: 0.5em;
+  padding: 0.5em 1.5em;
+  border-radius: ${shapes.borderRadius};
+  background-color: ${colours.highlight};
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.85rem;
+  box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
+
+  &:hover,
+  &:focus {
+    background-color: hsla(210, 77%, 73%, 1);
+    outline: ${focussing.border};
+    border-radius: ${focussing.radius};
+  }
+
+  &:active {
+    position: relative;
+    top: 0.125em;
+    box-shadow: none;
+  }
+`;
+
+export const Next = styled(Previous)``;

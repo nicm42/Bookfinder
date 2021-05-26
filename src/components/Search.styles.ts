@@ -23,6 +23,7 @@ export const Select = styled.select`
   font-family: inherit;
   font-size: 0.85rem;
   line-height: inherit;
+  box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
 
   &:hover,
   &:focus {
@@ -41,6 +42,7 @@ export const Input = styled.input`
   border: 1px solid ${colours.text};
   border-radius: ${shapes.borderRadius};
   font-size: 1rem;
+  box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
 
   &:hover,
   &:focus {
@@ -57,6 +59,7 @@ export const Submit = styled.button`
   cursor: pointer;
   font-weight: 700;
   font-size: 1rem;
+  box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
 
   &:hover,
   &:focus {
@@ -68,5 +71,6 @@ export const Submit = styled.button`
   &:active {
     position: relative;
     top: 0.125em;
+    box-shadow: none;
   }
 `;
