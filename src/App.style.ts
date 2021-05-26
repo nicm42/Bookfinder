@@ -48,9 +48,14 @@ export const Books = styled.div`
   padding: 0.5em;
 `;
 
-export const ResultsCount = styled.div``;
+export const ResultsCount = styled.div`
+  padding: 0.5em 0;
+  text-align: center;
+`;
 
-export const ResultsTotal = styled.div``;
+export const ResultsTotal = styled.div`
+  padding-bottom: 0.125em;
+`;
 
 export const ResultsCurrent = styled.div``;
 

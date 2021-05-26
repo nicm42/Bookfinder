@@ -18,8 +18,8 @@ import {
 import { testCards } from './dummyCardData';
 
 const App = () => {
-  //const [cardData, setCardData] = useState<any[]>([]);
-  const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
+  const [cardData, setCardData] = useState<any[]>([]);
+  //const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
   const [results, setResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -151,19 +151,19 @@ const App = () => {
       <Search getData={getData} />
       {isLoading && <Loading data-testid="loading" />}
       {errorMessage && <Error data-testid="error">{errorMessage}</Error>}
+      {resultCount && (
+        <ResultsCount data-testid="results">
+          <ResultsTotal>Number of books = {resultCount}</ResultsTotal>
+          <ResultsCurrent>
+            Showing books {resultStart}-{resultEnd}
+          </ResultsCurrent>
+        </ResultsCount>
+      )}
       <PrevNext>
         {isPreviousResults && <Previous onClick={goBack}>Previous</Previous>}
         {isMoreResults && <Next onClick={searchAgain}>Next</Next>}
       </PrevNext>
       <Books>
-        {resultCount && (
-          <ResultsCount data-testid="results">
-            <ResultsTotal>Number of books = {resultCount}</ResultsTotal>
-            <ResultsCurrent>
-              Showing books {resultStart}-{resultEnd}
-            </ResultsCurrent>
-          </ResultsCount>
-        )}
         {cardData &&
           cardData.map((card) => (
             <CardDiv key={card.id} data-testid="cardDiv">
