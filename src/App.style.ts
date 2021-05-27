@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { colours, shapes, focussing } from './constants';
+import { colours, shapes, focussing, mediaQuery } from './constants';
 
 export const Header = styled.h1`
   padding-bottom: 0.5em;
@@ -75,6 +75,7 @@ export const CardDiv = styled.div`
 
   a {
     color: ${colours.link};
+    margin-top: auto;
   }
 
   a:visited {
@@ -95,6 +96,15 @@ export const CardDiv = styled.div`
   a:active {
     outline: 0.1em dashed ${colours.linkDarker};
     outline-offset: 0.25em;
+  }
+
+  @media ${mediaQuery.medium} {
+    display: flex;
+    gap: 1em;
+
+    a {
+      margin-top: auto;
+    }
   }
 `;
 

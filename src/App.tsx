@@ -19,8 +19,8 @@ import {
 import { testCards } from './dummyCardData';
 
 const App = () => {
-  const [cardData, setCardData] = useState<any[]>([]);
-  //const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
+  //const [cardData, setCardData] = useState<any[]>([]);
+  const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
   const [results, setResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');

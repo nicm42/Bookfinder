@@ -1,5 +1,5 @@
 import PropTypes, { string } from 'prop-types';
-import { Cover, Title, Author, Publisher } from './Card.styles';
+import { Cover, Info, Title, Author, Publisher } from './Card.styles';
 import cover from '../generic-book-cover.jpg';
 
 interface CardProps {
@@ -37,28 +37,27 @@ const Card = ({ card }: CardProps) => {
         alt={card.volumeInfo.title ? card.volumeInfo.title : 'Book'}
       />
 
-      <Title data-testid="title">
-        {card.volumeInfo.title ? card.volumeInfo.title : 'Title missing'}
-      </Title>
-
-      <Author data-testid="author">
-        {/* if I put the 'by' into the ternary operator with formatted authors
-        it adds a random comma for some reason. Giving it its own ternary doesn't */}
-        {card.volumeInfo.authors ? 'by ' : ''}
-        {card.volumeInfo.authors ? formattedAuthors : 'Author missing'}
-      </Author>
-
-      <Publisher data-testid="publisher">
-        {card.volumeInfo.publisher
-          ? `Publisher: ${card.volumeInfo.publisher}`
-          : 'Publisher missing'}
-      </Publisher>
-
-      {card.volumeInfo.infoLink ? (
-        <a href={card.volumeInfo.infoLink}>More information</a>
-      ) : (
-        'Link missing'
-      )}
+      <Info>
+        <Title data-testid="title">
+          {card.volumeInfo.title ? card.volumeInfo.title : 'Title missing'}
+        </Title>
+        <Author data-testid="author">
+          {/* if I put the 'by' into the ternary operator with formatted authors
+          it adds a random comma for some reason. Giving it its own ternary doesn't */}
+          {card.volumeInfo.authors ? 'by ' : ''}
+          {card.volumeInfo.authors ? formattedAuthors : 'Author missing'}
+        </Author>
+        <Publisher data-testid="publisher">
+          {card.volumeInfo.publisher
+            ? `Publisher: ${card.volumeInfo.publisher}`
+            : 'Publisher missing'}
+        </Publisher>
+        {card.volumeInfo.infoLink ? (
+          <a href={card.volumeInfo.infoLink}>More information</a>
+        ) : (
+          'Link missing'
+        )}
+      </Info>
     </>
   );
 };

@@ -23,3 +23,9 @@ export const shapes = {
     border-radius: 0.25em;
   }
  */
+
+export const mediaQuery = {
+  /* small: '(min-width: 15em)', */
+  medium: '(min-width: 25em)',
+  large: '(min-width: 45em)',
+};
