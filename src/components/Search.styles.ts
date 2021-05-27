@@ -20,6 +20,7 @@ export const Form = styled.form`
 
 export const Label = styled.label`
   padding-bottom: 0.5em;
+  font-size: 1.25em;
   text-align: center;
 `;
 

@@ -15,8 +15,6 @@ export const LoadingDiv = styled.div`
 
 export const Loading = styled.div`
   /* Spinner from https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
-  display: grid;
-  place-content: center;
   width: 2.5em;
   height: 2.5em;
   border-radius: 50%;
@@ -26,7 +24,7 @@ export const Loading = styled.div`
     #0000 calc(100% - 0.33em),
     #000 0
   );
-  animation: spinner 1s infinite linear;
+  /* animation: spinner 1s infinite linear; */
 
   @media (prefers-reduced-motion) {
     animation: none;
@@ -43,6 +41,12 @@ export const Error = styled.div`
   font-size: 1.5rem;
   color: ${colours.error};
   text-align: center;
+
+  @media ${mediaQuery.large} {
+    padding-left: 0.5rem;
+    font-size: 2em;
+    text-align: left;
+  }
 `;
 
 export const Books = styled.div`
@@ -64,10 +68,19 @@ export const Books = styled.div`
 export const ResultsCount = styled.div`
   padding: 0.5em 0;
   text-align: center;
+
+  @media ${mediaQuery.large} {
+    padding-left: 0.5em;
+    text-align: left;
+  }
 `;
 
 export const ResultsTotal = styled.div`
   padding-bottom: 0.125em;
+
+  @media ${mediaQuery.large} {
+    padding-bottom: 0.25em;
+  }
 `;
 
 export const ResultsCurrent = styled.div``;
@@ -118,6 +131,10 @@ export const CardDiv = styled.div`
 
 export const PrevNext = styled.div`
   text-align: center;
+
+  @media ${mediaQuery.large} {
+    text-align: left;
+  }
 `;
 
 export const Previous = styled.button`
