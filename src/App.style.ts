@@ -53,13 +53,11 @@ export const Books = styled.div`
   gap: 1em;
   padding: 0.5em;
 
-  /* they won't go next to each when the display is this small
-  but the flex-wrap will mean they only will when there's enough space */
-  @media ${mediaQuery.medium} {
+  @media ${mediaQuery.large} {
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: flex-start;
     align-items: stretch; /* makes everything same height */
-    margin: 0 auto;
   }
 `;
 

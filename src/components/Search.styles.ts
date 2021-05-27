@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { colours, focussing, shapes } from '../constants';
+import { colours, focussing, shapes, mediaQuery } from '../constants';
 
 export const Form = styled.form`
   display: inline-flex;
@@ -10,6 +10,12 @@ export const Form = styled.form`
   position: relative;
   left: 50%;
   transform: translateX(-50%);
+
+  @media ${mediaQuery.large} {
+    padding-left: 0.5em;
+    left: 0;
+    transform: translateX(0);
+  }
 `;
 
 export const Label = styled.label`
