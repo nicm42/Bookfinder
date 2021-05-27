@@ -48,9 +48,19 @@ export const Error = styled.div`
 export const Books = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 1em;
   padding: 0.5em;
+
+  /* they won't go next to each when the display is this small
+  but the flex-wrap will mean they only will when there's enough space */
+  @media ${mediaQuery.medium} {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch; /* makes everything same height */
+    margin: 0 auto;
+  }
 `;
 
 export const ResultsCount = styled.div`

@@ -27,5 +27,5 @@ export const shapes = {
 export const mediaQuery = {
   /* small: '(min-width: 15em)', */
   medium: '(min-width: 25em)',
-  large: '(min-width: 45em)',
+  large: '(min-width: 60em)',
 };
