@@ -28,7 +28,7 @@ const App = () => {
   const [searchText, setSearchText] = useState<string>('');
   const [searchType, setSearchType] = useState<string>('');
 
-  const [resultCount, setResultCount] = useState<number>();
+  const [resultCount, setResultCount] = useState<number>(0);
   const [isPreviousResults, setIsPreviousResults] = useState<boolean>(false);
   const [isMoreResults, setIsMoreResults] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(0);
@@ -78,6 +78,7 @@ const App = () => {
       setIsMoreResults(false);
       setIsPreviousResults(false);
       setLastSearch(0);
+      setResultCount(0);
     } else {
       setIsPreviousResults(true);
     }
@@ -151,7 +152,7 @@ const App = () => {
       <Header>Book Search</Header>
       <Search getData={getData} />
       {errorMessage && <Error data-testid="error">{errorMessage}</Error>}
-      {resultCount && (
+      {resultCount > 0 && (
         <ResultsCount data-testid="results">
           <ResultsTotal>Number of books = {resultCount}</ResultsTotal>
           <ResultsCurrent>
