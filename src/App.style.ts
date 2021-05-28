@@ -24,7 +24,7 @@ export const Loading = styled.div`
     #0000 calc(100% - 0.33em),
     #000 0
   );
-  /* animation: spinner 1s infinite linear; */
+  animation: spinner 1s infinite linear;
 
   @media (prefers-reduced-motion) {
     animation: none;
