@@ -30,6 +30,9 @@ export const Select = styled.select`
   font-family: inherit;
   font-size: 0.85rem;
   line-height: inherit;
+  background-color: white;
+  border: 1px solid ${colours.text};
+  border-radius: ${shapes.borderRadius};
   box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
 
   &:hover,
