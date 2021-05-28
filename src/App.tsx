@@ -16,7 +16,7 @@ import {
   Previous,
   Next,
 } from './App.style';
-import { testCards } from './dummyCardData';
+//import { testCards } from './dummyCardData'; //uncomment to load cards without using API
 
 const App = () => {
   const [cardData, setCardData] = useState<any[]>([]);
@@ -159,10 +159,12 @@ const App = () => {
           </ResultsCurrent>
         </ResultsCount>
       )}
-      <PrevNext>
-        {isPreviousResults && <Previous onClick={goBack}>Previous</Previous>}
-        {isMoreResults && <Next onClick={searchAgain}>Next</Next>}
-      </PrevNext>
+      {!isLoading && (
+        <PrevNext>
+          {isPreviousResults && <Previous onClick={goBack}>Previous</Previous>}
+          {isMoreResults && <Next onClick={searchAgain}>Next</Next>}
+        </PrevNext>
+      )}
       {isLoading && (
         <LoadingDiv>
           <Loading data-testid="loading" />
@@ -176,10 +178,12 @@ const App = () => {
             </CardDiv>
           ))}
       </Books>
-      <PrevNext>
-        {isPreviousResults && <Previous onClick={goBack}>Previous</Previous>}
-        {isMoreResults && <Next onClick={searchAgain}>Next</Next>}
-      </PrevNext>
+      {!isLoading && (
+        <PrevNext>
+          {isPreviousResults && <Previous onClick={goBack}>Previous</Previous>}
+          {isMoreResults && <Next onClick={searchAgain}>Next</Next>}
+        </PrevNext>
+      )}
     </>
   );
 };
