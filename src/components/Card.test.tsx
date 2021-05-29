@@ -25,8 +25,8 @@ describe('Search tests', () => {
     render(<Card card={cards.items[0]} />);
     const coverImage = screen.getByRole('img');
     const title = screen.getByText('Title 1');
-    const author = screen.getByText('Author 1');
-    const publisher = screen.getByText('Publisher 1');
+    const author = screen.getByText('by Author 1');
+    const publisher = screen.getByText('Publisher: Publisher 1');
     const moreInfo = screen.getByText('More information');
     const link = screen.getByRole('link');
     expect(coverImage).toHaveAttribute('src', 'http://www.dummycover1.com');
