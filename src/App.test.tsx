@@ -92,7 +92,7 @@ describe('App tests with card data', () => {
     await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(1));
     await waitFor(() =>
       expect(mockedAxios.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0'
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0&maxResults=10'
       )
     );
     const results = await waitFor(() =>
@@ -102,9 +102,9 @@ describe('App tests with card data', () => {
     const books = await waitFor(() => screen.getByText('Showing books 1-4'));
     expect(books).toBeInTheDocument();
     const moreResults = await waitFor(() =>
-      screen.queryByRole('button', { name: /Next/i })
+      screen.queryAllByRole('button', { name: /Next/i })
     );
-    expect(moreResults).not.toBeInTheDocument();
+    expect(moreResults).toHaveLength(0);
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(4);
     const cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
@@ -130,7 +130,7 @@ describe('App tests with card data', () => {
 
     await waitFor(() =>
       expect(mockedAxios.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=inauthor:%22test%22&startIndex=0'
+        'https://www.googleapis.com/books/v1/volumes?q=inauthor:%22test%22&startIndex=0&maxResults=10'
       )
     );
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
@@ -157,9 +157,9 @@ describe('App tests with card data', () => {
     );
     expect(results).not.toBeInTheDocument();
     const moreResults = await waitFor(() =>
-      screen.queryByRole('button', { name: /Next/i })
+      screen.queryAllByRole('button', { name: /Next/i })
     );
-    expect(moreResults).not.toBeInTheDocument();
+    expect(moreResults).toHaveLength(0);
     const books = await waitFor(() =>
       screen.queryByText('Showing books', { exact: false })
     );
@@ -190,9 +190,9 @@ describe('App tests with card data', () => {
     );
     expect(results).not.toBeInTheDocument();
     const moreResults = await waitFor(() =>
-      screen.queryByRole('button', { name: /Next/i })
+      screen.queryAllByRole('button', { name: /Next/i })
     );
-    expect(moreResults).not.toBeInTheDocument();
+    expect(moreResults).toHaveLength(0);
     const books = await waitFor(() =>
       screen.queryByText('Showing books', { exact: false })
     );
@@ -223,9 +223,9 @@ describe('App tests with card data', () => {
     );
     expect(results).not.toBeInTheDocument();
     const moreResults = await waitFor(() =>
-      screen.queryByRole('button', { name: /Next/i })
+      screen.queryAllByRole('button', { name: /Next/i })
     );
-    expect(moreResults).not.toBeInTheDocument();
+    expect(moreResults).toHaveLength(0);
     const books = await waitFor(() =>
       screen.queryByText('Showing books', { exact: false })
     );
@@ -265,20 +265,20 @@ describe('App tests with card data', () => {
 describe('App tests with card data with more than 10 cards', () => {
   jest.mock('axios');
   const mockedAxios = axios as jest.Mocked<typeof axios>;
-  const mockedAxios1 = axios as jest.Mocked<typeof axios>;
-  const mockedAxios2 = axios as jest.Mocked<typeof axios>;
-  const mockedAxios3 = axios as jest.Mocked<typeof axios>;
+  const mockedAxiosMany1 = axios as jest.Mocked<typeof axios>;
+  const mockedAxiosMany2 = axios as jest.Mocked<typeof axios>;
+  const mockedAxiosMany3 = axios as jest.Mocked<typeof axios>;
   const mockData = { data: cards };
-  const mockData1 = { data: manyCards1 };
-  const mockData2 = { data: manyCards2 };
-  const mockData3 = { data: manyCards3 };
+  const mockDataMany1 = { data: manyCards1 };
+  const mockDataMany2 = { data: manyCards2 };
+  const mockDataMany3 = { data: manyCards3 };
 
   afterEach(cleanup);
 
-  it('tests more than 10 cards', async () => {
-    mockedAxios1.get.mockResolvedValueOnce(mockData1);
-    mockedAxios2.get.mockResolvedValueOnce(mockData2);
-    mockedAxios2.get.mockResolvedValueOnce(mockData3);
+  it.only('tests more than 10 cards', async () => {
+    mockedAxiosMany1.get.mockResolvedValueOnce(mockDataMany1);
+    mockedAxiosMany2.get.mockResolvedValueOnce(mockDataMany2);
+    mockedAxiosMany3.get.mockResolvedValueOnce(mockDataMany3);
     render(<App />);
 
     const inputElement = screen.getByRole('searchbox');
@@ -289,8 +289,8 @@ describe('App tests with card data with more than 10 cards', () => {
     fireEvent.click(submitButton);
 
     await waitFor(() =>
-      expect(mockedAxios1.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0'
+      expect(mockedAxiosMany1.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0&maxResults=10'
       )
     );
 
@@ -303,38 +303,38 @@ describe('App tests with card data with more than 10 cards', () => {
     let cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
     expect(cardTitle1).toBeInTheDocument();
     let previous = await waitFor(() =>
-      screen.queryByRole('button', { name: /Previous/i })
+      screen.queryAllByRole('button', { name: /Previous/i })
     );
-    expect(previous).not.toBeInTheDocument();
+    expect(previous).toHaveLength(0);
     let next = await waitFor(() =>
-      screen.getByRole('button', { name: /Next/i })
+      screen.getAllByRole('button', { name: /Next/i })
     );
-    expect(next).toBeInTheDocument();
+    expect(next).toHaveLength(2);
 
-    fireEvent.click(next);
+    fireEvent.click(next[0]);
     await waitFor(() =>
-      expect(mockedAxios2.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=9'
+      expect(mockedAxiosMany2.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=9&maxResults=10'
       )
     );
     expect(results).toBeInTheDocument();
     books = await waitFor(() => screen.getByText('Showing books 11-20'));
     expect(books).toBeInTheDocument();
-    const cardTitle11 = await waitFor(() => screen.getByText('Title 11'));
+    let cardTitle11 = await waitFor(() => screen.getByText('Title 11'));
     expect(cardTitle11).toBeInTheDocument();
     previous = await waitFor(() =>
-      screen.getByRole('button', { name: /Previous/i })
+      screen.getAllByRole('button', { name: /Previous/i })
     );
-    expect(previous).toBeInTheDocument();
+    expect(previous).toHaveLength(2);
     next = (await waitFor(() =>
-      screen.queryByRole('button', { name: /Next/i })
-    )) as HTMLElement;
-    expect(next).toBeInTheDocument();
+      screen.queryAllByRole('button', { name: /Next/i })
+    )) as HTMLElement[];
+    expect(next).toHaveLength(2);
 
-    fireEvent.click(next);
+    fireEvent.click(next[0]);
     await waitFor(() =>
-      expect(mockedAxios3.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=19'
+      expect(mockedAxiosMany3.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=19&maxResults=10'
       )
     );
     expect(results).toBeInTheDocument();
@@ -343,44 +343,60 @@ describe('App tests with card data with more than 10 cards', () => {
     const cardTitle21 = await waitFor(() => screen.getByText('Title 21'));
     expect(cardTitle21).toBeInTheDocument();
     previous = await waitFor(() =>
-      screen.getByRole('button', { name: /Previous/i })
+      screen.getAllByRole('button', { name: /Previous/i })
     );
-    expect(previous).toBeInTheDocument();
+    expect(previous).toHaveLength(2);
     next = (await waitFor(() =>
-      screen.queryByRole('button', { name: /Next/i })
-    )) as HTMLElement;
-    expect(next).not.toBeInTheDocument();
+      screen.queryAllByRole('button', { name: /Next/i })
+    )) as HTMLElement[];
+    expect(next).toHaveLength(0);
 
-    fireEvent.click(previous);
+    fireEvent.click(previous[0]);
     expect(results).toBeInTheDocument();
     books = await waitFor(() => screen.getByText('Showing books 11-20'));
     cardTitle1 = await waitFor(() => screen.getByText('Title 11'));
     expect(cardTitle1).toBeInTheDocument();
     expect(books).toBeInTheDocument();
     previous = await waitFor(() =>
-      screen.getByRole('button', { name: /Previous/i })
+      screen.getAllByRole('button', { name: /Previous/i })
     );
-    expect(previous).toBeInTheDocument();
-    next = await waitFor(() => screen.getByRole('button', { name: /Next/i }));
-    expect(next).toBeInTheDocument();
+    expect(previous).toHaveLength(2);
+    next = await waitFor(() =>
+      screen.getAllByRole('button', { name: /Next/i })
+    );
+    expect(next).toHaveLength(2);
 
-    fireEvent.click(previous);
+    fireEvent.click(previous[0]);
     expect(results).toBeInTheDocument();
     books = await waitFor(() => screen.getByText('Showing books 1-10'));
     cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
     expect(cardTitle1).toBeInTheDocument();
     expect(books).toBeInTheDocument();
     previous = await waitFor(() =>
-      screen.queryByRole('button', { name: /Previous/i })
+      screen.queryAllByRole('button', { name: /Previous/i })
     );
-    expect(previous).not.toBeInTheDocument();
-    next = await waitFor(() => screen.getByRole('button', { name: /Next/i }));
-    expect(next).toBeInTheDocument();
+    expect(previous).toHaveLength(0);
+    next = await waitFor(() =>
+      screen.getAllByRole('button', { name: /Next/i })
+    );
+    expect(next).toHaveLength(2);
+
+    fireEvent.click(next[0]);
+    await waitFor(() =>
+      expect(mockedAxiosMany2.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=9&maxResults=10'
+      )
+    );
+    expect(results).toBeInTheDocument();
+    books = await waitFor(() => screen.getByText('Showing books 11-20'));
+    expect(books).toBeInTheDocument();
+    cardTitle11 = await waitFor(() => screen.getByText('Title 11'));
+    expect(cardTitle11).toBeInTheDocument();
   });
 
   it('tests more than 10 cards followed by a new search', async () => {
-    mockedAxios1.get.mockResolvedValueOnce(mockData1);
-    mockedAxios2.get.mockResolvedValueOnce(mockData2);
+    mockedAxiosMany1.get.mockResolvedValueOnce(mockDataMany1);
+    mockedAxiosMany2.get.mockResolvedValueOnce(mockDataMany2);
     mockedAxios.get.mockResolvedValueOnce(mockData);
     render(<App />);
 
@@ -392,8 +408,8 @@ describe('App tests with card data with more than 10 cards', () => {
     fireEvent.click(submitButton);
 
     await waitFor(() =>
-      expect(mockedAxios1.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0'
+      expect(mockedAxiosMany1.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0&maxResults=10'
       )
     );
     let results = await waitFor(() => screen.getByText('Number of books = 24'));
@@ -401,13 +417,13 @@ describe('App tests with card data with more than 10 cards', () => {
     let books = await waitFor(() => screen.getByText('Showing books 1-10'));
     expect(books).toBeInTheDocument();
     const moreResults = await waitFor(() =>
-      screen.getByRole('button', { name: /Next/i })
+      screen.getAllByRole('button', { name: /Next/i })
     );
 
-    fireEvent.click(moreResults);
+    fireEvent.click(moreResults[0]);
     await waitFor(() =>
-      expect(mockedAxios2.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=9'
+      expect(mockedAxiosMany2.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=9&maxResults=10'
       )
     );
     books = await waitFor(() => screen.getByText('Showing books 11-20'));
@@ -418,7 +434,7 @@ describe('App tests with card data with more than 10 cards', () => {
     fireEvent.click(submitButton);
     await waitFor(() =>
       expect(mockedAxios.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0'
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0&maxResults=10'
       )
     );
     results = await waitFor(() => screen.getByText('Number of books = 4'));

@@ -35,7 +35,12 @@ const App = () => {
 
   const [resultStart, setResultStart] = useState<number>(-9);
   const [resultEnd, setResultEnd] = useState<number>(0);
-  const [lastSearch, setLastSearch] = useState<number>(0);
+
+  /* Google Books API automatically returns 10 books 
+    but since I'm using that 10 all over the place we need a constant
+    - and to see maxResults in case they change that default*/
+  const resultsPerPage: number = 10;
+  let startIndex: number;
 
   useEffect(() => {
     document.title = 'Book Finder';
@@ -49,35 +54,39 @@ const App = () => {
 
   const searchAgain = () => {
     setPageNumber((previousValue) => previousValue + 1);
-    const startIndex = lastSearch * 10 - 1;
+    startIndex = resultStart + resultsPerPage - 2;
+    console.log(startIndex);
     getData(searchText, searchType, startIndex);
   };
 
   const goBack = () => {
-    //window.scrollTo(0, 0); //scroll back up, otherwise it's not clear anything has changed
-    window.scrollTo({ top: 0 });
+    window.scrollTo({ top: 0 }); //scroll back up, otherwise it's not clear anything has changed
+    startIndex = resultStart - resultsPerPage - 2;
+    console.log(startIndex);
     setCardData(results[pageNumber - 2]);
     setIsMoreResults(true);
     setPageNumber((previousValue) => previousValue - 1);
-    setResultStart((previousValue) => previousValue - 10);
+    setResultStart((previousValue) => previousValue - resultsPerPage);
     //Take the last set of results and round it down to the nearest 10
     //But if it's 10, 20, 30 etc then just need to take 10 off it
     if (resultEnd % 10 === 0) {
-      setResultEnd((previousValue) => previousValue - 10);
+      setResultEnd((previousValue) => previousValue - resultsPerPage);
     } else {
-      setResultEnd((previousValue) => Math.floor(previousValue / 10) * 10);
+      setResultEnd(
+        (previousValue) =>
+          Math.floor(previousValue / resultsPerPage) * resultsPerPage
+      );
     }
   };
 
   const getData = async (search: string, type: string, start: number) => {
     //Need to re-set everything if this is a new search
     if (start === 0) {
-      setResultStart(-9);
+      setResultStart(1 - resultsPerPage);
       setResultEnd(0);
       setPageNumber(1);
       setIsMoreResults(false);
       setIsPreviousResults(false);
-      setLastSearch(0);
       setResultCount(0);
     } else {
       setIsPreviousResults(true);
@@ -94,7 +103,7 @@ const App = () => {
     try {
       const api = 'https://www.googleapis.com/books/v1/volumes?q=';
       const response = await axios.get(
-        `${api}${type}:%22${search}%22&startIndex=${start}`
+        `${api}${type}:%22${search}%22&startIndex=${start}&maxResults=10`
       );
 
       //Uncomment line below to test API errors
@@ -115,13 +124,13 @@ const App = () => {
         //There is data!
         setCardData(response.data.items);
         setResultCount(response.data.totalItems);
-        setResultStart((previousValue) => previousValue + 10);
+        setResultStart((previousValue) => previousValue + resultsPerPage);
         //Save these results so we can use them later if we need to go back to them
         setResults((arr) => [...arr, response.data.items]);
-        if (response.data.totalItems > 10) {
+        if (response.data.totalItems > resultsPerPage) {
           //Save these results so we can use them later if we need to go back to them
-          if (resultEnd + 10 < response.data.totalItems) {
-            setResultEnd((previousValue) => previousValue + 10);
+          if (resultEnd + resultsPerPage < response.data.totalItems) {
+            setResultEnd((previousValue) => previousValue + resultsPerPage);
             setIsMoreResults(true);
           } else {
             setResultEnd(response.data.totalItems);
@@ -132,7 +141,6 @@ const App = () => {
           setResultEnd(response.data.totalItems);
         }
       }
-      setLastSearch((previousValue) => previousValue + 1);
     } catch (error) {
       console.log(error);
       if (error.message === 'timeout of 2ms exceeded') {
