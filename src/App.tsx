@@ -4,6 +4,7 @@ import axios from 'axios';
 import Search from './components/Search';
 import Card from './components/Card';
 import * as Styled from './App.style';
+import favicon from './images/favicon.ico';
 import { testCards } from './dummyCardData'; //uncomment to load cards without using API
 
 const App = () => {
@@ -154,6 +155,7 @@ const App = () => {
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" type="image/ico" href={favicon} />
       </Helmet>
       <Styled.Header>Book Search</Styled.Header>
       <Search getData={getData} />
