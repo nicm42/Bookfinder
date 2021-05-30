@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components/macro';
-import { colours, mediaQuery } from './constants';
+import { createGlobalStyle, css } from 'styled-components/macro';
+import { colours, shapes, focussing, mediaQuery } from './constants';
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
@@ -29,3 +29,27 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export default GlobalStyle;
+
+export const button = css`
+  border: none;
+  padding: 0.5em 1.5em;
+  border-radius: ${shapes.borderRadius};
+  background-color: ${colours.highlight};
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.85rem;
+  box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
+
+  &:hover,
+  &:focus {
+    background-color: hsla(210, 77%, 73%, 1);
+    outline: ${focussing.border};
+    border-radius: ${focussing.radius};
+  }
+
+  &:active {
+    position: relative;
+    top: 0.125em;
+    box-shadow: none;
+  }
+`;

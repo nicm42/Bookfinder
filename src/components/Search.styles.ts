@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro';
 import { colours, focussing, shapes, mediaQuery } from '../constants';
 import dropdown from '../images/dropdown.png';
+import { button } from '../globalStyles';
 
 export const Form = styled.form`
   display: inline-flex;
@@ -71,25 +72,5 @@ export const Input = styled.input`
 `;
 
 export const Submit = styled.button`
-  border: none;
-  padding: 0.5em 1.5em;
-  border-radius: ${shapes.borderRadius};
-  background-color: ${colours.highlight};
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 1rem;
-  box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
-
-  &:hover,
-  &:focus {
-    background-color: hsla(210, 77%, 73%, 1);
-    outline: ${focussing.border};
-    border-radius: ${focussing.radius};
-  }
-
-  &:active {
-    position: relative;
-    top: 0.125em;
-    box-shadow: none;
-  }
+  ${button}
 `;
