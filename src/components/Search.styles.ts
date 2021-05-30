@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro';
 import { colours, focussing, shapes, mediaQuery } from '../constants';
+import dropdown from '../images/dropdown.png';
 
 export const Form = styled.form`
   display: inline-flex;
@@ -30,10 +31,18 @@ export const Select = styled.select`
   font-family: inherit;
   font-size: 0.85rem;
   line-height: inherit;
-  background-color: white;
   border: 1px solid ${colours.text};
   border-radius: ${shapes.borderRadius};
   box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 2em;
+  background: url(${dropdown});
+  background-repeat: no-repeat;
+  background-position: 95% 50%;
+  background-size: 0.85rem;
+  background-color: white;
 
   &:hover,
   &:focus {
