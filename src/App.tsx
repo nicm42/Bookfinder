@@ -11,16 +11,15 @@ import {
   ResultsCount,
   ResultsTotal,
   ResultsCurrent,
-  CardDiv,
   PrevNext,
   Previous,
   Next,
 } from './App.style';
-//import { testCards } from './dummyCardData'; //uncomment to load cards without using API
+import { testCards } from './dummyCardData'; //uncomment to load cards without using API
 
 const App = () => {
-  const [cardData, setCardData] = useState<any[]>([]);
-  //const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
+  //const [cardData, setCardData] = useState<any[]>([]);
+  const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
   const [results, setResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -182,9 +181,7 @@ const App = () => {
       <Books>
         {cardData &&
           cardData.map((card) => (
-            <CardDiv key={card.id} data-testid="cardDiv">
-              <Card card={card} key={card.id} data-testid="card" />
-            </CardDiv>
+            <Card card={card} key={card.id} data-testid="card" />
           ))}
       </Books>
       {!isLoading && (

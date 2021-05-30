@@ -1,6 +1,6 @@
 import PropTypes, { string } from 'prop-types';
-import { Cover, Info, Title, Author, Publisher } from './Card.styles';
-import cover from '../generic-book-cover.jpg';
+import { CardDiv, Cover, Info, Title, Author, Publisher } from './Card.styles';
+import cover from '../images/generic-book-cover.jpg';
 
 interface CardProps {
   card: any;
@@ -31,7 +31,7 @@ const Card = ({ card }: CardProps) => {
   }
 
   return (
-    <>
+    <CardDiv data-testid="cardDiv">
       <Cover
         src={card.volumeInfo.imageLinks ? bookCover : cover}
         alt={card.volumeInfo.title ? card.volumeInfo.title : 'Book'}
@@ -58,7 +58,7 @@ const Card = ({ card }: CardProps) => {
           'Link missing'
         )}
       </Info>
-    </>
+    </CardDiv>
   );
 };
 

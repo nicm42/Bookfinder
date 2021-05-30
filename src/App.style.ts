@@ -85,50 +85,6 @@ export const ResultsTotal = styled.div`
 
 export const ResultsCurrent = styled.div``;
 
-export const CardDiv = styled.div`
-  max-width: 90%;
-  width: 50ch;
-  padding: 1em;
-  border: 1px solid #dedede;
-  border-radius: ${shapes.borderRadius};
-  box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
-  text-align: center;
-
-  a {
-    color: ${colours.link};
-    margin-top: auto;
-  }
-
-  a:visited {
-    color: ${colours.linkVisited};
-  }
-
-  a:hover,
-  a:focus,
-  a:active,
-  a:visited:focus,
-  a:visited:hover,
-  a:visited:active {
-    color: ${colours.linkDarker};
-    text-decoration-thickness: 0.125em;
-    text-underline-offset: 0.125em;
-  }
-
-  a:active {
-    outline: 0.1em dashed ${colours.linkDarker};
-    outline-offset: 0.25em;
-  }
-
-  @media ${mediaQuery.medium} {
-    display: flex;
-    gap: 1em;
-
-    a {
-      margin-top: auto;
-    }
-  }
-`;
-
 export const PrevNext = styled.div`
   text-align: center;
 
