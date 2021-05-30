@@ -1,10 +1,10 @@
 import styled from 'styled-components/macro';
-import { colours, mediaQuery } from './constants';
+import { colours, fonts, mediaQuery } from './constants';
 import { button } from './globalStyles';
 
 export const Header = styled.h1`
   padding-bottom: 0.5em;
-  font-size: 2.5rem;
+  font-size: ${fonts.h1};
   text-align: center;
 `;
 
@@ -39,13 +39,13 @@ export const Loading = styled.div`
 `;
 
 export const Error = styled.div`
-  font-size: 1.5rem;
+  font-size: ${fonts.larger};
   color: ${colours.error};
   text-align: center;
 
   @media ${mediaQuery.large} {
     padding-left: 0.5rem;
-    font-size: 2em;
+    font-size: ${fonts.extraLarge};
     text-align: left;
   }
 `;

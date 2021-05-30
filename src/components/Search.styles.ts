@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { colours, focussing, shapes, mediaQuery } from '../constants';
+import { colours, fonts, focussing, shapes, mediaQuery } from '../constants';
 import dropdown from '../images/dropdown.png';
 import { button } from '../globalStyles';
 
@@ -22,7 +22,7 @@ export const Form = styled.form`
 
 export const Label = styled.label`
   padding-bottom: 0.5em;
-  font-size: 1.25em;
+  font-size: ${fonts.large};
   text-align: center;
 `;
 
@@ -30,11 +30,11 @@ export const Select = styled.select`
   padding: 0.5em;
   color: inherit;
   font-family: inherit;
-  font-size: 0.85rem;
+  font-size: ${fonts.small}; /* Otherwise it looks huge */
   line-height: inherit;
   border: 1px solid ${colours.text};
   border-radius: ${shapes.borderRadius};
-  box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
+  box-shadow: ${shapes.boxShadow};
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -61,8 +61,8 @@ export const Input = styled.input`
   padding: 0.5em;
   border: 1px solid ${colours.text};
   border-radius: ${shapes.borderRadius};
-  font-size: 1rem;
-  box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
+  font-size: ${fonts.medium};
+  box-shadow: ${shapes.boxShadow};
 
   &:hover,
   &:focus {

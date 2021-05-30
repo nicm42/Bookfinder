@@ -9,6 +9,15 @@ export const colours = {
   linkVisited: 'hsla(145, 81%, 33%, 1)',
 };
 
+export const fonts = {
+  small: '0.85rem',
+  medium: '1rem',
+  large: '1.25rem',
+  larger: '1,5em',
+  extraLarge: '1.75em',
+  h1: '2.5rem',
+};
+
 export const focussing = {
   border: '0.1em solid hsla(233, 24%, 19%, 1)',
   radius: '0.25em',
@@ -16,17 +25,10 @@ export const focussing = {
 
 export const shapes = {
   borderRadius: '0.25em',
+  boxShadow: '0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25)',
 };
 
-/* *:hover,
-  *:focus {
-    outline: 0.1em solid ${colours.text};
-    border-radius: 0.25em;
-  }
- */
-
 export const mediaQuery = {
-  /* small: '(min-width: 15em)', */
   medium: '(min-width: 25em)',
   large: '(min-width: 60em)',
 };

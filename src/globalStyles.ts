@@ -1,5 +1,5 @@
 import { createGlobalStyle, css } from 'styled-components/macro';
-import { colours, shapes, focussing, mediaQuery } from './constants';
+import { colours, fonts, shapes, focussing, mediaQuery } from './constants';
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
@@ -37,8 +37,8 @@ export const button = css`
   background-color: ${colours.highlight};
   cursor: pointer;
   font-weight: 700;
-  font-size: 0.85rem;
-  box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
+  font-size: ${fonts.small};
+  box-shadow: ${shapes.boxShadow};
 
   &:hover,
   &:focus {

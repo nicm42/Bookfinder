@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { colours, shapes, mediaQuery } from '../constants';
+import { colours, fonts, shapes, mediaQuery } from '../constants';
 
 export const CardDiv = styled.div`
   max-width: 90%;
@@ -8,7 +8,7 @@ export const CardDiv = styled.div`
   border: 1px solid #dedede;
   border-radius: ${shapes.borderRadius};
   background-color: ${colours.darkBackground};
-  box-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.25);
+  box-shadow: ${shapes.boxShadow};
   text-align: center;
 
   a {
@@ -60,7 +60,7 @@ export const Info = styled.div`
 
 export const Title = styled.div`
   padding-top: 0.5em;
-  font-size: 1.25rem;
+  font-size: ${fonts.large};
   font-weight: 700;
   line-height: 1.1;
 
