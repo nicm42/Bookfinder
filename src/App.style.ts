@@ -39,7 +39,7 @@ export const Loading = styled.div`
 `;
 
 export const Error = styled.div`
-  font-size: ${fonts.larger};
+  font-size: ${fonts.extraLarge};
   color: ${colours.error};
   text-align: center;
 

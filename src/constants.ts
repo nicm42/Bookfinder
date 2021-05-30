@@ -13,7 +13,6 @@ export const fonts = {
   small: '0.85rem',
   medium: '1rem',
   large: '1.25rem',
-  larger: '1,5em',
   extraLarge: '1.75em',
   h1: '2.5rem',
 };
