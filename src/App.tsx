@@ -2,19 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Search from './components/Search';
 import Card from './components/Card';
-import {
-  Header,
-  LoadingDiv,
-  Loading,
-  Error,
-  Books,
-  ResultsCount,
-  ResultsTotal,
-  ResultsCurrent,
-  PrevNext,
-  Previous,
-  Next,
-} from './App.style';
+import * as Styled from './App.style';
 import { testCards } from './dummyCardData'; //uncomment to load cards without using API
 
 const App = () => {
@@ -28,8 +16,8 @@ const App = () => {
   const [searchType, setSearchType] = useState<string>('');
 
   const [resultCount, setResultCount] = useState<number>(0);
-  const [isPreviousResults, setIsPreviousResults] = useState<boolean>(false);
-  const [isMoreResults, setIsMoreResults] = useState<boolean>(false);
+  const [isPreviousResults, setIsPreviousResults] = useState<boolean>(true);
+  const [isMoreResults, setIsMoreResults] = useState<boolean>(true);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
   const [resultStart, setResultStart] = useState<number>(-9);
@@ -156,39 +144,51 @@ const App = () => {
 
   return (
     <>
-      <Header>Book Search</Header>
+      <Styled.Header>Book Search</Styled.Header>
       <Search getData={getData} />
-      {errorMessage && <Error data-testid="error">{errorMessage}</Error>}
+      {errorMessage && (
+        <Styled.Error data-testid="error">{errorMessage}</Styled.Error>
+      )}
       {resultCount > 0 && (
-        <ResultsCount data-testid="results">
-          <ResultsTotal>Number of books = {resultCount}</ResultsTotal>
-          <ResultsCurrent>
+        <Styled.ResultsCount data-testid="results">
+          <Styled.ResultsTotal>
+            Number of books = {resultCount}
+          </Styled.ResultsTotal>
+          <Styled.ResultsCurrent>
             Showing books {resultStart}-{resultEnd}
-          </ResultsCurrent>
-        </ResultsCount>
+          </Styled.ResultsCurrent>
+        </Styled.ResultsCount>
       )}
       {!isLoading && (
-        <PrevNext>
-          {isPreviousResults && <Previous onClick={goBack}>Previous</Previous>}
-          {isMoreResults && <Next onClick={searchAgain}>Next</Next>}
-        </PrevNext>
+        <Styled.PrevNext>
+          {isPreviousResults && (
+            <Styled.Previous onClick={goBack}>Previous</Styled.Previous>
+          )}
+          {isMoreResults && (
+            <Styled.Next onClick={searchAgain}>Next</Styled.Next>
+          )}
+        </Styled.PrevNext>
       )}
       {isLoading && (
-        <LoadingDiv>
-          <Loading data-testid="loading" />
-        </LoadingDiv>
+        <Styled.LoadingDiv>
+          <Styled.Loading data-testid="loading" />
+        </Styled.LoadingDiv>
       )}
-      <Books>
+      <Styled.Books>
         {cardData &&
           cardData.map((card) => (
             <Card card={card} key={card.id} data-testid="card" />
           ))}
-      </Books>
+      </Styled.Books>
       {!isLoading && (
-        <PrevNext>
-          {isPreviousResults && <Previous onClick={goBack}>Previous</Previous>}
-          {isMoreResults && <Next onClick={searchAgain}>Next</Next>}
-        </PrevNext>
+        <Styled.PrevNext>
+          {isPreviousResults && (
+            <Styled.Previous onClick={goBack}>Previous</Styled.Previous>
+          )}
+          {isMoreResults && (
+            <Styled.Next onClick={searchAgain}>Next</Styled.Next>
+          )}
+        </Styled.PrevNext>
       )}
     </>
   );

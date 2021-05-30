@@ -1,5 +1,5 @@
 import PropTypes, { string } from 'prop-types';
-import { CardDiv, Cover, Info, Title, Author, Publisher } from './Card.styles';
+import * as Styled from './Card.styles';
 import cover from '../images/generic-book-cover.jpg';
 
 interface CardProps {
@@ -31,34 +31,34 @@ const Card = ({ card }: CardProps) => {
   }
 
   return (
-    <CardDiv data-testid="cardDiv">
-      <Cover
+    <Styled.CardDiv data-testid="cardDiv">
+      <Styled.Cover
         src={card.volumeInfo.imageLinks ? bookCover : cover}
         alt={card.volumeInfo.title ? card.volumeInfo.title : 'Book'}
       />
 
-      <Info>
-        <Title data-testid="title">
+      <Styled.Info>
+        <Styled.Title data-testid="title">
           {card.volumeInfo.title ? card.volumeInfo.title : 'Title missing'}
-        </Title>
-        <Author data-testid="author">
+        </Styled.Title>
+        <Styled.Author data-testid="author">
           {/* if I put the 'by' into the ternary operator with formatted authors
           it adds a random comma for some reason. Giving it its own ternary doesn't */}
           {card.volumeInfo.authors ? 'by ' : ''}
           {card.volumeInfo.authors ? formattedAuthors : 'Author missing'}
-        </Author>
-        <Publisher data-testid="publisher">
+        </Styled.Author>
+        <Styled.Publisher data-testid="publisher">
           {card.volumeInfo.publisher
             ? `Publisher: ${card.volumeInfo.publisher}`
             : 'Publisher missing'}
-        </Publisher>
+        </Styled.Publisher>
         {card.volumeInfo.infoLink ? (
           <a href={card.volumeInfo.infoLink}>More information</a>
         ) : (
           'Link missing'
         )}
-      </Info>
-    </CardDiv>
+      </Styled.Info>
+    </Styled.CardDiv>
   );
 };
 

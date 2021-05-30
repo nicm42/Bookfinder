@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Label, Input, Select, Submit } from './Search.styles';
+import * as Styled from './Search.styles';
 
 interface SearchProps {
   getData: Function;
@@ -20,9 +20,11 @@ const Search = ({ getData }: SearchProps) => {
   };
 
   return (
-    <Form onSubmit={(e) => submitSearch(e)}>
-      <Label htmlFor="search-input">Search for a book by title or author</Label>
-      <Select
+    <Styled.Form onSubmit={(e) => submitSearch(e)}>
+      <Styled.Label htmlFor="search-input">
+        Search for a book by title or author
+      </Styled.Label>
+      <Styled.Select
         required
         data-testid="select"
         onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
@@ -35,8 +37,8 @@ const Search = ({ getData }: SearchProps) => {
         </option>
         <option value="intitle">Title</option>
         <option value="inauthor">Author</option>
-      </Select>
-      <Input
+      </Styled.Select>
+      <Styled.Input
         type="search"
         id="search-input"
         name="search"
@@ -46,8 +48,8 @@ const Search = ({ getData }: SearchProps) => {
           setSearchText(e.target.value)
         }
       />
-      <Submit>Search</Submit>
-    </Form>
+      <Styled.Submit>Search</Styled.Submit>
+    </Styled.Form>
   );
 };
 
