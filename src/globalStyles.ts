@@ -2,8 +2,6 @@ import { createGlobalStyle, css } from 'styled-components/macro';
 import { colours, fonts, shapes, focussing, mediaQuery } from './constants';
 
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-
   *,
   *::before,
   *::after {

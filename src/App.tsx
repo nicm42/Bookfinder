@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import Search from './components/Search';
 import Card from './components/Card';
@@ -10,7 +11,9 @@ const App = () => {
   const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
   const [results, setResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>(
+    'This is an error message'
+  );
 
   const [searchText, setSearchText] = useState<string>('');
   const [searchType, setSearchType] = useState<string>('');
@@ -29,9 +32,9 @@ const App = () => {
   const resultsPerPage: number = 10;
   let startIndex: number;
 
-  useEffect(() => {
-    document.title = 'Book Finder';
-  }, []);
+  /* useEffect(() => {
+    document.title = 'Book Search';
+  }, []); */
 
   useEffect(() => {
     if (pageNumber === 1) {
@@ -144,6 +147,14 @@ const App = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Book Search</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
+      </Helmet>
       <Styled.Header>Book Search</Styled.Header>
       <Search getData={getData} />
       {errorMessage && (
