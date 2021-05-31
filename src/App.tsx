@@ -1,15 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
-//import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import Search from './components/Search';
 import Card from './components/Card';
 import * as Styled from './App.style';
-//import favicon from './images/favicon.ico';
-//import { testCards } from './dummyCardData'; //uncomment to load cards without using API
+import { testCards } from './dummyCardData'; //uncomment to load cards without using API
 
 const App = () => {
-  const [cardData, setCardData] = useState<any[]>([]);
-  //const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
+  //const [cardData, setCardData] = useState<any[]>([]);
+  const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
   const [results, setResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -17,9 +15,8 @@ const App = () => {
   const [searchText, setSearchText] = useState<string>('');
   const [searchType, setSearchType] = useState<string>('');
 
-  //const [resultCount, setResultCount] = useState<number>(0);
-  const [isPreviousResults, setIsPreviousResults] = useState<boolean>(false);
-  const [isMoreResults, setIsMoreResults] = useState<boolean>(false);
+  const [isPreviousResults, setIsPreviousResults] = useState<boolean>(true);
+  const [isMoreResults, setIsMoreResults] = useState<boolean>(true);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
   const [resultStart, setResultStart] = useState<number>(-9);
@@ -181,12 +178,7 @@ const App = () => {
       )}
       {resultEnd > 0 && (
         <Styled.ResultsCount>
-          {/* <Styled.ResultsTotal>
-            Number of books = {resultCount}
-          </Styled.ResultsTotal> */}
-          <Styled.ResultsCurrent>
-            Showing books {resultStart}-{resultEnd}
-          </Styled.ResultsCurrent>
+          Showing books {resultStart}-{resultEnd}
         </Styled.ResultsCount>
       )}
       {!isLoading && (

@@ -76,16 +76,6 @@ export const ResultsCount = styled.div`
   }
 `;
 
-export const ResultsTotal = styled.div`
-  padding-bottom: 0.125em;
-
-  @media ${mediaQuery.large} {
-    padding-bottom: 0.25em;
-  }
-`;
-
-export const ResultsCurrent = styled.div``;
-
 export const PrevNext = styled.div`
   text-align: center;
 
