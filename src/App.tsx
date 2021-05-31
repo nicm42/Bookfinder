@@ -24,8 +24,9 @@ const App = () => {
 
   const [resultStart, setResultStart] = useState<number>(-9);
   const [resultEnd, setResultEnd] = useState<number>(0);
+  const [totalItems, setTotalItems] = useState<number>(0);
 
-  const didMountRef = useRef(false);
+  const didMountRef = useRef<boolean>(false);
 
   /* Google Books API automatically returns 10 books 
     but since I'm using that 10 all over the place we need a constant
@@ -49,18 +50,19 @@ const App = () => {
     }
   }, [pageNumber]);
 
-  /* useEffect(() => {
-    setResultEnd(resultStart + cardData.length);
-  }, [cardData]); */
-
   const searchAgain = () => {
     //If we already have this data, then just show that
     startIndex = resultStart + resultsPerPage - 2;
     if (results.length >= pageNumber + 1) {
-      setCardData(results[pageNumber]);
       window.scrollTo({ top: 0 }); //scroll back up, otherwise it's not clear anything has changed
+      setCardData(results[pageNumber]);
+      if (resultEnd + resultsPerPage > totalItems) {
+        setIsMoreResults(false);
+      }
       setResultStart((previousValue) => previousValue + resultsPerPage);
-      setResultEnd((previousValue) => previousValue + resultsPerPage);
+      setResultEnd(
+        (previousValue) => previousValue + results[pageNumber].length
+      );
     }
     setPageNumber((previousValue) => previousValue + 1);
     //Otherwise get it from the API
@@ -72,11 +74,13 @@ const App = () => {
   const goBack = () => {
     window.scrollTo({ top: 0 }); //scroll back up, otherwise it's not clear anything has changed
     startIndex = resultStart - resultsPerPage - 2;
-    console.log(startIndex);
     setCardData(results[pageNumber - 2]);
     setIsMoreResults(true);
     setPageNumber((previousValue) => previousValue - 1);
     setResultStart((previousValue) => previousValue - resultsPerPage);
+    /* setResultEnd(
+      (previousValue) => previousValue - results[pageNumber - 2].length
+    ); */
     //Take the last set of results and round it down to the nearest 10
     //But if it's 10, 20, 30 etc then just need to take 10 off it
     if (resultEnd % 10 === 0) {
@@ -97,6 +101,7 @@ const App = () => {
       setPageNumber(1);
       setIsMoreResults(false);
       setIsPreviousResults(false);
+      setTotalItems(0);
       //setResultCount(0);
     } else {
       setIsPreviousResults(true);
@@ -123,7 +128,9 @@ const App = () => {
         timeout: 2,
       }); */
 
-      if (response.data.totalItems === 0) {
+      setTotalItems(response.data.totalItems);
+
+      if (!response.data.items) {
         if (type === 'intitle') {
           setErrorMessage(`No books were found with the title ${search} :(`);
         }
@@ -140,16 +147,16 @@ const App = () => {
         if (response.data.totalItems > resultsPerPage) {
           //Save these results so we can use them later if we need to go back to them
           if (resultEnd + resultsPerPage < response.data.totalItems) {
-            //setResultEnd((previousValue) => previousValue + resultsPerPage);
             setIsMoreResults(true);
           } else {
-            //setResultEnd(response.data.totalItems);
             setIsMoreResults(false);
           }
         } else {
           setIsMoreResults(false);
-          //setResultEnd(response.data.totalItems);
         }
+        setResultEnd(
+          (previousValue) => previousValue + response.data.items.length
+        );
       }
     } catch (error) {
       console.log(error);
@@ -172,8 +179,8 @@ const App = () => {
       {errorMessage && (
         <Styled.Error data-testid="error">{errorMessage}</Styled.Error>
       )}
-      {resultEnd && (
-        <Styled.ResultsCount data-testid="results">
+      {resultEnd > 0 && (
+        <Styled.ResultsCount>
           {/* <Styled.ResultsTotal>
             Number of books = {resultCount}
           </Styled.ResultsTotal> */}

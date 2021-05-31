@@ -297,7 +297,6 @@ describe('App tests with card data with more than 10 cards', () => {
         'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=9&maxResults=10'
       )
     );
-    expect(results).toBeInTheDocument();
     books = await waitFor(() => screen.getByText('Showing books 11-20'));
     expect(books).toBeInTheDocument();
     let cardTitle11 = await waitFor(() => screen.getByText('Title 11'));
@@ -317,10 +316,9 @@ describe('App tests with card data with more than 10 cards', () => {
         'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=19&maxResults=10'
       )
     );
-    expect(results).toBeInTheDocument();
     books = await waitFor(() => screen.getByText('Showing books 21-24'));
     expect(books).toBeInTheDocument();
-    const cardTitle21 = await waitFor(() => screen.getByText('Title 21'));
+    let cardTitle21 = await waitFor(() => screen.getByText('Title 21'));
     expect(cardTitle21).toBeInTheDocument();
     previous = await waitFor(() =>
       screen.getAllByRole('button', { name: /Previous/i })
@@ -332,7 +330,6 @@ describe('App tests with card data with more than 10 cards', () => {
     expect(next).toHaveLength(0);
 
     fireEvent.click(previous[0]);
-    expect(results).toBeInTheDocument();
     books = await waitFor(() => screen.getByText('Showing books 11-20'));
     cardTitle1 = await waitFor(() => screen.getByText('Title 11'));
     expect(cardTitle1).toBeInTheDocument();
@@ -347,7 +344,6 @@ describe('App tests with card data with more than 10 cards', () => {
     expect(next).toHaveLength(2);
 
     fireEvent.click(previous[0]);
-    expect(results).toBeInTheDocument();
     books = await waitFor(() => screen.getByText('Showing books 1-10'));
     cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
     expect(cardTitle1).toBeInTheDocument();
@@ -362,11 +358,24 @@ describe('App tests with card data with more than 10 cards', () => {
     expect(next).toHaveLength(2);
 
     fireEvent.click(next[0]);
-    expect(results).toBeInTheDocument();
     books = await waitFor(() => screen.getByText('Showing books 11-20'));
     expect(books).toBeInTheDocument();
     cardTitle11 = await waitFor(() => screen.getByText('Title 11'));
     expect(cardTitle11).toBeInTheDocument();
+
+    fireEvent.click(next[0]);
+    books = await waitFor(() => screen.getByText('Showing books 21-24'));
+    expect(books).toBeInTheDocument();
+    cardTitle21 = await waitFor(() => screen.getByText('Title 21'));
+    expect(cardTitle21).toBeInTheDocument();
+    previous = await waitFor(() =>
+      screen.getAllByRole('button', { name: /Previous/i })
+    );
+    expect(previous).toHaveLength(2);
+    next = (await waitFor(() =>
+      screen.queryAllByRole('button', { name: /Next/i })
+    )) as HTMLElement[];
+    expect(next).toHaveLength(0);
   });
 
   it('tests more than 10 cards followed by a new search', async () => {
