@@ -17,7 +17,7 @@ const App = () => {
   const [searchText, setSearchText] = useState<string>('');
   const [searchType, setSearchType] = useState<string>('');
 
-  const [resultCount, setResultCount] = useState<number>(0);
+  //const [resultCount, setResultCount] = useState<number>(0);
   const [isPreviousResults, setIsPreviousResults] = useState<boolean>(false);
   const [isMoreResults, setIsMoreResults] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(0);
@@ -48,6 +48,10 @@ const App = () => {
       didMountRef.current = true;
     }
   }, [pageNumber]);
+
+  /* useEffect(() => {
+    setResultEnd(resultStart + cardData.length);
+  }, [cardData]); */
 
   const searchAgain = () => {
     //If we already have this data, then just show that
@@ -93,7 +97,7 @@ const App = () => {
       setPageNumber(1);
       setIsMoreResults(false);
       setIsPreviousResults(false);
-      setResultCount(0);
+      //setResultCount(0);
     } else {
       setIsPreviousResults(true);
     }
@@ -129,22 +133,22 @@ const App = () => {
       } else {
         //There is data!
         setCardData(response.data.items);
-        setResultCount(response.data.totalItems);
+        //setResultCount(response.data.totalItems);
         setResultStart((previousValue) => previousValue + resultsPerPage);
         //Save these results so we can use them later if we need to go back to them
         setResults((arr) => [...arr, response.data.items]);
         if (response.data.totalItems > resultsPerPage) {
           //Save these results so we can use them later if we need to go back to them
           if (resultEnd + resultsPerPage < response.data.totalItems) {
-            setResultEnd((previousValue) => previousValue + resultsPerPage);
+            //setResultEnd((previousValue) => previousValue + resultsPerPage);
             setIsMoreResults(true);
           } else {
-            setResultEnd(response.data.totalItems);
+            //setResultEnd(response.data.totalItems);
             setIsMoreResults(false);
           }
         } else {
           setIsMoreResults(false);
-          setResultEnd(response.data.totalItems);
+          //setResultEnd(response.data.totalItems);
         }
       }
     } catch (error) {
@@ -168,11 +172,11 @@ const App = () => {
       {errorMessage && (
         <Styled.Error data-testid="error">{errorMessage}</Styled.Error>
       )}
-      {resultCount > 0 && (
+      {resultEnd && (
         <Styled.ResultsCount data-testid="results">
-          <Styled.ResultsTotal>
+          {/* <Styled.ResultsTotal>
             Number of books = {resultCount}
-          </Styled.ResultsTotal>
+          </Styled.ResultsTotal> */}
           <Styled.ResultsCurrent>
             Showing books {resultStart}-{resultEnd}
           </Styled.ResultsCurrent>

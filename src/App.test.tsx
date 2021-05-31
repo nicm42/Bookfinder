@@ -95,10 +95,6 @@ describe('App tests with card data', () => {
         'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0&maxResults=10'
       )
     );
-    const results = await waitFor(() =>
-      screen.getByText('Number of books = 4')
-    );
-    expect(results).toBeInTheDocument();
     const books = await waitFor(() => screen.getByText('Showing books 1-4'));
     expect(books).toBeInTheDocument();
     const moreResults = await waitFor(() =>
@@ -152,10 +148,6 @@ describe('App tests with card data', () => {
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
 
-    const results = await waitFor(() =>
-      screen.queryByText('Number of books', { exact: false })
-    );
-    expect(results).not.toBeInTheDocument();
     const moreResults = await waitFor(() =>
       screen.queryAllByRole('button', { name: /Next/i })
     );
@@ -185,10 +177,6 @@ describe('App tests with card data', () => {
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
 
-    const results = await waitFor(() =>
-      screen.queryByText('Number of books', { exact: false })
-    );
-    expect(results).not.toBeInTheDocument();
     const moreResults = await waitFor(() =>
       screen.queryAllByRole('button', { name: /Next/i })
     );
@@ -218,10 +206,6 @@ describe('App tests with card data', () => {
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
 
-    const results = await waitFor(() =>
-      screen.queryByText('Number of books', { exact: false })
-    );
-    expect(results).not.toBeInTheDocument();
     const moreResults = await waitFor(() =>
       screen.queryAllByRole('button', { name: /Next/i })
     );
@@ -294,10 +278,6 @@ describe('App tests with card data with more than 10 cards', () => {
       )
     );
 
-    const results = await waitFor(() =>
-      screen.getByText('Number of books = 24')
-    );
-    expect(results).toBeInTheDocument();
     let books = await waitFor(() => screen.getByText('Showing books 1-10'));
     expect(books).toBeInTheDocument();
     let cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
@@ -407,8 +387,6 @@ describe('App tests with card data with more than 10 cards', () => {
         'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0&maxResults=10'
       )
     );
-    let results = await waitFor(() => screen.getByText('Number of books = 24'));
-    expect(results).toBeInTheDocument();
     let books = await waitFor(() => screen.getByText('Showing books 1-10'));
     expect(books).toBeInTheDocument();
     const moreResults = await waitFor(() =>
@@ -432,8 +410,6 @@ describe('App tests with card data with more than 10 cards', () => {
         'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0&maxResults=10'
       )
     );
-    results = await waitFor(() => screen.getByText('Number of books = 4'));
-    expect(results).toBeInTheDocument();
     books = await waitFor(() => screen.getByText('Showing books 1-4'));
     expect(books).toBeInTheDocument();
   });
