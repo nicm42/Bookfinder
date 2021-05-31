@@ -275,7 +275,7 @@ describe('App tests with card data with more than 10 cards', () => {
 
   afterEach(cleanup);
 
-  it.only('tests more than 10 cards', async () => {
+  it('tests more than 10 cards', async () => {
     mockedAxiosMany1.get.mockResolvedValueOnce(mockDataMany1);
     mockedAxiosMany2.get.mockResolvedValueOnce(mockDataMany2);
     mockedAxiosMany3.get.mockResolvedValueOnce(mockDataMany3);
@@ -382,11 +382,6 @@ describe('App tests with card data with more than 10 cards', () => {
     expect(next).toHaveLength(2);
 
     fireEvent.click(next[0]);
-    await waitFor(() =>
-      expect(mockedAxiosMany2.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=9&maxResults=10'
-      )
-    );
     expect(results).toBeInTheDocument();
     books = await waitFor(() => screen.getByText('Showing books 11-20'));
     expect(books).toBeInTheDocument();

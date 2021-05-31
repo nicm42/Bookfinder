@@ -1,31 +1,31 @@
-import { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
+import { useState, useEffect, useRef } from 'react';
+//import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import Search from './components/Search';
 import Card from './components/Card';
 import * as Styled from './App.style';
-import favicon from './images/favicon.ico';
-import { testCards } from './dummyCardData'; //uncomment to load cards without using API
+//import favicon from './images/favicon.ico';
+//import { testCards } from './dummyCardData'; //uncomment to load cards without using API
 
 const App = () => {
-  //const [cardData, setCardData] = useState<any[]>([]);
-  const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
+  const [cardData, setCardData] = useState<any[]>([]);
+  //const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
   const [results, setResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>(
-    'This is an error message'
-  );
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const [searchText, setSearchText] = useState<string>('');
   const [searchType, setSearchType] = useState<string>('');
 
   const [resultCount, setResultCount] = useState<number>(0);
-  const [isPreviousResults, setIsPreviousResults] = useState<boolean>(true);
-  const [isMoreResults, setIsMoreResults] = useState<boolean>(true);
+  const [isPreviousResults, setIsPreviousResults] = useState<boolean>(false);
+  const [isMoreResults, setIsMoreResults] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
   const [resultStart, setResultStart] = useState<number>(-9);
   const [resultEnd, setResultEnd] = useState<number>(0);
+
+  const didMountRef = useRef(false);
 
   /* Google Books API automatically returns 10 books 
     but since I'm using that 10 all over the place we need a constant
@@ -38,16 +38,31 @@ const App = () => {
   }, []); */
 
   useEffect(() => {
-    if (pageNumber === 1) {
-      setIsPreviousResults(false);
+    if (didMountRef.current) {
+      if (pageNumber === 1) {
+        setIsPreviousResults(false);
+      } else {
+        setIsPreviousResults(true);
+      }
+    } else {
+      didMountRef.current = true;
     }
   }, [pageNumber]);
 
   const searchAgain = () => {
-    setPageNumber((previousValue) => previousValue + 1);
+    //If we already have this data, then just show that
     startIndex = resultStart + resultsPerPage - 2;
-    console.log(startIndex);
-    getData(searchText, searchType, startIndex);
+    if (results.length >= pageNumber + 1) {
+      setCardData(results[pageNumber]);
+      window.scrollTo({ top: 0 }); //scroll back up, otherwise it's not clear anything has changed
+      setResultStart((previousValue) => previousValue + resultsPerPage);
+      setResultEnd((previousValue) => previousValue + resultsPerPage);
+    }
+    setPageNumber((previousValue) => previousValue + 1);
+    //Otherwise get it from the API
+    if (results.length < pageNumber + 1) {
+      getData(searchText, searchType, startIndex);
+    }
   };
 
   const goBack = () => {
@@ -148,15 +163,6 @@ const App = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Book Search</title>
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
-        <link rel="icon" type="image/ico" href={favicon} />
-      </Helmet>
       <Styled.Header>Book Search</Styled.Header>
       <Search getData={getData} />
       {errorMessage && (
