@@ -1,5 +1,5 @@
 import { createGlobalStyle, css } from 'styled-components/macro';
-import { colours, fonts, shapes, focussing, mediaQuery } from './constants';
+import { colours, shapes, focussing, mediaQuery } from './constants';
 
 const GlobalStyle = createGlobalStyle`
   *,
@@ -30,12 +30,14 @@ export default GlobalStyle;
 
 export const button = css`
   border: none;
-  padding: 0.5em 1.5em;
+  padding: 0.25em 1em;
+  border: ${shapes.border};
   border-radius: ${shapes.borderRadius};
-  background-color: ${colours.highlight};
+  background-color: ${colours.button};
   cursor: pointer;
-  font-weight: 700;
-  font-size: ${fonts.small};
+  font-family: inherit;
+  font-weight: 600;
+  font-size: inherit;
   box-shadow: ${shapes.boxShadow};
 
   &:hover,

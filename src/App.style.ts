@@ -19,7 +19,7 @@ export const Loading = styled.div`
   width: 2.5em;
   height: 2.5em;
   border-radius: 50%;
-  background: conic-gradient(#0000 10%, ${colours.highlight});
+  background: conic-gradient(#0000 10%, ${colours.loading});
   -webkit-mask: radial-gradient(
     farthest-side,
     #0000 calc(100% - 0.33em),

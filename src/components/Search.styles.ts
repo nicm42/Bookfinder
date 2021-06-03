@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { colours, fonts, focussing, shapes, mediaQuery } from '../constants';
+import { fonts, focussing, shapes, mediaQuery } from '../constants';
 import dropdown from '../images/dropdown.png';
 import { button } from '../globalStyles';
 
@@ -32,7 +32,7 @@ export const Select = styled.select`
   font-family: inherit;
   font-size: ${fonts.small}; /* Otherwise it looks huge */
   line-height: inherit;
-  border: 1px solid ${colours.text};
+  border: ${shapes.border};
   border-radius: ${shapes.borderRadius};
   box-shadow: ${shapes.boxShadow};
   -webkit-appearance: none;
@@ -59,7 +59,7 @@ export const Select = styled.select`
 export const Input = styled.input`
   max-width: 25ch; /* So it doesn't have more width than is available on small screens */
   padding: 0.5em;
-  border: 1px solid ${colours.text};
+  border: ${shapes.border};
   border-radius: ${shapes.borderRadius};
   font-size: ${fonts.medium};
   box-shadow: ${shapes.boxShadow};
