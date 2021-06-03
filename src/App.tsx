@@ -15,6 +15,7 @@ const App = () => {
   const [searchText, setSearchText] = useState<string>('');
   const [searchType, setSearchType] = useState<string>('');
 
+  const [showButtons, setShowButtons] = useState<boolean>(false);
   const [isPreviousResults, setIsPreviousResults] = useState<boolean>(false);
   const [isMoreResults, setIsMoreResults] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(0);
@@ -108,6 +109,7 @@ const App = () => {
     setSearchText(search);
     setSearchType(type);
 
+    setShowButtons(false);
     setIsLoading(true);
     setCardData([]); //in case this is another search, clear the results from the previous search
     setErrorMessage(''); //in case this is another search, clear the error message
@@ -142,6 +144,7 @@ const App = () => {
         //Save these results so we can use them later if we need to go back to them
         setResults((arr) => [...arr, response.data.items]);
         if (response.data.totalItems > resultsPerPage) {
+          setShowButtons(true);
           //Save these results so we can use them later if we need to go back to them
           if (resultEnd + resultsPerPage < response.data.totalItems) {
             setIsMoreResults(true);
@@ -181,14 +184,23 @@ const App = () => {
           Showing books {resultStart}-{resultEnd}
         </Styled.ResultsCount>
       )}
-      {!isLoading && (
+      {showButtons && (
         <Styled.PrevNext>
-          {isPreviousResults && (
-            <Styled.Previous onClick={goBack}>Previous</Styled.Previous>
-          )}
-          {isMoreResults && (
-            <Styled.Next onClick={searchAgain}>Next</Styled.Next>
-          )}
+          <Styled.Previous
+            disabled={!isPreviousResults}
+            onClick={goBack}
+            isPreviousResults={isPreviousResults}
+          >
+            Previous
+          </Styled.Previous>
+
+          <Styled.Next
+            disabled={!isMoreResults}
+            onClick={searchAgain}
+            isMoreResults={isMoreResults}
+          >
+            Next
+          </Styled.Next>
         </Styled.PrevNext>
       )}
       {isLoading && (
@@ -202,14 +214,23 @@ const App = () => {
             <Card card={card} key={card.id} data-testid="card" />
           ))}
       </Styled.Books>
-      {!isLoading && (
+      {showButtons && (
         <Styled.PrevNext>
-          {isPreviousResults && (
-            <Styled.Previous onClick={goBack}>Previous</Styled.Previous>
-          )}
-          {isMoreResults && (
-            <Styled.Next onClick={searchAgain}>Next</Styled.Next>
-          )}
+          <Styled.Previous
+            disabled={!isPreviousResults}
+            onClick={goBack}
+            isPreviousResults={isPreviousResults}
+          >
+            Previous
+          </Styled.Previous>
+
+          <Styled.Next
+            disabled={!isMoreResults}
+            onClick={searchAgain}
+            isMoreResults={isMoreResults}
+          >
+            Next
+          </Styled.Next>
         </Styled.PrevNext>
       )}
     </>

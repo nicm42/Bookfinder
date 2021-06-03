@@ -285,11 +285,13 @@ describe('App tests with card data with more than 10 cards', () => {
     let previous = await waitFor(() =>
       screen.queryAllByRole('button', { name: /Previous/i })
     );
-    expect(previous).toHaveLength(0);
+    expect(previous[0]).toBeDisabled();
+    expect(previous[1]).toBeDisabled();
     let next = await waitFor(() =>
       screen.getAllByRole('button', { name: /Next/i })
     );
-    expect(next).toHaveLength(2);
+    expect(next[0]).not.toBeDisabled();
+    expect(next[1]).not.toBeDisabled();
 
     fireEvent.click(next[0]);
     await waitFor(() =>
@@ -304,11 +306,13 @@ describe('App tests with card data with more than 10 cards', () => {
     previous = await waitFor(() =>
       screen.getAllByRole('button', { name: /Previous/i })
     );
-    expect(previous).toHaveLength(2);
+    expect(previous[0]).not.toBeDisabled();
+    expect(previous[1]).not.toBeDisabled();
     next = (await waitFor(() =>
       screen.queryAllByRole('button', { name: /Next/i })
     )) as HTMLElement[];
-    expect(next).toHaveLength(2);
+    expect(next[0]).not.toBeDisabled();
+    expect(next[1]).not.toBeDisabled();
 
     fireEvent.click(next[0]);
     await waitFor(() =>
@@ -323,11 +327,13 @@ describe('App tests with card data with more than 10 cards', () => {
     previous = await waitFor(() =>
       screen.getAllByRole('button', { name: /Previous/i })
     );
-    expect(previous).toHaveLength(2);
+    expect(previous[0]).not.toBeDisabled();
+    expect(previous[1]).not.toBeDisabled();
     next = (await waitFor(() =>
       screen.queryAllByRole('button', { name: /Next/i })
     )) as HTMLElement[];
-    expect(next).toHaveLength(0);
+    expect(next[0]).toBeDisabled();
+    expect(next[1]).toBeDisabled();
 
     fireEvent.click(previous[0]);
     books = await waitFor(() => screen.getByText('Showing books 11-20'));
@@ -337,11 +343,13 @@ describe('App tests with card data with more than 10 cards', () => {
     previous = await waitFor(() =>
       screen.getAllByRole('button', { name: /Previous/i })
     );
-    expect(previous).toHaveLength(2);
+    expect(previous[0]).not.toBeDisabled();
+    expect(previous[1]).not.toBeDisabled();
     next = await waitFor(() =>
       screen.getAllByRole('button', { name: /Next/i })
     );
-    expect(next).toHaveLength(2);
+    expect(next[0]).not.toBeDisabled();
+    expect(next[1]).not.toBeDisabled();
 
     fireEvent.click(previous[0]);
     books = await waitFor(() => screen.getByText('Showing books 1-10'));
@@ -351,11 +359,13 @@ describe('App tests with card data with more than 10 cards', () => {
     previous = await waitFor(() =>
       screen.queryAllByRole('button', { name: /Previous/i })
     );
-    expect(previous).toHaveLength(0);
+    expect(previous[0]).toBeDisabled();
+    expect(previous[1]).toBeDisabled();
     next = await waitFor(() =>
       screen.getAllByRole('button', { name: /Next/i })
     );
-    expect(next).toHaveLength(2);
+    expect(next[0]).not.toBeDisabled();
+    expect(next[1]).not.toBeDisabled();
 
     fireEvent.click(next[0]);
     books = await waitFor(() => screen.getByText('Showing books 11-20'));
@@ -371,11 +381,13 @@ describe('App tests with card data with more than 10 cards', () => {
     previous = await waitFor(() =>
       screen.getAllByRole('button', { name: /Previous/i })
     );
-    expect(previous).toHaveLength(2);
+    expect(previous[0]).not.toBeDisabled();
+    expect(previous[1]).not.toBeDisabled();
     next = (await waitFor(() =>
       screen.queryAllByRole('button', { name: /Next/i })
     )) as HTMLElement[];
-    expect(next).toHaveLength(0);
+    expect(next[0]).toBeDisabled();
+    expect(next[1]).toBeDisabled();
   });
 
   it('tests more than 10 cards followed by a new search', async () => {

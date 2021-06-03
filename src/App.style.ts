@@ -84,12 +84,43 @@ export const PrevNext = styled.div`
   }
 `;
 
-export const Previous = styled.button`
-  ${button}
+export const Previous = styled.button<{ isPreviousResults: boolean }>`
+  ${button};
   margin: 0.5em;
+  background-color: ${({ isPreviousResults }) =>
+    isPreviousResults ? `${colours.button}` : `${colours.buttonLighter}`};
+  color: ${({ isPreviousResults }) =>
+    isPreviousResults ? `${colours.text}` : `${colours.disabled}`};
+  cursor: ${({ isPreviousResults }) =>
+    isPreviousResults ? `pointer` : `not-allowed`};
+
+  &:hover,
+  &:focus {
+    background-color: ${({ isPreviousResults }) =>
+      isPreviousResults ? `${colours.buttonDarker}` : `${colours.button}`};
+  }
+
+  &:active {
+    top: ${({ isPreviousResults }) => (isPreviousResults ? `0.125em` : `0`)};
+  }
 `;
 
-export const Next = styled.button`
-  ${button}
+export const Next = styled.button<{ isMoreResults: boolean }>`
+  ${button};
   margin: 0.5em;
+  background-color: ${({ isMoreResults }) =>
+    isMoreResults ? `${colours.button}` : `${colours.buttonLighter}`};
+  color: ${({ isMoreResults }) =>
+    isMoreResults ? `${colours.text}` : `${colours.disabled}`};
+  cursor: ${({ isMoreResults }) => (isMoreResults ? `pointer` : `not-allowed`)};
+
+  &:hover,
+  &:focus {
+    background-color: ${({ isMoreResults }) =>
+      isMoreResults ? `${colours.buttonDarker}` : `${colours.button}`};
+  }
+
+  &:active {
+    top: ${({ isMoreResults }) => (isMoreResults ? `0.125em` : `0`)};
+  }
 `;

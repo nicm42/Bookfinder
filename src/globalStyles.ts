@@ -42,7 +42,7 @@ export const button = css`
 
   &:hover,
   &:focus {
-    background-color: hsla(210, 77%, 73%, 1);
+    background-color: ${colours.buttonDarker};
     outline: ${focussing.border};
     border-radius: ${focussing.radius};
   }
