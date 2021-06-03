@@ -42,7 +42,7 @@ describe('Search tests', () => {
     fireEvent.change(inputElement, { target: { value: 'test' } });
     expect(inputElement.value).toBe('test');
 
-    const dropDown = screen.getByTestId('select') as HTMLInputElement;
+    const dropDown = screen.getByTestId('select') as HTMLSelectElement;
     fireEvent.change(dropDown, { target: { value: 'intitle' } });
     expect(dropDown.value).toBe('intitle');
 
