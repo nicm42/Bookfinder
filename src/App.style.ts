@@ -111,6 +111,20 @@ export const Previous = styled.button<{ isPreviousResults: boolean }>`
 
 export const Next = styled.button<{ isMoreResults: boolean }>`
   ${button};
-  margin: 0.5em;
   ${Previous};
+  margin: 0.5em;
+  ${(props) =>
+    props.disabled &&
+    css`
+      background-color: ${colours.buttonLighter};
+      color: ${colours.disabled};
+      cursor: not-allowed;
+      &:hover,
+      &:focus {
+        background-color: ${colours.buttonLighter};
+      }
+      &:active {
+        top: 0;
+      }
+    `}
 `;
