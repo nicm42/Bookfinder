@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled, { css, keyframes } from 'styled-components/macro';
 import { colours, fonts, mediaQuery } from './constants';
 import { button } from './globalStyles';
 
@@ -14,6 +14,12 @@ export const LoadingDiv = styled.div`
   margin-top: 2em;
 `;
 
+const spinner = keyframes`
+    to {
+      transform: rotate(1turn);
+    }
+`;
+
 export const Loading = styled.div`
   /* Spinner from https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
   width: 2.5em;
@@ -25,17 +31,17 @@ export const Loading = styled.div`
     #0000 calc(100% - 0.33em),
     #000 0
   );
-  animation: spinner 1s infinite linear;
+  animation: ${spinner} 1s infinite linear;
 
   @media (prefers-reduced-motion) {
     animation: none;
   }
 
-  @keyframes spinner {
+  /*   @keyframes spinner {
     to {
       transform: rotate(1turn);
     }
-  }
+  } */
 `;
 
 export const Error = styled.div`
@@ -87,40 +93,24 @@ export const PrevNext = styled.div`
 export const Previous = styled.button<{ isPreviousResults: boolean }>`
   ${button};
   margin: 0.5em;
-  background-color: ${({ isPreviousResults }) =>
-    isPreviousResults ? `${colours.button}` : `${colours.buttonLighter}`};
-  color: ${({ isPreviousResults }) =>
-    isPreviousResults ? `${colours.text}` : `${colours.disabled}`};
-  cursor: ${({ isPreviousResults }) =>
-    isPreviousResults ? `pointer` : `not-allowed`};
-
-  &:hover,
-  &:focus {
-    background-color: ${({ isPreviousResults }) =>
-      isPreviousResults ? `${colours.buttonDarker}` : `${colours.button}`};
-  }
-
-  &:active {
-    top: ${({ isPreviousResults }) => (isPreviousResults ? `0.125em` : `0`)};
-  }
+  ${(props) =>
+    props.disabled &&
+    css`
+      background-color: ${colours.buttonLighter};
+      color: ${colours.disabled};
+      cursor: not-allowed;
+      &:hover,
+      &:focus {
+        background-color: ${colours.buttonLighter};
+      }
+      &:active {
+        top: 0;
+      }
+    `}
 `;
 
 export const Next = styled.button<{ isMoreResults: boolean }>`
   ${button};
   margin: 0.5em;
-  background-color: ${({ isMoreResults }) =>
-    isMoreResults ? `${colours.button}` : `${colours.buttonLighter}`};
-  color: ${({ isMoreResults }) =>
-    isMoreResults ? `${colours.text}` : `${colours.disabled}`};
-  cursor: ${({ isMoreResults }) => (isMoreResults ? `pointer` : `not-allowed`)};
-
-  &:hover,
-  &:focus {
-    background-color: ${({ isMoreResults }) =>
-      isMoreResults ? `${colours.buttonDarker}` : `${colours.button}`};
-  }
-
-  &:active {
-    top: ${({ isMoreResults }) => (isMoreResults ? `0.125em` : `0`)};
-  }
+  ${Previous};
 `;
