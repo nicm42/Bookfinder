@@ -2,6 +2,30 @@ import styled from 'styled-components/macro';
 import { fonts, focussing, shapes, mediaQuery } from '../constants';
 import dropdown from '../images/dropdown.png';
 import { button } from '../globalStyles';
+import library from '../images/library.jpg'; //Photo by 🇸🇮 Janko Ferlič on Unsplash
+
+export const SearchDiv = styled.div`
+  /* padding: 0.5em;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.8)
+    ),
+    url(${library});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const BookImage = styled.img`
+  display: none;
+
+  @media ${mediaQuery.large} {
+    display: block;
+    max-height: max-content;
+  }
+`;
 
 export const Form = styled.form`
   display: inline-flex;
@@ -23,6 +47,7 @@ export const Form = styled.form`
 export const Label = styled.label`
   padding-bottom: 0.5em;
   font-size: ${fonts.large};
+  font-weight: 500;
   text-align: center;
 `;
 
