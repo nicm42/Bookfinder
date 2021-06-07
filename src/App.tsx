@@ -32,10 +32,6 @@ const App = () => {
   const resultsPerPage: number = 10;
   let startIndex: number;
 
-  /* useEffect(() => {
-    document.title = 'Book Search';
-  }, []); */
-
   useEffect(() => {
     if (didMountRef.current) {
       if (pageNumber === 1) {
@@ -160,7 +156,7 @@ const App = () => {
       }
     } catch (error) {
       console.log(error);
-      if (error.message === 'timeout of 2ms exceeded') {
+      if (error.message.replace(/ .*/, '') === 'timeout') {
         setErrorMessage('The request timed out. Please try again later');
       } else {
         setErrorMessage(
