@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as Styled from './Search.styles';
-import books from '../images/books.jpg'; //Photo by Jonas Jacobsson on Unsplash
 
 interface SearchProps {
   getData: Function;
@@ -39,7 +38,6 @@ const Search = ({ getData }: SearchProps) => {
         <Styled.Input type="search" id="search-input" name="search" required />
         <Styled.Submit>Search</Styled.Submit>
       </Styled.Form>
-      <Styled.BookImage width="640" height="426" src={books} alt="" />
     </Styled.SearchDiv>
   );
 };

@@ -2,32 +2,18 @@ import styled from 'styled-components/macro';
 import { fonts, focussing, shapes, mediaQuery } from '../constants';
 import dropdown from '../images/dropdown.png';
 import { button } from '../globalStyles';
-import library from '../images/library.jpg'; //Photo by 🇸🇮 Janko Ferlič on Unsplash
+import books from '../images/books.jpg'; //Photo by Jonas Jacobsson on Unsplash
 
 export const SearchDiv = styled.div`
-  /* padding: 0.5em;
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.8),
-      rgba(255, 255, 255, 0.8)
-    ),
-    url(${library});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; */
-  display: flex;
-  justify-content: space-between;
-`;
-
-export const BookImage = styled.img`
-  display: none;
-
   @media ${mediaQuery.large} {
-    display: block;
-    max-height: max-content;
+    background-image: url(${books});
+    background-repeat: no-repeat;
+    background-position: 100%;
   }
 `;
 
 export const Form = styled.form`
+  position: relative;
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
