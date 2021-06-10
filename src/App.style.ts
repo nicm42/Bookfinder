@@ -22,8 +22,8 @@ const spinner = keyframes`
 
 export const Loading = styled.div`
   /* Spinner from https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
-  width: 2.5em;
-  height: 2.5em;
+  width: 5em;
+  height: 5em;
   border-radius: 50%;
   background: conic-gradient(#0000 10%, ${colours.loading});
   -webkit-mask: radial-gradient(
