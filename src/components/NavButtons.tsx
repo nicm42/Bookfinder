@@ -1,4 +1,4 @@
-import * as Styled from '../App.style';
+import * as Styled from './NavButtons.styles';
 
 interface NavButtonProps {
   isPreviousResults: boolean;
