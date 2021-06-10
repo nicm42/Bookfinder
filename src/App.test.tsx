@@ -71,7 +71,7 @@ describe('App tests with card data', () => {
   it('tests when axios works for title', async () => {
     mockedAxios.get.mockResolvedValueOnce(mockData);
     render(<App />);
-    const loadingDiv = screen.queryByTestId('Loading');
+    let loadingDiv = screen.queryByTestId('loading');
     expect(loadingDiv).not.toBeInTheDocument();
     const errorDiv = screen.queryByTestId('error');
     expect(errorDiv).not.toBeInTheDocument();
@@ -89,12 +89,16 @@ describe('App tests with card data', () => {
     const submitButton = screen.getByRole('button', { name: /search/i });
     fireEvent.click(submitButton);
 
+    loadingDiv = screen.queryByTestId('loading');
+    expect(loadingDiv).toBeInTheDocument();
     await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(1));
     await waitFor(() =>
       expect(mockedAxios.get).toHaveBeenCalledWith(
         'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0&maxResults=10'
       )
     );
+    loadingDiv = await waitFor(() => screen.queryByTestId('loading'));
+    expect(loadingDiv).not.toBeInTheDocument();
     const books = await waitFor(() => screen.getByText('Showing books 1-4'));
     expect(books).toBeInTheDocument();
     const moreResults = await waitFor(() =>
@@ -107,7 +111,7 @@ describe('App tests with card data', () => {
     const cardTitle2 = await waitFor(() => screen.getByText('Title 2'));
     expect(cardTitle1).toBeInTheDocument();
     expect(cardTitle2).toBeInTheDocument();
-    const loading = await waitFor(() => screen.queryByTestId('Loading'));
+    const loading = await waitFor(() => screen.queryByTestId('loading'));
     expect(loading).not.toBeInTheDocument();
     const error = await waitFor(() => screen.queryByTestId('error'));
     expect(error).not.toBeInTheDocument();
@@ -158,7 +162,7 @@ describe('App tests with card data', () => {
     expect(books).not.toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(0);
-    const loading = await waitFor(() => screen.queryByTestId('Loading'));
+    const loading = await waitFor(() => screen.queryByTestId('loading'));
     expect(loading).not.toBeInTheDocument();
     const error = await waitFor(() =>
       screen.queryByText('Something went wrong :(', { exact: false })
@@ -187,7 +191,7 @@ describe('App tests with card data', () => {
     expect(books).not.toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(0);
-    const loading = await waitFor(() => screen.queryByTestId('Loading'));
+    const loading = await waitFor(() => screen.queryByTestId('loading'));
     expect(loading).not.toBeInTheDocument();
     const error = await waitFor(() =>
       screen.queryByText('The request timed out', { exact: false })
@@ -216,7 +220,7 @@ describe('App tests with card data', () => {
     expect(books).not.toBeInTheDocument();
     const cardDiv = await waitFor(() => screen.queryAllByTestId('cardDiv'));
     expect(cardDiv).toHaveLength(0);
-    const loading = await waitFor(() => screen.queryByTestId('Loading'));
+    const loading = await waitFor(() => screen.queryByTestId('loading'));
     expect(loading).not.toBeInTheDocument();
     const error = await waitFor(() =>
       screen.queryByText('No books were found with the title', { exact: false })
