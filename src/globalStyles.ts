@@ -11,7 +11,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    min-height: 99vh; /* 99 rather than 100 so it doesn't turn the scroll bar on unnecessarily */
     margin: 0;
     padding: 1em;
     background-color: ${colours.background};
@@ -25,12 +24,6 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-  #root {
-    min-height: calc(99vh - 2em); /* 2em for the 1em padding at top and bottom */
-    display: grid;
-    align-content: start;
-    grid-template-rows: auto auto 1fr;
-  }
 `;
 
 export default GlobalStyle;
