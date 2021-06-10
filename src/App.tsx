@@ -3,6 +3,7 @@ import axios from 'axios';
 import Search from './components/Search';
 import Card from './components/Card';
 import NavButtons from './components/NavButtons';
+import Loading from './components/Loading';
 import * as Styled from './App.styles';
 //import { testCards } from './dummyCardData'; //uncomment to load cards without using API
 
@@ -190,11 +191,12 @@ const App = () => {
           searchAgain={searchAgain}
         />
       )}
-      {isLoading && (
+      {/* {isLoading && (
         <Styled.LoadingDiv>
           <Styled.Loading data-testid="loading" />
         </Styled.LoadingDiv>
-      )}
+      )} */}
+      {isLoading && <Loading />}
       <Styled.Books>
         {cardData &&
           cardData.map((card) => (
