@@ -97,18 +97,18 @@ const App = () => {
       setIsPreviousResults(false);
       setTotalItems(0);
       setResults([]);
+      //set these two, so we can use them for another search
+      setSearchText(search);
+      setSearchType(type);
     } else {
       setIsPreviousResults(true);
     }
 
-    //set these two, so we can use them for another search
-    setSearchText(search);
-    setSearchType(type);
-
     setShowButtons(false);
     setIsLoading(true);
-    setCardData([]); //in case this is another search, clear the results from the previous search
-    setErrorMessage(''); //in case this is another search, clear the error message
+    //clear these, ready for a new search
+    setCardData([]);
+    setErrorMessage('');
 
     try {
       const api = 'https://www.googleapis.com/books/v1/volumes?q=';
@@ -136,13 +136,14 @@ const App = () => {
         //There is data!
         setCardData(response.data.items);
         //setResultCount(response.data.totalItems);
+        console.log(response.data.totalItems);
         setResultStart((previousValue) => previousValue + resultsPerPage);
         //Save these results so we can use them later if we need to go back to them
         setResults((arr) => [...arr, response.data.items]);
         if (response.data.totalItems > resultsPerPage) {
           setShowButtons(true);
           //Save these results so we can use them later if we need to go back to them
-          if (resultEnd + resultsPerPage < response.data.totalItems) {
+          if (start + 1 + resultsPerPage < response.data.totalItems) {
             setIsMoreResults(true);
           } else {
             setIsMoreResults(false);
