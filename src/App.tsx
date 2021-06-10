@@ -3,7 +3,7 @@ import axios from 'axios';
 import Search from './components/Search';
 import Card from './components/Card';
 import NavButtons from './components/NavButtons';
-import * as Styled from './App.style';
+import * as Styled from './App.styles';
 //import { testCards } from './dummyCardData'; //uncomment to load cards without using API
 
 const App = () => {
