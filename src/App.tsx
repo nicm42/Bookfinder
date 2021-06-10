@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Search from './components/Search';
 import Card from './components/Card';
+import NavButtons from './components/NavButtons';
 import * as Styled from './App.style';
 //import { testCards } from './dummyCardData'; //uncomment to load cards without using API
 
@@ -136,7 +137,7 @@ const App = () => {
         //There is data!
         setCardData(response.data.items);
         //setResultCount(response.data.totalItems);
-        console.log(response.data.totalItems);
+        //console.log(response.data.totalItems);
         setResultStart((previousValue) => previousValue + resultsPerPage);
         //Save these results so we can use them later if we need to go back to them
         setResults((arr) => [...arr, response.data.items]);
@@ -182,23 +183,12 @@ const App = () => {
         </Styled.ResultsCount>
       )}
       {showButtons && (
-        <Styled.PrevNext>
-          <Styled.Previous
-            disabled={!isPreviousResults}
-            onClick={goBack}
-            isPreviousResults={isPreviousResults}
-          >
-            Previous
-          </Styled.Previous>
-
-          <Styled.Next
-            disabled={!isMoreResults}
-            onClick={searchAgain}
-            isMoreResults={isMoreResults}
-          >
-            Next
-          </Styled.Next>
-        </Styled.PrevNext>
+        <NavButtons
+          isPreviousResults={isPreviousResults}
+          isMoreResults={isMoreResults}
+          goBack={goBack}
+          searchAgain={searchAgain}
+        />
       )}
       {isLoading && (
         <Styled.LoadingDiv>
@@ -212,23 +202,12 @@ const App = () => {
           ))}
       </Styled.Books>
       {showButtons && (
-        <Styled.PrevNext>
-          <Styled.Previous
-            disabled={!isPreviousResults}
-            onClick={goBack}
-            isPreviousResults={isPreviousResults}
-          >
-            Previous
-          </Styled.Previous>
-
-          <Styled.Next
-            disabled={!isMoreResults}
-            onClick={searchAgain}
-            isMoreResults={isMoreResults}
-          >
-            Next
-          </Styled.Next>
-        </Styled.PrevNext>
+        <NavButtons
+          isPreviousResults={isPreviousResults}
+          isMoreResults={isMoreResults}
+          goBack={goBack}
+          searchAgain={searchAgain}
+        />
       )}
     </>
   );
