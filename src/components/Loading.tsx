@@ -1,9 +1,5 @@
 import * as Styled from './Loading.styles';
 
-const Loading = () => (
-  <Styled.LoadingDiv>
-    <Styled.Loading data-testid="loading" />
-  </Styled.LoadingDiv>
-);
+const Loading = () => <Styled.Loading data-testid="loading" />;
 
 export default Loading;

@@ -1,20 +1,16 @@
 import styled, { keyframes } from 'styled-components/macro';
 import { colours } from '../constants';
 
-export const LoadingDiv = styled.div`
-  display: grid;
-  place-content: center;
-  margin-top: 2em;
-`;
-
 const spinner = keyframes`
     to {
       transform: rotate(1turn);
     }
 `;
 
+// eslint-disable-next-line import/prefer-default-export
 export const Loading = styled.div`
   /* Spinner from https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
+  place-self: center;
   width: 5em;
   height: 5em;
   border-radius: 50%;
