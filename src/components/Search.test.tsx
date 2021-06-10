@@ -4,10 +4,6 @@ import Search from './Search';
 describe('Search tests', () => {
   const getData = jest.fn();
 
-  it('does a dummy test so it collects coverage', () => {
-    expect(true).toBeTruthy();
-  });
-
   it('renders without crashing', () => {
     render(<Search getData={getData} />);
   });
