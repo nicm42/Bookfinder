@@ -9,6 +9,8 @@ export const SearchDiv = styled.div`
     background-image: url(${books});
     background-repeat: no-repeat;
     background-position: 100%;
+    /* move it up so we still see the margin between the bottom of the search/image and the text/cards below */
+    background-size: 50% calc(100% - 1em);
   }
 `;
 
