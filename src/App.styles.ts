@@ -1,22 +1,10 @@
 import styled from 'styled-components/macro';
-import { colours, fonts, mediaQuery } from './constants';
+import { fonts, mediaQuery } from './constants';
 
 export const Header = styled.h1`
   padding-bottom: 0.5em;
   font-size: ${fonts.h1};
   text-align: center;
-`;
-
-export const Error = styled.div`
-  font-size: ${fonts.extraLarge};
-  color: ${colours.error};
-  text-align: center;
-
-  @media ${mediaQuery.large} {
-    padding-left: 0.5rem;
-    font-size: ${fonts.extraLarge};
-    text-align: left;
-  }
 `;
 
 export const Books = styled.div`
