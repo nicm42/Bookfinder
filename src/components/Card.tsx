@@ -34,7 +34,11 @@ const Card = ({ card }: CardProps) => {
     <Styled.CardDiv data-testid="cardDiv">
       <Styled.Cover
         src={card.volumeInfo.imageLinks ? bookCover : cover}
-        alt={card.volumeInfo.title ? card.volumeInfo.title : 'Book'}
+        alt={
+          card.volumeInfo.title
+            ? `Cover for ${card.volumeInfo.title}`
+            : 'Book cover'
+        }
       />
 
       <Styled.Info>
@@ -53,7 +57,12 @@ const Card = ({ card }: CardProps) => {
             : 'Publisher missing'}
         </Styled.Publisher>
         {card.volumeInfo.infoLink ? (
-          <a href={card.volumeInfo.infoLink}>More information</a>
+          <a
+            href={card.volumeInfo.infoLink}
+            title={`More information about ${card.volumeInfo.title}`}
+          >
+            More information
+          </a>
         ) : (
           'Link missing'
         )}

@@ -7,11 +7,11 @@ import Results from './components/Results';
 import NavButtons from './components/NavButtons';
 import Card from './components/Card';
 import * as Styled from './App.styles';
-import { testCards } from './dummyCardData'; //uncomment to load cards without using API
+//import { testCards } from './dummyCardData'; //uncomment to load cards without using API
 
 const App = () => {
-  //const [cardData, setCardData] = useState<any[]>([]);
-  const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
+  const [cardData, setCardData] = useState<any[]>([]);
+  //const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
   const [results, setResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');

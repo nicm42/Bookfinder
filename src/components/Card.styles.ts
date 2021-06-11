@@ -58,7 +58,7 @@ export const Info = styled.div`
   }
 `;
 
-export const Title = styled.h2`
+export const Title = styled.p`
   padding-top: 0.5em;
   font-size: ${fonts.large};
   font-weight: 700;
@@ -69,9 +69,8 @@ export const Title = styled.h2`
   }
 `;
 
-export const Author = styled.h3`
+export const Author = styled.p`
   padding: 0.25em 0;
-  font-size: ${fonts.medium};
   font-weight: 700;
 `;
 

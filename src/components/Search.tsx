@@ -25,17 +25,23 @@ const Search = ({ getData }: SearchProps) => {
   return (
     <Styled.SearchDiv>
       <Styled.Form onSubmit={(e) => submitSearch(e)}>
-        <Styled.Label htmlFor="search-input">
-          Search for a book by title or author
-        </Styled.Label>
-        <Styled.Select name="select" required data-testid="select">
+        <Styled.Title>Search for a book by title or author</Styled.Title>
+        <Styled.Select
+          required
+          aria-label="Select title or author"
+          data-testid="select"
+        >
           <option value="" className="hide">
             Title or author
           </option>
           <option value="intitle">Title</option>
           <option value="inauthor">Author</option>
         </Styled.Select>
-        <Styled.Input type="search" id="search-input" name="search" required />
+        <Styled.Input
+          type="search"
+          aria-label="Type in the title or author you want to search for"
+          required
+        />
         <Styled.Submit>Search</Styled.Submit>
       </Styled.Form>
     </Styled.SearchDiv>

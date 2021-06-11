@@ -32,7 +32,7 @@ export const Form = styled.form`
   }
 `;
 
-export const Label = styled.label`
+export const Title = styled.p`
   padding-bottom: 0.5em;
   font-size: ${fonts.large};
   font-weight: 500;
