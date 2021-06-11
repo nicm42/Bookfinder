@@ -3,6 +3,7 @@ import axios from 'axios';
 import Search from './components/Search';
 import Loading from './components/Loading';
 import Error from './components/Error';
+import Results from './components/Results';
 import NavButtons from './components/NavButtons';
 import Card from './components/Card';
 import * as Styled from './App.styles';
@@ -178,9 +179,7 @@ const App = () => {
       <Search getData={getData} />
       {errorMessage && <Error errorMessage={errorMessage} />}
       {resultEnd > 0 && (
-        <Styled.ResultsCount>
-          Showing books {resultStart}-{resultEnd}
-        </Styled.ResultsCount>
+        <Results resultStart={resultStart} resultEnd={resultEnd} />
       )}
       {showButtons && (
         <NavButtons

@@ -22,13 +22,3 @@ export const Books = styled.div`
     align-items: stretch; /* makes everything same height */
   }
 `;
-
-export const ResultsCount = styled.div`
-  padding: 0.5em 0;
-  text-align: center;
-
-  @media ${mediaQuery.large} {
-    padding-left: 0.5em;
-    text-align: left;
-  }
-`;
