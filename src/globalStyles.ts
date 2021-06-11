@@ -10,6 +10,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
+  html, body {
+    height: 100%;
+  }
+
   body {
     margin: 0;
     padding: 1em;
@@ -22,6 +26,12 @@ const GlobalStyle = createGlobalStyle`
     @media ${mediaQuery.large} {
       padding: 2em;
     }
+  }
+
+  #root {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
 `;

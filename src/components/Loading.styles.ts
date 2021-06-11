@@ -4,6 +4,7 @@ import { colours } from '../constants';
 export const LoadingDiv = styled.div`
   display: grid;
   place-content: center;
+  flex-grow: 1;
   margin-top: 2em;
 `;
 
