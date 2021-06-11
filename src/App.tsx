@@ -7,11 +7,11 @@ import Results from './components/Results';
 import NavButtons from './components/NavButtons';
 import Card from './components/Card';
 import * as Styled from './App.styles';
-//import { testCards } from './dummyCardData'; //uncomment to load cards without using API
+import { testCards } from './dummyCardData'; //uncomment to load cards without using API
 
 const App = () => {
-  const [cardData, setCardData] = useState<any[]>([]);
-  //const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
+  //const [cardData, setCardData] = useState<any[]>([]);
+  const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
   const [results, setResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -175,35 +175,40 @@ const App = () => {
 
   return (
     <>
-      <Styled.Header>Book Search</Styled.Header>
-      <Search getData={getData} />
-      {errorMessage && <Error errorMessage={errorMessage} />}
-      {resultEnd > 0 && (
-        <Results resultStart={resultStart} resultEnd={resultEnd} />
-      )}
-      {showButtons && (
-        <NavButtons
-          isPreviousResults={isPreviousResults}
-          isMoreResults={isMoreResults}
-          goBack={goBack}
-          searchAgain={searchAgain}
-        />
-      )}
-      {isLoading && <Loading />}
-      <Styled.Books>
-        {cardData &&
-          cardData.map((card) => (
-            <Card card={card} key={card.id} data-testid="card" />
-          ))}
-      </Styled.Books>
-      {showButtons && (
-        <NavButtons
-          isPreviousResults={isPreviousResults}
-          isMoreResults={isMoreResults}
-          goBack={goBack}
-          searchAgain={searchAgain}
-        />
-      )}
+      <header>
+        <Styled.Header>Book Search</Styled.Header>
+      </header>
+
+      <main>
+        <Search getData={getData} />
+        {errorMessage && <Error errorMessage={errorMessage} />}
+        {resultEnd > 0 && (
+          <Results resultStart={resultStart} resultEnd={resultEnd} />
+        )}
+        {showButtons && (
+          <NavButtons
+            isPreviousResults={isPreviousResults}
+            isMoreResults={isMoreResults}
+            goBack={goBack}
+            searchAgain={searchAgain}
+          />
+        )}
+        {isLoading && <Loading />}
+        <Styled.Books>
+          {cardData &&
+            cardData.map((card) => (
+              <Card card={card} key={card.id} data-testid="card" />
+            ))}
+        </Styled.Books>
+        {showButtons && (
+          <NavButtons
+            isPreviousResults={isPreviousResults}
+            isMoreResults={isMoreResults}
+            goBack={goBack}
+            searchAgain={searchAgain}
+          />
+        )}
+      </main>
     </>
   );
 };
