@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import * as Styled from './NavButtons.styles';
 
 interface NavButtonProps {
@@ -31,5 +32,12 @@ const NavButtons = ({
     </Styled.Next>
   </Styled.PrevNext>
 );
+
+NavButtons.propTypes = {
+  isPreviousResults: PropTypes.bool.isRequired,
+  isMoreResults: PropTypes.bool.isRequired,
+  goBack: PropTypes.func.isRequired,
+  searchAgain: PropTypes.func.isRequired,
+};
 
 export default NavButtons;
