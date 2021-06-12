@@ -2,10 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",
-    "lib": [
-      "es6",
-      "dom"
-    ],
+    "lib": ["es6", "dom"],
     "allowJs": true,
     "jsx": "react-jsx",
     "sourceMap": true,
@@ -24,7 +21,8 @@
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "types": ["cypress"]
   },
   "exclude": [
     "node_modules",
@@ -35,10 +33,6 @@
     "jest",
     "src/setupTests.ts"
   ],
-  "types": [
-    "typePatches"
-  ],
-  "include": [
-    "src"
-  ]
+  "types": ["typePatches"],
+  "include": ["src"]
 }
