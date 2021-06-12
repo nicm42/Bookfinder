@@ -39,6 +39,7 @@ const Search = ({ getData }: SearchProps) => {
         </Styled.Select>
         <Styled.Input
           type="search"
+          name="search"
           aria-label="Type in the title or author you want to search for"
           required
         />
