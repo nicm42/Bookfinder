@@ -26,46 +26,46 @@ const Card = ({ card }: CardProps) => {
         }
         return `, ${author}`;
       }
-      return author;
+      return `by ${author}`;
     });
   }
 
+  //Making ternary operators variables so the return is easier to read
+  const coverSrc = card.volumeInfo.imageLinks ? bookCover : cover;
+  const coverAlt = card.volumeInfo.title
+    ? `Cover for ${card.volumeInfo.title}`
+    : 'Book cover';
+  const titleText = card.volumeInfo.title
+    ? card.volumeInfo.title
+    : 'Title missing';
+  const authorText = card.volumeInfo.authors
+    ? formattedAuthors
+    : 'Author missing';
+  const publisherText = card.volumeInfo.publisher
+    ? `Publisher: ${card.volumeInfo.publisher}`
+    : 'Publisher missing';
+  const linkText = card.volumeInfo.title ? card.volumeInfo.title : 'this book';
+  const link = card.volumeInfo.infoLink ? (
+    <a
+      href={card.volumeInfo.infoLink}
+      title={`More information about ${linkText}`}
+    >
+      More information
+    </a>
+  ) : (
+    'Link missing'
+  );
+
   return (
     <Styled.CardDiv data-testid="cardDiv">
-      <Styled.Cover
-        src={card.volumeInfo.imageLinks ? bookCover : cover}
-        alt={
-          card.volumeInfo.title
-            ? `Cover for ${card.volumeInfo.title}`
-            : 'Book cover'
-        }
-      />
-
+      <Styled.Cover src={coverSrc} alt={coverAlt} />
       <Styled.Info>
-        <Styled.Title data-testid="title">
-          {card.volumeInfo.title ? card.volumeInfo.title : 'Title missing'}
-        </Styled.Title>
-        <Styled.Author data-testid="author">
-          {/* if I put the 'by' into the ternary operator with formatted authors
-          it adds a random comma for some reason. Giving it its own ternary doesn't */}
-          {card.volumeInfo.authors ? 'by ' : ''}
-          {card.volumeInfo.authors ? formattedAuthors : 'Author missing'}
-        </Styled.Author>
+        <Styled.Title data-testid="title">{titleText}</Styled.Title>
+        <Styled.Author data-testid="author">{authorText}</Styled.Author>
         <Styled.Publisher data-testid="publisher">
-          {card.volumeInfo.publisher
-            ? `Publisher: ${card.volumeInfo.publisher}`
-            : 'Publisher missing'}
+          {publisherText}
         </Styled.Publisher>
-        {card.volumeInfo.infoLink ? (
-          <a
-            href={card.volumeInfo.infoLink}
-            title={`More information about ${card.volumeInfo.title}`}
-          >
-            More information
-          </a>
-        ) : (
-          'Link missing'
-        )}
+        {link}
       </Styled.Info>
     </Styled.CardDiv>
   );
