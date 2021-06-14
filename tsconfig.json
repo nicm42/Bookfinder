@@ -22,7 +22,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "types": ["jest"]
+    /* "typeRoots": ["./support"]
+    /* "types": ["jest"] */
+    "types": [
+      "jest",
+      "@testing-library/jest-dom",
+      "cypress",
+      "@testing-library/cypress"
+    ]
   },
   "exclude": [
     "node_modules",
@@ -34,6 +41,6 @@
     "src/setupTests.ts"
   ],
   "types": ["typePatches"],
-  "include": ["src"],
-  "exclude": ["src/*.test.ts"]
+  "include": ["src"]
+  /* "exclude": ["src/*.test.ts"] */
 }

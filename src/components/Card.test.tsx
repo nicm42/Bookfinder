@@ -1,3 +1,5 @@
+/// <reference types="Jest" />
+
 import { render, screen } from '@testing-library/react';
 import Card from './Card';
 import cards from '../dummyCardData';
