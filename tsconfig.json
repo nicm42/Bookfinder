@@ -22,7 +22,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "types": ["cypress"]
+    "types": ["jest"]
   },
   "exclude": [
     "node_modules",
@@ -34,5 +34,6 @@
     "src/setupTests.ts"
   ],
   "types": ["typePatches"],
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/*.test.ts"]
 }

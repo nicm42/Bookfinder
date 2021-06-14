@@ -4,7 +4,8 @@
     "airbnb",
     "airbnb/hooks",
     "plugin:import/typescript",
-    "prettier"
+    "prettier",
+    "plugin:cypress/recommended"
   ],
   "plugins": ["import", "jsx-a11y", "prettier"],
   "rules": {
@@ -19,7 +20,7 @@
     "import/prefer-default-export": "warn",
     "no-use-before-define": "warn",
     // note you must disable the base rule as it can report incorrect errors
-    "no-use-before-define": "off",
+    //"no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["warn"],
     "import/extensions": [
       "warn",
