@@ -18,4 +18,17 @@ describe('E2E tests', () => {
     cy.findByRole('searchbox').should('exist');
     cy.findByRole('button', { name: /search/i }).should('exist');
   });
+
+  it.only('should not let you submit if option and/or input are blank', () => {
+    cy.findByRole('button', { name: /search/i }).click();
+    cy.get('select:invalid').then(($combobox) => {
+      expect($combobox[0].validationMessage).to.eq(
+        'Please select an item in the list.'
+      );
+    });
+    cy.get('input:invalid').should('have.length', 1);
+    cy.get('input:invalid').then(($input) => {
+      expect($input[0].validationMessage).to.eq('Please fill in this field.');
+    });
+  });
 });
