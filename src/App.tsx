@@ -48,49 +48,6 @@ const App = () => {
     }
   }, [pageNumber]);
 
-  const searchAgain = () => {
-    //If we already have this data, then just show that
-    startIndex = resultStart + resultsPerPage - 2;
-    if (results.length >= pageNumber + 1) {
-      window.scrollTo({ top: 0 }); //scroll back up, otherwise it's not clear anything has changed
-      setCardData(results[pageNumber]);
-      if (resultEnd + resultsPerPage > totalItems) {
-        setIsMoreResults(false);
-      }
-      setResultStart((previousValue) => previousValue + resultsPerPage);
-      setResultEnd(
-        (previousValue) => previousValue + results[pageNumber].length
-      );
-    }
-    setPageNumber((previousValue) => previousValue + 1);
-    //Otherwise get it from the API
-    if (results.length < pageNumber + 1) {
-      getData(searchText, searchType, startIndex);
-    }
-  };
-
-  const goBack = () => {
-    window.scrollTo({ top: 0 }); //scroll back up, otherwise it's not clear anything has changed
-    startIndex = resultStart - resultsPerPage - 2;
-    setCardData(results[pageNumber - 2]);
-    setIsMoreResults(true);
-    setPageNumber((previousValue) => previousValue - 1);
-    setResultStart((previousValue) => previousValue - resultsPerPage);
-    /* setResultEnd(
-      (previousValue) => previousValue - results[pageNumber - 2].length
-    ); */
-    //Take the last set of results and round it down to the nearest 10
-    //But if it's 10, 20, 30 etc then just need to take 10 off it
-    if (resultEnd % 10 === 0) {
-      setResultEnd((previousValue) => previousValue - resultsPerPage);
-    } else {
-      setResultEnd(
-        (previousValue) =>
-          Math.floor(previousValue / resultsPerPage) * resultsPerPage
-      );
-    }
-  };
-
   const getData = async (search: string, type: string, start: number) => {
     //Need to re-set everything if this is a new search
     if (start === 0) {
@@ -170,6 +127,49 @@ const App = () => {
       }
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const searchAgain = () => {
+    //If we already have this data, then just show that
+    startIndex = resultStart + resultsPerPage - 2;
+    if (results.length >= pageNumber + 1) {
+      window.scrollTo({ top: 0 }); //scroll back up, otherwise it's not clear anything has changed
+      setCardData(results[pageNumber]);
+      if (resultEnd + resultsPerPage > totalItems) {
+        setIsMoreResults(false);
+      }
+      setResultStart((previousValue) => previousValue + resultsPerPage);
+      setResultEnd(
+        (previousValue) => previousValue + results[pageNumber].length
+      );
+    }
+    setPageNumber((previousValue) => previousValue + 1);
+    //Otherwise get it from the API
+    if (results.length < pageNumber + 1) {
+      getData(searchText, searchType, startIndex);
+    }
+  };
+
+  const goBack = () => {
+    window.scrollTo({ top: 0 }); //scroll back up, otherwise it's not clear anything has changed
+    startIndex = resultStart - resultsPerPage - 2;
+    setCardData(results[pageNumber - 2]);
+    setIsMoreResults(true);
+    setPageNumber((previousValue) => previousValue - 1);
+    setResultStart((previousValue) => previousValue - resultsPerPage);
+    /* setResultEnd(
+      (previousValue) => previousValue - results[pageNumber - 2].length
+    ); */
+    //Take the last set of results and round it down to the nearest 10
+    //But if it's 10, 20, 30 etc then just need to take 10 off it
+    if (resultEnd % 10 === 0) {
+      setResultEnd((previousValue) => previousValue - resultsPerPage);
+    } else {
+      setResultEnd(
+        (previousValue) =>
+          Math.floor(previousValue / resultsPerPage) * resultsPerPage
+      );
     }
   };
 
