@@ -30,7 +30,7 @@ describe('Search tests', () => {
     const moreInfo = screen.getByText('More information');
     const link = screen.getByRole('link');
     expect(coverImage).toHaveAttribute('src', 'http://www.dummycover1.com');
-    expect(coverImage).toHaveAttribute('alt', 'Title 1');
+    expect(coverImage).toHaveAttribute('alt', 'Cover for Title 1');
     expect(title).toBeInTheDocument();
     expect(author).toBeInTheDocument();
     expect(publisher).toBeInTheDocument();
@@ -66,7 +66,7 @@ describe('Search tests', () => {
     const link = screen.queryByRole('link');
     expect(coverImage).toBeInTheDocument();
     expect(coverImage).toHaveAttribute('src', 'generic-book-cover.jpg');
-    expect(coverImage).toHaveAttribute('alt', 'Book');
+    expect(coverImage).toHaveAttribute('alt', 'Book cover');
     expect(title).toBeInTheDocument();
     expect(author).toBeInTheDocument();
     expect(publisher).toBeInTheDocument();
