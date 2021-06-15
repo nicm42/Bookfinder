@@ -46,4 +46,17 @@ describe('Search tests', () => {
     cy.findByTestId('select').should('have.value', '');
     cy.findByRole('searchbox').should('have.value', '');
   });
+
+  it('checks API is called when pressing enter in input', () => {
+    cy.intercept(
+      'GET',
+      `${apiLinkSearch}intitle:%22test%22&startIndex=0&maxResults=10`
+    ).as('getData');
+    cy.findByTestId('select').select('intitle');
+    cy.findByRole('searchbox').type('test');
+    cy.findByRole('searchbox').type('{enter}');
+    cy.wait('@getData');
+    cy.findByTestId('select').should('have.value', '');
+    cy.findByRole('searchbox').should('have.value', '');
+  });
 });
