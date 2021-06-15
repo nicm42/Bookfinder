@@ -18,7 +18,9 @@ describe('API tests', () => {
     cy.findByRole('button', { name: /search/i }).click();
     cy.wait('@getData').then(({ response }) => {
       expect(response.statusCode).to.eq(200);
-      cy.findByText('Something went wrong').should('not.exist');
+      cy.findByText('Something went wrong :(', { exact: false }).should(
+        'not.exist'
+      );
     });
   });
 

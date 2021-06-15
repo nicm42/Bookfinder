@@ -50,6 +50,9 @@ describe('App tests with card data', () => {
   const mockData = { data: cards };
   const noData = { data: noCards };
   const errorData = {
+    request: {
+      status: 400,
+    },
     response: {
       status: 400,
       statusText: 'Bad API',
