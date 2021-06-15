@@ -1,9 +1,9 @@
 /// <reference types="Cypress" />
 /// <reference types="@testing-library/cypress" />
 
-const api = 'https://www.googleapis.com/books/v1/volumes?q=';
+const apiLinkSearch = 'https://www.googleapis.com/books/v1/volumes?q=';
 
-describe('E2E tests', () => {
+describe('Search tests', () => {
   beforeEach(() => {
     cy.visit(Cypress.config('baseUrl'));
   });
@@ -34,20 +34,16 @@ describe('E2E tests', () => {
     });
   });
 
-  it.only('gets one page of cards', () => {
-    cy.intercept('GET', `${api}intitle:%22test%22&startIndex=0&maxResults=10`, {
-      fixture: 'cards.json',
-    }).as('getData');
+  it('blanks the select and input after API returns data', () => {
+    cy.intercept(
+      'GET',
+      `${apiLinkSearch}intitle:%22test%22&startIndex=0&maxResults=10`
+    ).as('getData');
     cy.findByTestId('select').select('intitle');
     cy.findByRole('searchbox').type('test');
     cy.findByRole('button', { name: /search/i }).click();
-    //cy.findByTestId('loading').should('exist'); //TODO how to convince it this appears before cards are loaded
     cy.wait('@getData');
-    cy.findByText('Showing books 1-4').should('exist');
-    cy.findByTestId('loading').should('not.exist');
     cy.findByTestId('select').should('have.value', '');
     cy.findByRole('searchbox').should('have.value', '');
-    cy.findByRole('button', { name: /previous/i }).should('not.exist');
-    cy.findByRole('button', { name: /next/i }).should('not.exist');
   });
 });
