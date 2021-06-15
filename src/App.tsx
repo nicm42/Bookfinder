@@ -79,10 +79,10 @@ const App = () => {
 
       //Uncomment line below to test API errors
       //const response = await axios.get(`http://httpstat.us/404`);
-      //Uncomment lines below to test API timeout
+      //Uncomment one of the lines below to test API timeout
       /* const response = await axios.get(`http://httpstat.us/504`, {
-        timeout: 2,
-      }); */
+        timeout: 2,*/
+      /* const response = await axios.get(`http://httpstat.us/408`); */
 
       setTotalItems(response.data.totalItems);
 
@@ -118,7 +118,11 @@ const App = () => {
       }
     } catch (error) {
       console.log(error);
-      if (error.message.replace(/ .*/, '') === 'timeout') {
+      if (
+        error.message.replace(/ .*/, '') === 'timeout' ||
+        error.request.status === 408 ||
+        error.request.status === 504
+      ) {
         setErrorMessage('The request timed out. Please try again later');
       } else {
         setErrorMessage(
