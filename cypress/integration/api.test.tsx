@@ -18,6 +18,7 @@ describe('API tests', () => {
     cy.findByRole('button', { name: /search/i }).click();
     cy.wait('@getData').then(({ response }) => {
       expect(response.statusCode).to.eq(200);
+      cy.findByText('Something went wrong').should('not.exist');
     });
   });
 
@@ -36,7 +37,7 @@ describe('API tests', () => {
 
   it('tests for no data from API using title', () => {
     cy.intercept('GET', `${api}intitle:%22test%22&startIndex=0&maxResults=10`, {
-      fixture: 'nocards.json',
+      fixture: 'noCards.json',
     }).as('getData');
     cy.findByTestId('select').select('intitle');
     cy.findByRole('searchbox').type('test');
@@ -50,7 +51,7 @@ describe('API tests', () => {
       'GET',
       `${api}inauthor:%22test%22&startIndex=0&maxResults=10`,
       {
-        fixture: 'nocards.json',
+        fixture: 'noCards.json',
       }
     ).as('getData');
     cy.findByTestId('select').select('inauthor');
