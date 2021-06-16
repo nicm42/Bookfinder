@@ -1,0 +1,328 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot tests renders correctly when page is loaded 1`] = `
+<div
+  className="Searchstyles__SearchDiv-sc-1afspv3-0 erVQWF"
+>
+  <form
+    className="Searchstyles__Form-sc-1afspv3-1 lmIVUu"
+    onSubmit={[Function]}
+  >
+    <p
+      className="Searchstyles__Title-sc-1afspv3-2 hXMlzD"
+    >
+      Search for a book by title or author
+    </p>
+    <select
+      aria-label="Select title or author"
+      className="Searchstyles__Select-sc-1afspv3-3 fOtYjG"
+      data-testid="select"
+      required={true}
+    >
+      <option
+        className="hide"
+        value=""
+      >
+        Title or author
+      </option>
+      <option
+        value="intitle"
+      >
+        Title
+      </option>
+      <option
+        value="inauthor"
+      >
+        Author
+      </option>
+    </select>
+    <input
+      aria-label="Type in the title or author you want to search for"
+      className="Searchstyles__Input-sc-1afspv3-4 gbjkP"
+      name="search"
+      required={true}
+      type="search"
+    />
+    <button
+      className="Searchstyles__Submit-sc-1afspv3-5 kVqeMX"
+    >
+      Search
+    </button>
+  </form>
+</div>
+`;
+
+exports[`Snapshot tests renders error message correctly 1`] = `
+<p
+  className="Errorstyles__Error-b0ye4i-0 dipzyz"
+  data-testid="error"
+>
+  This is an error message
+</p>
+`;
+
+exports[`Snapshot tests renders loading spinner correctly 1`] = `
+<div
+  className="Loadingstyles__LoadingDiv-yove8p-0 dPOaed"
+>
+  <div
+    className="Loadingstyles__Loading-yove8p-1 AJFPM"
+    data-testid="loading"
+  />
+</div>
+`;
+
+exports[`Snapshot tests renders nav buttons correctly for both buttons 1`] = `
+<div
+  className="NavButtonsstyles__PrevNext-tjoruy-0 fPtyJB"
+>
+  <button
+    className="NavButtonsstyles__Previous-tjoruy-1 iyEMDy"
+    disabled={false}
+    onClick={[MockFunction]}
+  >
+    Previous
+  </button>
+  <button
+    className="NavButtonsstyles__Next-tjoruy-2 frJrFi"
+    disabled={false}
+    onClick={[MockFunction]}
+  >
+    Next
+  </button>
+</div>
+`;
+
+exports[`Snapshot tests renders nav buttons correctly for just next button 1`] = `
+<div
+  className="NavButtonsstyles__PrevNext-tjoruy-0 fPtyJB"
+>
+  <button
+    className="NavButtonsstyles__Previous-tjoruy-1 mipfr"
+    disabled={true}
+    onClick={[MockFunction]}
+  >
+    Previous
+  </button>
+  <button
+    className="NavButtonsstyles__Next-tjoruy-2 frJrFi"
+    disabled={false}
+    onClick={[MockFunction]}
+  >
+    Next
+  </button>
+</div>
+`;
+
+exports[`Snapshot tests renders nav buttons correctly for just previous button 1`] = `
+<div
+  className="NavButtonsstyles__PrevNext-tjoruy-0 fPtyJB"
+>
+  <button
+    className="NavButtonsstyles__Previous-tjoruy-1 iyEMDy"
+    disabled={false}
+    onClick={[MockFunction]}
+  >
+    Previous
+  </button>
+  <button
+    className="NavButtonsstyles__Next-tjoruy-2 eYzWCn"
+    disabled={true}
+    onClick={[MockFunction]}
+  >
+    Next
+  </button>
+</div>
+`;
+
+exports[`Snapshot tests renders nav buttons correctly for no buttons 1`] = `
+<div
+  className="NavButtonsstyles__PrevNext-tjoruy-0 fPtyJB"
+>
+  <button
+    className="NavButtonsstyles__Previous-tjoruy-1 mipfr"
+    disabled={true}
+    onClick={[MockFunction]}
+  >
+    Previous
+  </button>
+  <button
+    className="NavButtonsstyles__Next-tjoruy-2 eYzWCn"
+    disabled={true}
+    onClick={[MockFunction]}
+  >
+    Next
+  </button>
+</div>
+`;
+
+exports[`Snapshot tests renders results text correctly 1`] = `
+<p
+  className="Resultsstyles__ResultsCount-sc-1u314jh-0 komArg"
+>
+  Showing books 
+  1
+  -
+  10
+</p>
+`;
+
+exports[`Snapshot tests renders the app correctly 1`] = `
+Array [
+  <header>
+    <h1
+      className="Appstyles__Header-sc-1dagatm-0 fnbhWd"
+    >
+      Book Search
+    </h1>
+  </header>,
+  <main>
+    <div
+      className="Searchstyles__SearchDiv-sc-1afspv3-0 erVQWF"
+    >
+      <form
+        className="Searchstyles__Form-sc-1afspv3-1 lmIVUu"
+        onSubmit={[Function]}
+      >
+        <p
+          className="Searchstyles__Title-sc-1afspv3-2 hXMlzD"
+        >
+          Search for a book by title or author
+        </p>
+        <select
+          aria-label="Select title or author"
+          className="Searchstyles__Select-sc-1afspv3-3 fOtYjG"
+          data-testid="select"
+          required={true}
+        >
+          <option
+            className="hide"
+            value=""
+          >
+            Title or author
+          </option>
+          <option
+            value="intitle"
+          >
+            Title
+          </option>
+          <option
+            value="inauthor"
+          >
+            Author
+          </option>
+        </select>
+        <input
+          aria-label="Type in the title or author you want to search for"
+          className="Searchstyles__Input-sc-1afspv3-4 gbjkP"
+          name="search"
+          required={true}
+          type="search"
+        />
+        <button
+          className="Searchstyles__Submit-sc-1afspv3-5 kVqeMX"
+        >
+          Search
+        </button>
+      </form>
+    </div>
+    
+    <div
+      className="Appstyles__Books-sc-1dagatm-1 fkTpGD"
+    />
+  </main>,
+]
+`;
+
+exports[`Snapshot tests renders the cards correctly 1`] = `
+<div
+  className="Cardstyles__CardDiv-sc-8m35hg-0 cLLdFS"
+  data-testid="cardDiv"
+>
+  <img
+    alt="Cover for Title 1"
+    className="Cardstyles__Cover-sc-8m35hg-1 gvYeit"
+    src="http://www.dummycover1.com"
+  />
+  <div
+    className="Cardstyles__Info-sc-8m35hg-2 eIHPWj"
+  >
+    <p
+      className="Cardstyles__Title-sc-8m35hg-3 bXzrjE"
+      data-testid="title"
+    >
+      Title 1
+    </p>
+    <p
+      className="Cardstyles__Author-sc-8m35hg-4 eHwNlE"
+      data-testid="author"
+    >
+      by Author 1
+    </p>
+    <p
+      className="Cardstyles__Publisher-sc-8m35hg-5 Vzfrb"
+      data-testid="publisher"
+    >
+      Publisher: Publisher 1
+    </p>
+    <a
+      href="https://www.dummylink1.com"
+      title="More information about Title 1"
+    >
+      More information
+    </a>
+  </div>
+</div>
+`;
+
+exports[`Snapshot tests renders the search correctly 1`] = `
+<div
+  className="Searchstyles__SearchDiv-sc-1afspv3-0 erVQWF"
+>
+  <form
+    className="Searchstyles__Form-sc-1afspv3-1 lmIVUu"
+    onSubmit={[Function]}
+  >
+    <p
+      className="Searchstyles__Title-sc-1afspv3-2 hXMlzD"
+    >
+      Search for a book by title or author
+    </p>
+    <select
+      aria-label="Select title or author"
+      className="Searchstyles__Select-sc-1afspv3-3 fOtYjG"
+      data-testid="select"
+      required={true}
+    >
+      <option
+        className="hide"
+        value=""
+      >
+        Title or author
+      </option>
+      <option
+        value="intitle"
+      >
+        Title
+      </option>
+      <option
+        value="inauthor"
+      >
+        Author
+      </option>
+    </select>
+    <input
+      aria-label="Type in the title or author you want to search for"
+      className="Searchstyles__Input-sc-1afspv3-4 gbjkP"
+      name="search"
+      required={true}
+      type="search"
+    />
+    <button
+      className="Searchstyles__Submit-sc-1afspv3-5 kVqeMX"
+    >
+      Search
+    </button>
+  </form>
+</div>
+`;
