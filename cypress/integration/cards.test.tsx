@@ -114,15 +114,17 @@ describe('Card tests', () => {
     cy.wait('@getData1');
 
     cy.findByText('Showing books 1-10').should('exist');
-    cy.findAllByRole('button', { name: /next/i }).first().type('{enter}');
-    //TODO above line works, but Cypress complains that you can't type into a button
-    //you can only type into buttons...
+    cy.findAllByRole('button', { name: /next/i })
+      .first()
+      .type('{enter}', { force: true });
+    //If you don't force it then it works, but Cypress complains it can't do it and stops here
 
     cy.wait('@getData2');
     cy.findByText('Showing books 11-20').should('exist');
     cy.findAllByRole('button', { name: /previous/i })
       .first()
-      .type('{enter}');
+      .type('{enter}', { force: true });
+    //But it still doesn't like this one despite the forcing
     cy.findByText('Showing books 1-10').should('exist');
   });
 });
