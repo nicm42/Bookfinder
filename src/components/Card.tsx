@@ -53,7 +53,7 @@ const Card = ({ card }: CardProps) => {
       More information
     </a>
   ) : (
-    'Link missing'
+    <p>Link missing</p>
   );
 
   return (

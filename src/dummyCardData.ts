@@ -201,4 +201,8 @@ export const testCards = [
       infoLink: 'http://www.dummylink.com',
     },
   },
+  {
+    id: 'id 4',
+    volumeInfo: {},
+  },
 ];

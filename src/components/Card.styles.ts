@@ -11,6 +11,10 @@ export const CardDiv = styled.div`
   box-shadow: ${shapes.boxShadow};
   text-align: center;
 
+  p:last-child {
+    margin-top: auto;
+  }
+
   a {
     color: ${colours.link};
     margin-top: auto;
