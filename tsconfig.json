@@ -28,7 +28,8 @@
       "jest",
       "@testing-library/jest-dom",
       "cypress",
-      "@testing-library/cypress"
+      "@testing-library/cypress",
+      "cypress-axe"
     ]
   },
   "exclude": [

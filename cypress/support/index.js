@@ -21,4 +21,6 @@ import './commands';
 
 import '@cypress/code-coverage/support';
 
+import 'cypress-axe';
+
 require('cypress-plugin-tab');
