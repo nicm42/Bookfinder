@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Search from './Search';
 
 describe('Search tests', () => {
@@ -34,11 +35,11 @@ describe('Search tests', () => {
 
   it('checks the input and dropdown are blank after submit is clicked', () => {
     render(<Search getData={getData} />);
-    const inputElement = screen.getByRole('searchbox') as HTMLInputElement;
+    const inputElement = screen.getByRole('searchbox') as any;
     fireEvent.change(inputElement, { target: { value: 'test' } });
     expect(inputElement.value).toBe('test');
 
-    const dropDown = screen.getByTestId('select') as HTMLSelectElement;
+    const dropDown = screen.getByTestId('select') as any;
     fireEvent.change(dropDown, { target: { value: 'intitle' } });
     expect(dropDown.value).toBe('intitle');
 
@@ -47,5 +48,33 @@ describe('Search tests', () => {
 
     expect(inputElement.value).toBe('');
     expect(dropDown.value).toBe('');
+  });
+
+  it('navigates using only the keyboard works', async () => {
+    render(<Search getData={getData} />);
+    expect(document.body).toHaveFocus();
+    userEvent.tab();
+
+    const dropDown = screen.getByTestId('select');
+    expect(dropDown).toHaveFocus();
+    userEvent.selectOptions(dropDown, 'intitle');
+    const titleOption = screen.getByRole('option', {
+      name: 'Title',
+    }) as any;
+    expect(titleOption.selected).toBe(true);
+    const authorOption = screen.getByRole('option', {
+      name: 'Author',
+    }) as any;
+    expect(authorOption.selected).toBe(false);
+    userEvent.tab();
+
+    const inputElement = screen.getByRole('searchbox');
+    expect(inputElement).toHaveFocus();
+    userEvent.type(inputElement, 'test');
+    expect(inputElement).toHaveValue('test');
+
+    userEvent.tab();
+    const submitButton = screen.getByRole('button', { name: /search/i });
+    expect(submitButton).toHaveFocus();
   });
 });
