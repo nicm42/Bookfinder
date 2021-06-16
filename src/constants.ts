@@ -1,6 +1,6 @@
 export const colours = {
-  background: 'hsl(68, 100%, 98%)',
-  darkBackground: 'hsl(68, 100%, 96%)',
+  background: 'hsl(68, 100%, 99%)',
+  darkBackground: 'hsl(68, 100%, 98%)',
   text: 'hsl(233, 24%, 19%)',
   loading: 'hsl(210, 77%, 81%)',
   button: 'hsl(210, 77%, 91%)',
