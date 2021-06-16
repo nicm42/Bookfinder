@@ -56,6 +56,7 @@ describe('Card tests', () => {
         fixture: 'manyCards3.json',
       }
     ).as('getData3');
+
     cy.findByTestId('select').select('intitle');
     cy.findByRole('searchbox').type('test');
     cy.findByRole('button', { name: /search/i }).click();
@@ -89,5 +90,39 @@ describe('Card tests', () => {
     cy.findByText('Showing books 21-24').should('exist');
     cy.findAllByRole('button', { name: /previous/i }).should('not.be.disabled');
     cy.findAllByRole('button', { name: /next/i }).should('be.disabled');
+  });
+
+  it.only('works when pressing enter on next and previous buttons', () => {
+    cy.intercept(
+      'GET',
+      `${apiLinkCards}intitle:%22test%22&startIndex=0&maxResults=10`,
+      {
+        fixture: 'manyCards1.json',
+      }
+    ).as('getData1');
+    cy.intercept(
+      'GET',
+      `${apiLinkCards}intitle:%22test%22&startIndex=9&maxResults=10`,
+      {
+        fixture: 'manyCards2.json',
+      }
+    ).as('getData2');
+
+    cy.findByTestId('select').select('intitle');
+    cy.findByRole('searchbox').type('test');
+    cy.findByRole('button', { name: /search/i }).click();
+    cy.wait('@getData1');
+
+    cy.findByText('Showing books 1-10').should('exist');
+    cy.findAllByRole('button', { name: /next/i }).first().type('{enter}');
+    //TODO above line works, but Cypress complains that you can't type into a button
+    //you can only type into buttons...
+
+    cy.wait('@getData2');
+    cy.findByText('Showing books 11-20').should('exist');
+    cy.findAllByRole('button', { name: /previous/i })
+      .first()
+      .type('{enter}');
+    cy.findByText('Showing books 1-10').should('exist');
   });
 });

@@ -97,6 +97,7 @@ export const manyCards2 = {
       id: 'id 11',
       volumeInfo: {
         title: 'Title 11',
+        infoLink: 'https://www.dummylink.com',
       },
     },
     {

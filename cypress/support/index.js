@@ -20,3 +20,5 @@ import './commands';
 // require('./commands')
 
 import '@cypress/code-coverage/support';
+
+require('cypress-plugin-tab');

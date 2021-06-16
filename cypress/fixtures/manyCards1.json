@@ -4,12 +4,15 @@
     {
       "id": "id 1",
       "volumeInfo": {
-        "title": "Title 1"
+        "title": "Title 1",
+        "infoLink": "https://www.dummylink1.com"
       }
     },
     {
       "id": "id 2",
-      "volumeInfo": {}
+      "volumeInfo": {
+        "infoLink": "https://www.dummylink2.com"
+      }
     },
     {
       "id": "id 3",

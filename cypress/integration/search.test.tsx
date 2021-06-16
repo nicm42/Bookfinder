@@ -59,4 +59,30 @@ describe('Search tests', () => {
     cy.findByTestId('select').should('have.value', '');
     cy.findByRole('searchbox').should('have.value', '');
   });
+
+  it.only('checks API is called when pressing enter on button', () => {
+    cy.intercept(
+      'GET',
+      `${apiLinkSearch}intitle:%22test%22&startIndex=0&maxResults=10`
+    ).as('getData');
+    cy.findByTestId('select').select('intitle');
+    cy.findByRole('searchbox').type('test');
+    cy.findByRole('button', { name: /search/i }).type('{enter}');
+    cy.wait('@getData');
+    cy.findByTestId('select').should('have.value', '');
+    cy.findByRole('searchbox').should('have.value', '');
+  });
+
+  it('checks API is called when submitting the form', () => {
+    cy.intercept(
+      'GET',
+      `${apiLinkSearch}intitle:%22test%22&startIndex=0&maxResults=10`
+    ).as('getData');
+    cy.findByTestId('select').select('intitle');
+    cy.findByRole('searchbox').type('test');
+    cy.get('form').submit(); //I don't know why it can't find the form by role
+    cy.wait('@getData');
+    cy.findByTestId('select').should('have.value', '');
+    cy.findByRole('searchbox').should('have.value', '');
+  });
 });
