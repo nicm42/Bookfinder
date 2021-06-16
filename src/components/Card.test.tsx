@@ -1,6 +1,7 @@
 /// <reference types="Jest" />
 
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Card from './Card';
 import cards from '../dummyCardData';
 
@@ -74,5 +75,16 @@ describe('Search tests', () => {
     expect(publisher).toBeInTheDocument();
     expect(moreInfo).toBeInTheDocument();
     expect(link).not.toBeInTheDocument();
+  });
+
+  it('navigates through cards using only the keyboard', () => {
+    render(<Card card={cards.items[0]} />);
+    expect(document.body).toHaveFocus();
+    userEvent.tab();
+    const moreInfo = screen.getByRole('link');
+    expect(moreInfo).toHaveFocus();
+
+    userEvent.tab();
+    expect(document.body).toHaveFocus();
   });
 });

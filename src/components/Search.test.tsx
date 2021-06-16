@@ -50,7 +50,7 @@ describe('Search tests', () => {
     expect(dropDown.value).toBe('');
   });
 
-  it('navigates using only the keyboard works', async () => {
+  it('navigates through Search using only the keyboard', () => {
     render(<Search getData={getData} />);
     expect(document.body).toHaveFocus();
     userEvent.tab();
@@ -76,5 +76,8 @@ describe('Search tests', () => {
     userEvent.tab();
     const submitButton = screen.getByRole('button', { name: /search/i });
     expect(submitButton).toHaveFocus();
+
+    userEvent.tab();
+    expect(document.body).toHaveFocus();
   });
 });
