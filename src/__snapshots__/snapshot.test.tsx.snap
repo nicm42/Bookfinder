@@ -162,7 +162,7 @@ Array [
         </select>
         <input
           aria-label="Type in the title or author you want to search for"
-          className="Searchstyles__Input-sc-1afspv3-4 gbjkP"
+          className="Searchstyles__Input-sc-1afspv3-4 dCOzro"
           name="search"
           required={true}
           type="search"
@@ -261,7 +261,7 @@ exports[`Snapshot tests renders the search correctly 1`] = `
     </select>
     <input
       aria-label="Type in the title or author you want to search for"
-      className="Searchstyles__Input-sc-1afspv3-4 gbjkP"
+      className="Searchstyles__Input-sc-1afspv3-4 dCOzro"
       name="search"
       required={true}
       type="search"

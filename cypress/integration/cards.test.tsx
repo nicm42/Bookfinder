@@ -107,6 +107,13 @@ describe('Card tests', () => {
         fixture: 'manyCards2.json',
       }
     ).as('getData2');
+    cy.intercept(
+      'GET',
+      `${apiLinkCards}intitle:%22test%22&startIndex=19&maxResults=10`,
+      {
+        fixture: 'manyCards3.json',
+      }
+    ).as('getData3');
 
     cy.findByTestId('select').select('intitle');
     cy.findByRole('searchbox').type('test');
@@ -118,13 +125,17 @@ describe('Card tests', () => {
       .first()
       .type('{enter}', { force: true });
     //If you don't force it then it works, but Cypress complains it can't do it and stops here
-
+    //But with forcing, it's happy and carries on
     cy.wait('@getData2');
+
     cy.findByText('Showing books 11-20').should('exist');
+    cy.findAllByRole('button', { name: /next/i }).first().click();
+    cy.wait('@getData3');
+    cy.findByText('Showing books 21-24').should('exist');
+
     cy.findAllByRole('button', { name: /previous/i })
       .first()
       .type('{enter}', { force: true });
-    //But it still doesn't like this one despite the forcing
-    cy.findByText('Showing books 1-10').should('exist');
+    cy.findByText('Showing books 11-20').should('exist');
   });
 });
