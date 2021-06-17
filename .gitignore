@@ -30,3 +30,4 @@ cypress/integration/examples
 .nyc_output
 
 todo
+.vscode

@@ -9,7 +9,7 @@ interface SearchProps {
 
 const Search = ({ getData }: SearchProps) => {
   // Using uncontrolled inputs here so as not to have additional renders
-  // - this form isn't that complicated, so there's no point in overcomplicating it
+  // - this form isn't that complicated, so there's no point in over-complicating it
   // https://daveceddia.com/react-forms/
   const submitSearch = (event: React.FormEvent) => {
     event.preventDefault();
