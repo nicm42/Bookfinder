@@ -73,6 +73,7 @@ export const Input = styled.input`
   max-width: 25ch; /* So it doesn't have more width than is available on small screens */
   padding: 0.5em;
   border: ${shapes.border};
+  -webkit-appearance: none; /* So iOS doesn't make the input corners really rounded */
   border-radius: ${shapes.borderRadius};
   font-size: ${fonts.medium};
   box-shadow: ${shapes.boxShadow};
