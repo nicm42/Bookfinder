@@ -1,57 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshot tests renders correctly when page is loaded 1`] = `
-<div
-  className="Searchstyles__SearchDiv-sc-1afspv3-0 erVQWF"
->
-  <form
-    className="Searchstyles__Form-sc-1afspv3-1 lmIVUu"
-    onSubmit={[Function]}
-  >
-    <p
-      className="Searchstyles__Title-sc-1afspv3-2 hXMlzD"
-    >
-      Search for a book by title or author
-    </p>
-    <select
-      aria-label="Select title or author"
-      className="Searchstyles__Select-sc-1afspv3-3 fOtYjG"
-      data-testid="select"
-      required={true}
-    >
-      <option
-        className="hide"
-        value=""
-      >
-        Title or author
-      </option>
-      <option
-        value="intitle"
-      >
-        Title
-      </option>
-      <option
-        value="inauthor"
-      >
-        Author
-      </option>
-    </select>
-    <input
-      aria-label="Type in the title or author you want to search for"
-      className="Searchstyles__Input-sc-1afspv3-4 gbjkP"
-      name="search"
-      required={true}
-      type="search"
-    />
-    <button
-      className="Searchstyles__Submit-sc-1afspv3-5 kVqeMX"
-    >
-      Search
-    </button>
-  </form>
-</div>
-`;
-
 exports[`Snapshot tests renders error message correctly 1`] = `
 <p
   className="Errorstyles__Error-b0ye4i-0 dipzyz"
@@ -171,7 +119,7 @@ exports[`Snapshot tests renders the app correctly 1`] = `
 Array [
   <header>
     <h1
-      className="Appstyles__Header-sc-1dagatm-0 fnbhWd"
+      className="Appstyles__Header-sc-1dagatm-0 jFTszl"
     >
       Book Search
     </h1>

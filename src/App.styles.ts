@@ -4,6 +4,7 @@ import { fonts, mediaQuery } from './constants';
 export const Header = styled.h1`
   padding-bottom: 0.5em;
   font-size: ${fonts.h1};
+  line-height: 1;
   text-align: center;
 `;
 

@@ -29,6 +29,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #root {
+    height: calc(100% - 6rem);
+
+    @media ${mediaQuery.medium} {
+      height: calc(100% - 3rem);
+    }
+  }
+
+  main {
     height: 100%;
     display: flex;
     flex-direction: column;
