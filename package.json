@@ -19,7 +19,7 @@
     "cypress": "^7.5.0",
     "cypress-axe": "^0.12.2",
     "cypress-plugin-tab": "^1.0.5",
-    "eslint-plugin-markdown": "^2.1.0",
+    "eslint-plugin-markdown": "^2.2.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

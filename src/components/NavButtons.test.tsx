@@ -1,19 +1,19 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import NavButtons from './NavButtons';
+import ButtonContext from '../contexts/ButtonContext';
 
 describe('Nav button tests', () => {
   const goBack = jest.fn();
   const searchAgain = jest.fn();
 
   it('renders without crashing', () => {
+    const isPreviousResults = false;
+    const isMoreResults = true;
     render(
-      <NavButtons
-        isPreviousResults={false}
-        isMoreResults
-        searchAgain={searchAgain}
-        goBack={goBack}
-      />
+      <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
+        <NavButtons goBack={goBack} searchAgain={searchAgain} />
+      </ButtonContext.Provider>
     );
     const moreResults = screen.getByRole('button', { name: /Next/i });
     expect(moreResults).toBeInTheDocument();
@@ -24,13 +24,12 @@ describe('Nav button tests', () => {
   });
 
   it('disables the previous button when it should', () => {
+    const isPreviousResults = false;
+    const isMoreResults = true;
     render(
-      <NavButtons
-        isPreviousResults={false}
-        isMoreResults
-        searchAgain={searchAgain}
-        goBack={goBack}
-      />
+      <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
+        <NavButtons goBack={goBack} searchAgain={searchAgain} />
+      </ButtonContext.Provider>
     );
     const moreResults = screen.getByRole('button', { name: /Next/i });
     expect(moreResults).not.toBeDisabled();
@@ -41,13 +40,12 @@ describe('Nav button tests', () => {
   });
 
   it('disables the next button when it should', () => {
+    const isPreviousResults = true;
+    const isMoreResults = false;
     render(
-      <NavButtons
-        isPreviousResults
-        isMoreResults={false}
-        searchAgain={searchAgain}
-        goBack={goBack}
-      />
+      <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
+        <NavButtons goBack={goBack} searchAgain={searchAgain} />
+      </ButtonContext.Provider>
     );
     const moreResults = screen.getByRole('button', { name: /Next/i });
     expect(moreResults).toBeDisabled();
@@ -63,13 +61,12 @@ describe('Keyboard navigation tests', () => {
   const searchAgain = jest.fn();
 
   it('tests keyboard nav when both previous and next enabled', () => {
+    const isPreviousResults = true;
+    const isMoreResults = true;
     render(
-      <NavButtons
-        isPreviousResults
-        isMoreResults
-        searchAgain={searchAgain}
-        goBack={goBack}
-      />
+      <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
+        <NavButtons goBack={goBack} searchAgain={searchAgain} />
+      </ButtonContext.Provider>
     );
     expect(document.body).toHaveFocus();
     userEvent.tab();
@@ -88,13 +85,13 @@ describe('Keyboard navigation tests', () => {
   });
 
   it('tests keyboard nav when previous is disabled', () => {
+    const isPreviousResults = false;
+    const isMoreResults = true;
+
     render(
-      <NavButtons
-        isPreviousResults={false}
-        isMoreResults
-        searchAgain={searchAgain}
-        goBack={goBack}
-      />
+      <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
+        <NavButtons goBack={goBack} searchAgain={searchAgain} />
+      </ButtonContext.Provider>
     );
     expect(document.body).toHaveFocus();
     userEvent.tab();
@@ -107,13 +104,13 @@ describe('Keyboard navigation tests', () => {
   });
 
   it('tests keyboard nav when next is disabled', () => {
+    const isPreviousResults = true;
+    const isMoreResults = false;
+
     render(
-      <NavButtons
-        isPreviousResults
-        isMoreResults={false}
-        searchAgain={searchAgain}
-        goBack={goBack}
-      />
+      <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
+        <NavButtons goBack={goBack} searchAgain={searchAgain} />
+      </ButtonContext.Provider>
     );
     expect(document.body).toHaveFocus();
     userEvent.tab();

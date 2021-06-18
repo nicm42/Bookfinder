@@ -6,6 +6,8 @@ import Error from './components/Error';
 import Results from './components/Results';
 import NavButtons from './components/NavButtons';
 import Card from './components/Card';
+//import DataContext from './contexts/DataContext';
+import ButtonContext from './contexts/ButtonContext';
 import * as Styled from './App.styles';
 //import { testCards } from './dummyCardData'; //uncomment to load cards without using API
 
@@ -190,12 +192,9 @@ const App = () => {
           <Results resultStart={resultStart} resultEnd={resultEnd} />
         )}
         {showButtons && (
-          <NavButtons
-            isPreviousResults={isPreviousResults}
-            isMoreResults={isMoreResults}
-            goBack={goBack}
-            searchAgain={searchAgain}
-          />
+          <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
+            <NavButtons goBack={goBack} searchAgain={searchAgain} />
+          </ButtonContext.Provider>
         )}
         {isLoading && <Loading />}
         <Styled.Books>
@@ -205,12 +204,9 @@ const App = () => {
             ))}
         </Styled.Books>
         {showButtons && (
-          <NavButtons
-            isPreviousResults={isPreviousResults}
-            isMoreResults={isMoreResults}
-            goBack={goBack}
-            searchAgain={searchAgain}
-          />
+          <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
+            <NavButtons goBack={goBack} searchAgain={searchAgain} />
+          </ButtonContext.Provider>
         )}
       </main>
     </>
