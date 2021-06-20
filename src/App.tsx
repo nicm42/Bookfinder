@@ -6,16 +6,25 @@ import Results from './components/Results';
 import NavButtons from './components/NavButtons';
 import Card from './components/Card';
 import useAxios from './hooks/useAxios';
-import ButtonContext from './contexts/ButtonContext';
 import * as Styled from './App.styles';
 //import { testCards } from './dummyCardData'; //uncomment to load cards without using API
 
-const searchTerm: string = '';
+/* const searchTerm: string = '';
 const typeNew: string = '';
-const page: number = 0;
+const page: number = 0; */
 
 const App = () => {
-  const { getData, cardData, results, isLoading, errorMessage } = useAxios();
+  const {
+    getData,
+    cardData,
+    results,
+    isLoading,
+    errorMessage,
+    resultStart,
+    resultEnd,
+    isPreviousResults,
+    isMoreResults,
+  } = useAxios();
 
   /* const [cardData, setCardData] = useState<any[]>([]); */
   //const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
@@ -27,13 +36,13 @@ const App = () => {
   const [searchType, setSearchType] = useState<string>('');
 
   const [showButtons, setShowButtons] = useState<boolean>(false);
-  const [isPreviousResults, setIsPreviousResults] = useState<boolean>(false);
-  const [isMoreResults, setIsMoreResults] = useState<boolean>(false);
+  //const [isPreviousResults, setIsPreviousResults] = useState<boolean>(false);
+  //const [isMoreResults, setIsMoreResults] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
-  const [resultStart, setResultStart] = useState<number>(-9);
+  /* const [resultStart, setResultStart] = useState<number>(-9);
   const [resultEnd, setResultEnd] = useState<number>(0);
-  const [totalItems, setTotalItems] = useState<number>(0);
+  const [totalItems, setTotalItems] = useState<number>(0); */
 
   const didMountRef = useRef<boolean>(false);
 
@@ -43,7 +52,7 @@ const App = () => {
   const resultsPerPage: number = 10;
   let startIndex: number;
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (didMountRef.current) {
       if (pageNumber === 1) {
         setIsPreviousResults(false);
@@ -53,7 +62,17 @@ const App = () => {
     } else {
       didMountRef.current = true;
     }
-  }, [pageNumber]);
+  }, [pageNumber]); */
+
+  //Set whether to show buttons based on whether one of them is not disabled
+  //ie there's more than 10 results
+  useEffect(() => {
+    if (isPreviousResults || isMoreResults) {
+      setShowButtons(true);
+    } else {
+      setShowButtons(false);
+    }
+  }, [isPreviousResults, isMoreResults]);
 
   return (
     <>
@@ -62,16 +81,10 @@ const App = () => {
       </header>
 
       <main>
-        <Search getData={getData} />
+        <Search />
         {errorMessage && <Error errorMessage={errorMessage} />}
-        {resultEnd > 0 && (
-          <Results resultStart={resultStart} resultEnd={resultEnd} />
-        )}
-        {/* {showButtons && (
-          <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
-            <NavButtons goBack={goBack} searchAgain={searchAgain} />
-          </ButtonContext.Provider>
-        )} */}
+        {resultEnd > 0 && <Results />}
+        {showButtons && <NavButtons />}
         {isLoading && <Loading />}
         <Styled.Books>
           {cardData &&
@@ -79,11 +92,7 @@ const App = () => {
               <Card card={card} key={card.id} data-testid="card" />
             ))}
         </Styled.Books>
-        {/* {showButtons && (
-          <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
-            <NavButtons goBack={goBack} searchAgain={searchAgain} />
-          </ButtonContext.Provider>
-        )} */}
+        {showButtons && <NavButtons />}
       </main>
     </>
   );

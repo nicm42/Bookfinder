@@ -1,20 +1,15 @@
-import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import CountContext from '../contexts/CountContext';
 import * as Styled from './Results.styles';
 
-interface ResultsProps {
-  resultStart: number;
-  resultEnd: number;
-}
+const Results = () => {
+  const { resultStart, resultEnd } = useContext(CountContext);
 
-const Results = ({ resultStart, resultEnd }: ResultsProps) => (
-  <Styled.ResultsCount>
-    Showing books {resultStart}-{resultEnd}
-  </Styled.ResultsCount>
-);
-
-Results.propTypes = {
-  resultStart: PropTypes.number.isRequired,
-  resultEnd: PropTypes.number.isRequired,
+  return (
+    <Styled.ResultsCount>
+      Showing books {resultStart}-{resultEnd}
+    </Styled.ResultsCount>
+  );
 };
 
 export default Results;
