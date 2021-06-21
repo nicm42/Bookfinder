@@ -16,15 +16,8 @@ const useAxios = () => {
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const { resultStart, setResultStart, resultEnd, setResultEnd } = useContext(
-    CountContext
-  );
-  const {
-    isPreviousResults,
-    setIsPreviousResults,
-    isMoreResults,
-    setIsMoreResults,
-  } = useContext(ButtonContext);
+  const { setResultStart, setResultEnd } = useContext(CountContext);
+  const { setIsPreviousResults, setIsMoreResults } = useContext(ButtonContext);
 
   const getData = async (search: string, type: string, start: number) => {
     //Need to re-set everything if this is a new search
@@ -105,10 +98,6 @@ const useAxios = () => {
     results,
     isLoading,
     errorMessage,
-    resultStart,
-    resultEnd,
-    isPreviousResults,
-    isMoreResults,
   };
 };
 

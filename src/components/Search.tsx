@@ -1,16 +1,16 @@
 // eslint-disable-next-line no-use-before-define
 import React from 'react';
 //import PropTypes from 'prop-types';
-import useAxios from '../hooks/useAxios';
+//import useAxios from '../hooks/useAxios';
 import * as Styled from './Search.styles';
 
-/* interface SearchProps {
+interface SearchProps {
   getData: Function;
-} */
+}
 
-//const Search = ({ getData }: SearchProps) => {
-const Search = () => {
-  const { getData } = useAxios();
+const Search = ({ getData }: SearchProps) => {
+  //const Search = () => {
+  //const { getData } = useAxios();
 
   // Using uncontrolled inputs here so as not to have additional renders
   // - this form isn't that complicated, so there's no point in over-complicating it

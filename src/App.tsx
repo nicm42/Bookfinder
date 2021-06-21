@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import Search from './components/Search';
 import Loading from './components/Loading';
 import Error from './components/Error';
@@ -6,6 +6,8 @@ import Results from './components/Results';
 import NavButtons from './components/NavButtons';
 import Card from './components/Card';
 import useAxios from './hooks/useAxios';
+import CountContext from './contexts/CountContext';
+import ButtonContext from './contexts/ButtonContext';
 import * as Styled from './App.styles';
 //import { testCards } from './dummyCardData'; //uncomment to load cards without using API
 
@@ -14,17 +16,9 @@ const typeNew: string = '';
 const page: number = 0; */
 
 const App = () => {
-  const {
-    getData,
-    cardData,
-    results,
-    isLoading,
-    errorMessage,
-    resultStart,
-    resultEnd,
-    isPreviousResults,
-    isMoreResults,
-  } = useAxios();
+  const { getData, cardData, results, isLoading, errorMessage } = useAxios();
+  const { resultEnd } = useContext(CountContext);
+  const { isPreviousResults, isMoreResults } = useContext(ButtonContext);
 
   /* const [cardData, setCardData] = useState<any[]>([]); */
   //const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API
@@ -81,7 +75,7 @@ const App = () => {
       </header>
 
       <main>
-        <Search />
+        <Search getData={getData} />
         {errorMessage && <Error errorMessage={errorMessage} />}
         {resultEnd > 0 && <Results />}
         {showButtons && <NavButtons />}
