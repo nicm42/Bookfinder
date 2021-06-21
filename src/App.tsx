@@ -16,7 +16,16 @@ const typeNew: string = '';
 const page: number = 0; */
 
 const App = () => {
-  const { getData, cardData, results, isLoading, errorMessage } = useAxios();
+  const {
+    getData,
+    cardData,
+    setCardData,
+    results,
+    isLoading,
+    errorMessage,
+    totalItems,
+    resultsPerPage,
+  } = useAxios();
   const { resultEnd } = useContext(CountContext);
   const { isPreviousResults, isMoreResults } = useContext(ButtonContext);
 
@@ -26,13 +35,13 @@ const App = () => {
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>(''); */
 
-  const [searchText, setSearchText] = useState<string>('');
-  const [searchType, setSearchType] = useState<string>('');
+  /* const [searchText, setSearchText] = useState<string>('');
+  const [searchType, setSearchType] = useState<string>(''); */
 
   const [showButtons, setShowButtons] = useState<boolean>(false);
   //const [isPreviousResults, setIsPreviousResults] = useState<boolean>(false);
   //const [isMoreResults, setIsMoreResults] = useState<boolean>(false);
-  const [pageNumber, setPageNumber] = useState<number>(0);
+  const [pageNumber, setPageNumber] = useState<number>(1);
 
   /* const [resultStart, setResultStart] = useState<number>(-9);
   const [resultEnd, setResultEnd] = useState<number>(0);
@@ -43,7 +52,7 @@ const App = () => {
   /* Google Books API automatically returns 10 books 
     but since I'm using that 10 all over the place we need a constant
     - and to see maxResults in case they change that default*/
-  const resultsPerPage: number = 10;
+  //const resultsPerPage: number = 10;
   let startIndex: number;
 
   /* useEffect(() => {
@@ -78,7 +87,17 @@ const App = () => {
         <Search getData={getData} />
         {errorMessage && <Error errorMessage={errorMessage} />}
         {resultEnd > 0 && <Results />}
-        {showButtons && <NavButtons />}
+        {showButtons && (
+          <NavButtons
+            getData={getData}
+            resultsPerPage={resultsPerPage}
+            results={results}
+            pageNumber={pageNumber}
+            setPageNumber={setPageNumber}
+            setCardData={setCardData}
+            totalItems={totalItems}
+          />
+        )}
         {isLoading && <Loading />}
         <Styled.Books>
           {cardData &&
@@ -86,7 +105,17 @@ const App = () => {
               <Card card={card} key={card.id} data-testid="card" />
             ))}
         </Styled.Books>
-        {showButtons && <NavButtons />}
+        {showButtons && (
+          <NavButtons
+            getData={getData}
+            resultsPerPage={resultsPerPage}
+            results={results}
+            pageNumber={pageNumber}
+            setPageNumber={setPageNumber}
+            setCardData={setCardData}
+            totalItems={totalItems}
+          />
+        )}
       </main>
     </>
   );

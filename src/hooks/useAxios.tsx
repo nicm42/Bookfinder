@@ -16,14 +16,18 @@ const useAxios = () => {
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
+  const [totalItems, setTotalItems] = useState<number>(0);
+
   const { setResultStart, setResultEnd } = useContext(CountContext);
   const { setIsPreviousResults, setIsMoreResults } = useContext(ButtonContext);
 
   const getData = async (search: string, type: string, start: number) => {
+    console.log(`searching with ${search} for ${type} starting at ${start}`);
     //Need to re-set everything if this is a new search
     if (start === 0) {
       setResults([]);
       setErrorMessage('');
+      setTotalItems(0);
       setIsPreviousResults(false);
       setIsMoreResults(false);
     } else {
@@ -38,6 +42,7 @@ const useAxios = () => {
       const response = await axios.get(
         `${api}${type}:%22${search}%22&startIndex=${start}&maxResults=10`
       );
+      console.log(response);
 
       //Uncomment line below to test API errors
       /* const response = await axios.get(`http://httpstat.us/404`); */
@@ -57,6 +62,7 @@ const useAxios = () => {
         //There is data!
         setResults((arr) => [...arr, response.data.items]);
         setCardData(response.data.items);
+        setTotalItems(response.data.totalItems);
 
         setResultStart((previousValue: any) => previousValue + resultsPerPage);
         setResultEnd(
@@ -95,9 +101,12 @@ const useAxios = () => {
   return {
     getData,
     cardData,
+    setCardData,
     results,
     isLoading,
     errorMessage,
+    totalItems,
+    resultsPerPage,
   };
 };
 
