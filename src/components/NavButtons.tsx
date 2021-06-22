@@ -8,8 +8,6 @@ interface NavButtonProps {
   getData: Function;
   resultsPerPage: number;
   results: [][];
-  pageNumber: number;
-  setPageNumber: (previousValue: any) => void;
   setCardData: (c: []) => void;
   totalItems: number;
 }
@@ -18,14 +16,15 @@ const NavButtons = ({
   getData,
   resultsPerPage,
   results,
-  pageNumber,
-  setPageNumber,
   setCardData,
   totalItems,
 }: NavButtonProps) => {
-  const { isPreviousResults, isMoreResults, setIsMoreResults } = useContext(
-    ButtonContext
-  );
+  const {
+    isPreviousResults,
+    setIsPreviousResults,
+    isMoreResults,
+    setIsMoreResults,
+  } = useContext(ButtonContext);
   const { resultStart, setResultStart, resultEnd, setResultEnd } = useContext(
     CountContext
   );
@@ -34,24 +33,43 @@ const NavButtons = ({
   const searchAgain = () => {
     //If we already have this data, then just show that
     const startIndex = resultStart + resultsPerPage - 2;
-    console.log(results.length, pageNumber);
+    const pageNumber = (resultStart + resultsPerPage - 1) / resultsPerPage;
     if (results.length >= pageNumber + 1) {
-      console.log('not getting data');
       window.scrollTo({ top: 0 }); //scroll back up, otherwise it's not clear anything has changed
       setCardData(results[pageNumber]);
+      setIsPreviousResults(true);
       if (resultEnd + resultsPerPage > totalItems) {
         setIsMoreResults(false);
       }
-      setResultStart((previousValue: any) => previousValue + resultsPerPage);
+      setResultStart((previousValue: number) => previousValue + resultsPerPage);
       setResultEnd(
-        (previousValue: any) => previousValue + results[pageNumber].length
+        (previousValue: number) => previousValue + results[pageNumber].length
       );
     }
-    setPageNumber((previousValue: any) => previousValue + 1);
     //Otherwise get it from the API
     if (results.length < pageNumber + 1) {
-      console.log('getting data');
       getData(searchText, searchType, startIndex);
+    }
+  };
+
+  const goBack = () => {
+    window.scrollTo({ top: 0 }); //scroll back up, otherwise it's not clear anything has changed
+    const pageNumber = (resultStart + resultsPerPage - 1) / resultsPerPage;
+    setCardData(results[pageNumber - 2]);
+    setIsMoreResults(true);
+    if (resultStart - resultsPerPage === 1) {
+      setIsPreviousResults(false);
+    }
+    setResultStart((previousValue: number) => previousValue - resultsPerPage);
+    //Take the last set of results and round it down to the nearest 10
+    //But if it's 10, 20, 30 etc then just need to take 10 off it
+    if (resultEnd % 10 === 0) {
+      setResultEnd((previousValue: number) => previousValue - resultsPerPage);
+    } else {
+      setResultEnd(
+        (previousValue: number) =>
+          Math.floor(previousValue / resultsPerPage) * resultsPerPage
+      );
     }
   };
 
@@ -59,7 +77,7 @@ const NavButtons = ({
     <Styled.PrevNext>
       <Styled.Previous
         disabled={!isPreviousResults}
-        /* onClick={goBack} */
+        onClick={goBack}
         isPreviousResults={isPreviousResults}
       >
         Previous

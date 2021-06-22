@@ -29,6 +29,9 @@ const useAxios = () => {
       setTotalItems(0);
       setIsPreviousResults(false);
       setIsMoreResults(false);
+      setResultStart(1 - resultsPerPage);
+      setResultEnd(0);
+      setResults([]);
     } else {
       setIsPreviousResults(true);
     }
@@ -62,9 +65,11 @@ const useAxios = () => {
         setCardData(response.data.items);
         setTotalItems(response.data.totalItems);
 
-        setResultStart((previousValue: any) => previousValue + resultsPerPage);
+        setResultStart(
+          (previousValue: number) => previousValue + resultsPerPage
+        );
         setResultEnd(
-          (previousValue: any) => previousValue + response.data.items.length
+          (previousValue: number) => previousValue + response.data.items.length
         );
 
         if (response.data.totalItems > resultsPerPage) {
