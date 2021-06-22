@@ -26,7 +26,9 @@ const Wrapper = () => {
           setIsMoreResults,
         }}
       >
-        <SearchContext.Provider value={{ searchText, searchType }}>
+        <SearchContext.Provider
+          value={{ searchText, setSearchText, searchType, setSearchType }}
+        >
           <App />
         </SearchContext.Provider>
       </ButtonContext.Provider>

@@ -8,6 +8,7 @@ import Card from './components/Card';
 import useAxios from './hooks/useAxios';
 import CountContext from './contexts/CountContext';
 import ButtonContext from './contexts/ButtonContext';
+import SearchContext from './contexts/SearchContext';
 import * as Styled from './App.styles';
 //import { testCards } from './dummyCardData'; //uncomment to load cards without using API
 
@@ -28,6 +29,7 @@ const App = () => {
   } = useAxios();
   const { resultEnd } = useContext(CountContext);
   const { isPreviousResults, isMoreResults } = useContext(ButtonContext);
+  const { searchText, searchType } = useContext(SearchContext);
 
   /* const [cardData, setCardData] = useState<any[]>([]); */
   //const [cardData, setCardData] = useState<any[]>(testCards); //uncomment to load cards without using API

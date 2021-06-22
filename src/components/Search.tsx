@@ -1,7 +1,8 @@
 // eslint-disable-next-line no-use-before-define
-import React from 'react';
+import React, { useContext } from 'react';
 //import PropTypes from 'prop-types';
 //import useAxios from '../hooks/useAxios';
+import SearchContext from '../contexts/SearchContext';
 import * as Styled from './Search.styles';
 
 interface SearchProps {
@@ -11,6 +12,7 @@ interface SearchProps {
 const Search = ({ getData }: SearchProps) => {
   //const Search = () => {
   //const { getData } = useAxios();
+  const { setSearchText, setSearchType } = useContext(SearchContext);
 
   // Using uncontrolled inputs here so as not to have additional renders
   // - this form isn't that complicated, so there's no point in over-complicating it
@@ -21,9 +23,13 @@ const Search = ({ getData }: SearchProps) => {
     const select: any = event.currentTarget.children[1];
     const searchTerm = search.value;
     const type = select.value;
+    setSearchText(search.value);
+    setSearchType(select.value);
     //Clear input and dropdown now we're submitting
     search.value = '';
     select.value = '';
+    //Using constants to search here so we don't need to wait until the context has been updated
+    //By the time we need it again, it will be
     getData(searchTerm, type, 0);
   };
 

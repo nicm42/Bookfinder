@@ -22,7 +22,6 @@ const useAxios = () => {
   const { setIsPreviousResults, setIsMoreResults } = useContext(ButtonContext);
 
   const getData = async (search: string, type: string, start: number) => {
-    console.log(`searching with ${search} for ${type} starting at ${start}`);
     //Need to re-set everything if this is a new search
     if (start === 0) {
       setResults([]);
@@ -42,7 +41,6 @@ const useAxios = () => {
       const response = await axios.get(
         `${api}${type}:%22${search}%22&startIndex=${start}&maxResults=10`
       );
-      console.log(response);
 
       //Uncomment line below to test API errors
       /* const response = await axios.get(`http://httpstat.us/404`); */
