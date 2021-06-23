@@ -4,15 +4,32 @@ import NavButtons from './NavButtons';
 import ButtonContext from '../contexts/ButtonContext';
 
 describe('Nav button tests', () => {
-  const goBack = jest.fn();
-  const searchAgain = jest.fn();
+  //const goBack = jest.fn();
+  //const searchAgain = jest.fn();
+  const getData = jest.fn();
+  const setIsPreviousResults = jest.fn();
+  const setIsMoreResults = jest.fn();
+  const setCardData = jest.fn();
 
   it('renders without crashing', () => {
     const isPreviousResults = false;
     const isMoreResults = true;
     render(
-      <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
-        <NavButtons goBack={goBack} searchAgain={searchAgain} />
+      <ButtonContext.Provider
+        value={{
+          isPreviousResults,
+          setIsPreviousResults,
+          isMoreResults,
+          setIsMoreResults,
+        }}
+      >
+        <NavButtons
+          getData={getData}
+          resultsPerPage={10}
+          results={[]}
+          setCardData={setCardData}
+          totalItems={10}
+        />
       </ButtonContext.Provider>
     );
     const moreResults = screen.getByRole('button', { name: /Next/i });
@@ -27,8 +44,21 @@ describe('Nav button tests', () => {
     const isPreviousResults = false;
     const isMoreResults = true;
     render(
-      <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
-        <NavButtons goBack={goBack} searchAgain={searchAgain} />
+      <ButtonContext.Provider
+        value={{
+          isPreviousResults,
+          setIsPreviousResults,
+          isMoreResults,
+          setIsMoreResults,
+        }}
+      >
+        <NavButtons
+          getData={getData}
+          resultsPerPage={10}
+          results={[]}
+          setCardData={setCardData}
+          totalItems={10}
+        />
       </ButtonContext.Provider>
     );
     const moreResults = screen.getByRole('button', { name: /Next/i });
@@ -43,8 +73,21 @@ describe('Nav button tests', () => {
     const isPreviousResults = true;
     const isMoreResults = false;
     render(
-      <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
-        <NavButtons goBack={goBack} searchAgain={searchAgain} />
+      <ButtonContext.Provider
+        value={{
+          isPreviousResults,
+          setIsPreviousResults,
+          isMoreResults,
+          setIsMoreResults,
+        }}
+      >
+        <NavButtons
+          getData={getData}
+          resultsPerPage={10}
+          results={[]}
+          setCardData={setCardData}
+          totalItems={10}
+        />
       </ButtonContext.Provider>
     );
     const moreResults = screen.getByRole('button', { name: /Next/i });
@@ -57,15 +100,31 @@ describe('Nav button tests', () => {
 });
 
 describe('Keyboard navigation tests', () => {
-  const goBack = jest.fn();
-  const searchAgain = jest.fn();
+  const getData = jest.fn();
+  const setIsPreviousResults = jest.fn();
+  const setIsMoreResults = jest.fn();
+  const setCardData = jest.fn();
 
   it('tests keyboard nav when both previous and next enabled', () => {
     const isPreviousResults = true;
     const isMoreResults = true;
+
     render(
-      <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
-        <NavButtons goBack={goBack} searchAgain={searchAgain} />
+      <ButtonContext.Provider
+        value={{
+          isPreviousResults,
+          setIsPreviousResults,
+          isMoreResults,
+          setIsMoreResults,
+        }}
+      >
+        <NavButtons
+          getData={getData}
+          resultsPerPage={10}
+          results={[]}
+          setCardData={setCardData}
+          totalItems={10}
+        />
       </ButtonContext.Provider>
     );
     expect(document.body).toHaveFocus();
@@ -89,8 +148,21 @@ describe('Keyboard navigation tests', () => {
     const isMoreResults = true;
 
     render(
-      <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
-        <NavButtons goBack={goBack} searchAgain={searchAgain} />
+      <ButtonContext.Provider
+        value={{
+          isPreviousResults,
+          setIsPreviousResults,
+          isMoreResults,
+          setIsMoreResults,
+        }}
+      >
+        <NavButtons
+          getData={getData}
+          resultsPerPage={10}
+          results={[]}
+          setCardData={setCardData}
+          totalItems={10}
+        />
       </ButtonContext.Provider>
     );
     expect(document.body).toHaveFocus();
@@ -108,8 +180,21 @@ describe('Keyboard navigation tests', () => {
     const isMoreResults = false;
 
     render(
-      <ButtonContext.Provider value={{ isPreviousResults, isMoreResults }}>
-        <NavButtons goBack={goBack} searchAgain={searchAgain} />
+      <ButtonContext.Provider
+        value={{
+          isPreviousResults,
+          setIsPreviousResults,
+          isMoreResults,
+          setIsMoreResults,
+        }}
+      >
+        <NavButtons
+          getData={getData}
+          resultsPerPage={10}
+          results={[]}
+          setCardData={setCardData}
+          totalItems={10}
+        />
       </ButtonContext.Provider>
     );
     expect(document.body).toHaveFocus();
