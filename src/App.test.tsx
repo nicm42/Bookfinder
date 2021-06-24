@@ -7,6 +7,7 @@ import {
 } from '@testing-library/react';
 import axios from 'axios';
 import ButtonContext from './contexts/ButtonContext';
+import CountContext from './contexts/CountContext';
 import SearchContext from './contexts/SearchContext';
 import App from './App';
 import cards, {
@@ -246,10 +247,12 @@ describe('App tests with card data', () => {
 });
 
 describe('App tests with card data with more than 10 cards', () => {
-  const setIsPreviousResults = jest.fn();
-  const setIsMoreResults = jest.fn();
   const setSearchText = jest.fn();
   const setSearchType = jest.fn();
+  const setIsPreviousResults = jest.fn();
+  const setIsMoreResults = jest.fn();
+  const setResultStart = jest.fn();
+  const setResultEnd = jest.fn();
 
   jest.mock('axios');
   const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -268,26 +271,32 @@ describe('App tests with card data with more than 10 cards', () => {
     const searchType = 'intitle';
     const isPreviousResults = true;
     const isMoreResults = true;
+    const resultStart = 1;
+    const resultEnd = 10;
     const resultsPerPage = 10;
 
-    mockedAxiosMany1.get.mockResolvedValueOnce(mockDataMany1);
-    mockedAxiosMany2.get.mockResolvedValueOnce(mockDataMany2);
-    mockedAxiosMany3.get.mockResolvedValueOnce(mockDataMany3);
+    mockedAxiosMany1.get.mockResolvedValue(mockDataMany1);
+    mockedAxiosMany2.get.mockResolvedValue(mockDataMany2);
+    mockedAxiosMany3.get.mockResolvedValue(mockDataMany3);
     render(
-      <ButtonContext.Provider
-        value={{
-          isPreviousResults,
-          setIsPreviousResults,
-          isMoreResults,
-          setIsMoreResults,
-        }}
+      <CountContext.Provider
+        value={{ resultStart, setResultStart, resultEnd, setResultEnd }}
       >
-        <SearchContext.Provider
-          value={{ searchText, setSearchText, searchType, setSearchType }}
+        <ButtonContext.Provider
+          value={{
+            isPreviousResults,
+            setIsPreviousResults,
+            isMoreResults,
+            setIsMoreResults,
+          }}
         >
-          <App />
-        </SearchContext.Provider>
-      </ButtonContext.Provider>
+          <SearchContext.Provider
+            value={{ searchText, setSearchText, searchType, setSearchType }}
+          >
+            <App />
+          </SearchContext.Provider>
+        </ButtonContext.Provider>
+      </CountContext.Provider>
     );
 
     const inputElement = screen.getByRole('searchbox');
@@ -304,10 +313,7 @@ describe('App tests with card data with more than 10 cards', () => {
     );
 
     let cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
-    let resultStart = 1;
-    const startIndex = 9;
-    //TODO why does it still call it with startIndex = 0?
-    let next = await waitFor(() =>
+    const next = await waitFor(() =>
       screen.getAllByRole('button', { name: /Next/i })
     );
 
@@ -317,81 +323,28 @@ describe('App tests with card data with more than 10 cards', () => {
         'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=9&maxResults=10'
       )
     );
-    let cardTitle11 = await waitFor(() => screen.getByText('Title 11'));
+    const cardTitle11 = await waitFor(() => screen.getByText('Title 11'));
     expect(cardTitle11).toBeInTheDocument();
-    resultStart = 10;
-    next = (await waitFor(() =>
-      screen.queryAllByRole('button', { name: /Next/i })
-    )) as HTMLElement[];
-
-    fireEvent.click(next[0]);
-    await waitFor(() =>
-      expect(mockedAxiosMany3.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=19&maxResults=10'
-      )
-    );
-    let cardTitle21 = await waitFor(() => screen.getByText('Title 21'));
-    expect(cardTitle21).toBeInTheDocument();
-    let previous = await waitFor(() =>
+    const previous = await waitFor(() =>
       screen.getAllByRole('button', { name: /Previous/i })
     );
 
     fireEvent.click(previous[0]);
-    cardTitle1 = await waitFor(() => screen.getByText('Title 11'));
+    cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
     expect(cardTitle1).toBeInTheDocument();
-    previous = await waitFor(() =>
-      screen.getAllByRole('button', { name: /Previous/i })
-    );
-
-    fireEvent.click(previous[0]);
-    expect(cardTitle1).toBeInTheDocument();
-    next = await waitFor(() =>
-      screen.getAllByRole('button', { name: /Next/i })
-    );
-
-    fireEvent.click(next[0]);
-    cardTitle11 = await waitFor(() => screen.getByText('Title 11'));
-    expect(cardTitle11).toBeInTheDocument();
-
-    fireEvent.click(next[0]);
-    cardTitle21 = await waitFor(() => screen.getByText('Title 21'));
-    expect(cardTitle21).toBeInTheDocument();
-    previous = await waitFor(() =>
-      screen.getAllByRole('button', { name: /Previous/i })
-    );
-    expect(previous[0]).not.toBeDisabled();
-    expect(previous[1]).not.toBeDisabled();
-    next = (await waitFor(() =>
-      screen.queryAllByRole('button', { name: /Next/i })
-    )) as HTMLElement[];
-    expect(next[0]).toBeDisabled();
-    expect(next[1]).toBeDisabled();
   });
 
   it.only('tests more than 10 cards followed by a new search', async () => {
-    const searchText = 'test';
-    const searchType = 'intitle';
-    const isPreviousResults = true;
-    const isMoreResults = true;
+    let searchText = 'test';
+    let searchType = 'intitle';
 
-    mockedAxiosMany1.get.mockResolvedValueOnce(mockDataMany1);
-    mockedAxiosMany2.get.mockResolvedValueOnce(mockDataMany2);
-    mockedAxios.get.mockResolvedValueOnce(mockData);
+    mockedAxios.get.mockResolvedValue(mockData);
     render(
-      <ButtonContext.Provider
-        value={{
-          isPreviousResults,
-          setIsPreviousResults,
-          isMoreResults,
-          setIsMoreResults,
-        }}
+      <SearchContext.Provider
+        value={{ searchText, setSearchText, searchType, setSearchType }}
       >
-        <SearchContext.Provider
-          value={{ searchText, setSearchText, searchType, setSearchType }}
-        >
-          <App />
-        </SearchContext.Provider>
-      </ButtonContext.Provider>
+        <App />
+      </SearchContext.Provider>
     );
 
     const inputElement = screen.getByRole('searchbox');
@@ -408,25 +361,15 @@ describe('App tests with card data with more than 10 cards', () => {
     );
     let cardTitle = await waitFor(() => screen.getByText('Title 1'));
     expect(cardTitle).toBeInTheDocument();
-    const moreResults = await waitFor(() =>
-      screen.getAllByRole('button', { name: /Next/i })
-    );
 
-    fireEvent.click(moreResults[0]);
-    await waitFor(() =>
-      expect(mockedAxiosMany2.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=9&maxResults=10'
-      )
-    );
-    cardTitle = await waitFor(() => screen.getByText('Title 11'));
-    expect(cardTitle).toBeInTheDocument();
-
-    fireEvent.change(inputElement, { target: { value: 'test' } });
-    fireEvent.change(dropDown, { target: { value: 'intitle' } });
+    searchText = 'test2';
+    searchType = 'inauthor';
+    fireEvent.change(inputElement, { target: { value: 'test2' } });
+    fireEvent.change(dropDown, { target: { value: 'inauthor' } });
     fireEvent.click(submitButton);
     await waitFor(() =>
       expect(mockedAxios.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0&maxResults=10'
+        'https://www.googleapis.com/books/v1/volumes?q=inauthor:%22test2%22&startIndex=0&maxResults=10'
       )
     );
     cardTitle = await waitFor(() => screen.getByText('Title 1'));
