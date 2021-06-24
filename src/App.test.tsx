@@ -266,18 +266,79 @@ describe('App tests with card data with more than 10 cards', () => {
 
   afterEach(cleanup);
 
-  it.only('tests more than 10 cards', async () => {
+  it('tests more than 10 cards', async () => {
     const searchText = 'test';
     const searchType = 'intitle';
     const isPreviousResults = true;
     const isMoreResults = true;
     const resultStart = 1;
     const resultEnd = 10;
-    const resultsPerPage = 10;
+    //const resultsPerPage = 10;
 
-    mockedAxiosMany1.get.mockResolvedValue(mockDataMany1);
-    mockedAxiosMany2.get.mockResolvedValue(mockDataMany2);
-    mockedAxiosMany3.get.mockResolvedValue(mockDataMany3);
+    mockedAxiosMany1.get.mockResolvedValueOnce(mockDataMany1);
+    mockedAxiosMany2.get.mockResolvedValueOnce(mockDataMany2);
+    mockedAxiosMany3.get.mockResolvedValueOnce(mockDataMany3);
+    render(
+      <CountContext.Provider
+        value={{ resultStart, setResultStart, resultEnd, setResultEnd }}
+      >
+        <ButtonContext.Provider
+          value={{
+            isPreviousResults,
+            setIsPreviousResults,
+            isMoreResults,
+            setIsMoreResults,
+          }}
+        >
+          <SearchContext.Provider
+            value={{ searchText, setSearchText, searchType, setSearchType }}
+          >
+            <App />
+          </SearchContext.Provider>
+        </ButtonContext.Provider>
+      </CountContext.Provider>
+    );
+
+    const inputElement = screen.getByRole('searchbox');
+    fireEvent.change(inputElement, { target: { value: 'test' } });
+    const dropDown = screen.getByTestId('select');
+    fireEvent.change(dropDown, { target: { value: 'intitle' } });
+    const submitButton = screen.getByRole('button', { name: /search/i });
+    fireEvent.click(submitButton);
+
+    await waitFor(() =>
+      expect(mockedAxiosMany1.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=0&maxResults=10'
+      )
+    );
+
+    const cardTitle1 = await waitFor(() => screen.getByText('Title 1'));
+    expect(cardTitle1).toBeInTheDocument();
+    const next = await waitFor(() =>
+      screen.getAllByRole('button', { name: /Next/i })
+    );
+
+    fireEvent.click(next[0]);
+    await waitFor(() =>
+      expect(mockedAxiosMany2.get).toHaveBeenCalledWith(
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=9&maxResults=10'
+      )
+    );
+    const cardTitle11 = await waitFor(() => screen.getByText('Title 11'));
+    expect(cardTitle11).toBeInTheDocument();
+  });
+
+  it('tests going backwards', async () => {
+    const searchText = 'test';
+    const searchType = 'intitle';
+    const isPreviousResults = true;
+    const isMoreResults = true;
+    const resultStart = 11;
+    const resultEnd = 20;
+
+    mockedAxiosMany1.get.mockResolvedValueOnce(mockDataMany1);
+    mockedAxiosMany2.get.mockResolvedValueOnce(mockDataMany2);
+    mockedAxiosMany3.get.mockResolvedValueOnce(mockDataMany3);
     render(
       <CountContext.Provider
         value={{ resultStart, setResultStart, resultEnd, setResultEnd }}
@@ -320,7 +381,7 @@ describe('App tests with card data with more than 10 cards', () => {
     fireEvent.click(next[0]);
     await waitFor(() =>
       expect(mockedAxiosMany2.get).toHaveBeenCalledWith(
-        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=9&maxResults=10'
+        'https://www.googleapis.com/books/v1/volumes?q=intitle:%22test%22&startIndex=19&maxResults=10'
       )
     );
     const cardTitle11 = await waitFor(() => screen.getByText('Title 11'));
@@ -334,7 +395,7 @@ describe('App tests with card data with more than 10 cards', () => {
     expect(cardTitle1).toBeInTheDocument();
   });
 
-  it.only('tests more than 10 cards followed by a new search', async () => {
+  it('tests more than 10 cards followed by a new search', async () => {
     let searchText = 'test';
     let searchType = 'intitle';
 

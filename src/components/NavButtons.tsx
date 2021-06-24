@@ -1,3 +1,4 @@
+import { result } from 'cypress/types/lodash';
 import { useContext } from 'react';
 import ButtonContext from '../contexts/ButtonContext';
 import CountContext from '../contexts/CountContext';
