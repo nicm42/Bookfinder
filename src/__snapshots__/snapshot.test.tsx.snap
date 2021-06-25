@@ -27,14 +27,14 @@ exports[`Snapshot tests renders nav buttons correctly for both buttons 1`] = `
   <button
     className="NavButtonsstyles__Previous-tjoruy-1 iyEMDy"
     disabled={false}
-    onClick={[MockFunction]}
+    onClick={[Function]}
   >
     Previous
   </button>
   <button
     className="NavButtonsstyles__Next-tjoruy-2 frJrFi"
     disabled={false}
-    onClick={[MockFunction]}
+    onClick={[Function]}
   >
     Next
   </button>
@@ -48,14 +48,14 @@ exports[`Snapshot tests renders nav buttons correctly for just next button 1`] =
   <button
     className="NavButtonsstyles__Previous-tjoruy-1 mipfr"
     disabled={true}
-    onClick={[MockFunction]}
+    onClick={[Function]}
   >
     Previous
   </button>
   <button
     className="NavButtonsstyles__Next-tjoruy-2 frJrFi"
     disabled={false}
-    onClick={[MockFunction]}
+    onClick={[Function]}
   >
     Next
   </button>
@@ -69,14 +69,14 @@ exports[`Snapshot tests renders nav buttons correctly for just previous button 1
   <button
     className="NavButtonsstyles__Previous-tjoruy-1 iyEMDy"
     disabled={false}
-    onClick={[MockFunction]}
+    onClick={[Function]}
   >
     Previous
   </button>
   <button
     className="NavButtonsstyles__Next-tjoruy-2 eYzWCn"
     disabled={true}
-    onClick={[MockFunction]}
+    onClick={[Function]}
   >
     Next
   </button>
@@ -90,14 +90,14 @@ exports[`Snapshot tests renders nav buttons correctly for no buttons 1`] = `
   <button
     className="NavButtonsstyles__Previous-tjoruy-1 mipfr"
     disabled={true}
-    onClick={[MockFunction]}
+    onClick={[Function]}
   >
     Previous
   </button>
   <button
     className="NavButtonsstyles__Next-tjoruy-2 eYzWCn"
     disabled={true}
-    onClick={[MockFunction]}
+    onClick={[Function]}
   >
     Next
   </button>
