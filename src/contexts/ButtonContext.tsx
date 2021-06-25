@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext } from 'react';
 
 export type ButtonContextType = {
   isPreviousResults: boolean;
@@ -17,5 +17,3 @@ const ButtonContext = createContext<ButtonContextType>({
 });
 
 export default ButtonContext;
-
-//export const useButtonContext = () => useContext(ButtonContext);
