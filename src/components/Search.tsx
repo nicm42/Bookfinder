@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-use-before-define
 import React, { useContext } from 'react';
-//import PropTypes from 'prop-types';
-//import useAxios from '../hooks/useAxios';
+import PropTypes from 'prop-types';
 import SearchContext from '../contexts/SearchContext';
 import * as Styled from './Search.styles';
 
@@ -60,8 +59,8 @@ const Search = ({ getData }: SearchProps) => {
   );
 };
 
-/* Search.propTypes = {
+Search.propTypes = {
   getData: PropTypes.func.isRequired,
-}; */
+};
 
 export default Search;

@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import PropTypes from 'prop-types';
 import ButtonContext from '../contexts/ButtonContext';
 import CountContext from '../contexts/CountContext';
 import SearchContext from '../contexts/SearchContext';
@@ -8,6 +9,7 @@ interface NavButtonProps {
   getData: Function;
   resultsPerPage: number;
   results: [][];
+  // eslint-disable-next-line no-unused-vars
   setCardData: (c: []) => void;
   totalItems: number;
 }
@@ -92,6 +94,14 @@ const NavButtons = ({
       </Styled.Next>
     </Styled.PrevNext>
   );
+};
+
+NavButtons.propTypes = {
+  getData: PropTypes.func.isRequired,
+  resultsPerPage: PropTypes.number.isRequired,
+  results: PropTypes.arrayOf(PropTypes.array).isRequired,
+  setCardData: PropTypes.func.isRequired,
+  totalItems: PropTypes.number.isRequired,
 };
 
 export default NavButtons;
