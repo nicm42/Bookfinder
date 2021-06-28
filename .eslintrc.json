@@ -1,0 +1,55 @@
+{
+  "extends": [
+    "react-app",
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:import/typescript",
+    "prettier",
+    "plugin:cypress/recommended"
+  ],
+  "plugins": ["import", "jsx-a11y", "prettier"],
+  "rules": {
+    "prettier/prettier": "warn",
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "func-names": "off",
+    "spaced-comment": "off",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "no-useless-concat": "warn",
+    "import/prefer-default-export": "warn",
+    "no-use-before-define": "warn",
+    // note you must disable the base rule as it can report incorrect errors
+    //"no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["warn"],
+    "import/extensions": [
+      "warn",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".tsx", ".ts", ".js", ".jsx"]
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.test.js",
+        "**/*.test.jsx",
+        "**/*.spec.js",
+        "**/*.spec.jsx"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
+}

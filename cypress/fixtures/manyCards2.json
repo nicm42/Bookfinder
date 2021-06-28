@@ -1,0 +1,47 @@
+{
+  "totalItems": 24,
+  "items": [
+    {
+      "id": "id 11",
+      "volumeInfo": {
+        "title": "Title 11"
+      }
+    },
+    {
+      "id": "id 12",
+      "volumeInfo": {}
+    },
+    {
+      "id": "id 13",
+      "volumeInfo": {}
+    },
+    {
+      "id": "id 14",
+      "volumeInfo": {}
+    },
+    {
+      "id": "id 15",
+      "volumeInfo": {}
+    },
+    {
+      "id": "id 16",
+      "volumeInfo": {}
+    },
+    {
+      "id": "id 17",
+      "volumeInfo": {}
+    },
+    {
+      "id": "id 18",
+      "volumeInfo": {}
+    },
+    {
+      "id": "id 19",
+      "volumeInfo": {}
+    },
+    {
+      "id": "id 20",
+      "volumeInfo": {}
+    }
+  ]
+}

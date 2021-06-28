@@ -3,20 +3,43 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@cypress/code-coverage": "^3.9.6",
+    "@cypress/instrument-cra": "^1.4.0",
+    "@testing-library/cypress": "^7.0.6",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.0.1",
+    "@types/react": "^17.0.4",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-test-renderer": "^17.0.1",
+    "axe-core": "^4.2.2",
+    "axios": "^0.21.1",
+    "cypress": "^7.5.0",
+    "cypress-axe": "^0.12.2",
+    "cypress-plugin-tab": "^1.0.5",
+    "eslint-plugin-markdown": "^2.2.0",
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "react-test-renderer": "^16.13.1",
+    "start-server-and-test": "^1.12.5",
     "styled-components": "^5.2.3",
+    "typescript": "^4.2.4",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test:coverage": "npm test -- --coverage --watchAll=false",
+    "eject": "react-scripts eject",
+    "cypress:start:app": "BROWSER=none react-scripts -r @cypress/instrument-cra start",
+    "cypress:start:wait": "start-server-and-test cypress:start:app http://localhost:3000",
+    "cypress:open": "npm run cypress:start:wait -- \"cypress open\"",
+    "cypress:run": "npm run cypress:start:wait -- \"cypress run\""
   },
   "eslintConfig": {
     "extends": [
@@ -35,5 +58,31 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/index.tsx",
+      "!src/dummyCardData.ts"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.2",
+    "@babel/preset-env": "^7.14.2",
+    "@types/styled-components": "^5.1.9",
+    "babel-jest": "^26.6.3",
+    "babel-plugin-istanbul": "^6.0.0",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-cypress": "^2.11.3",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "istanbul-lib-coverage": "^3.0.0",
+    "nyc": "^15.1.0",
+    "prettier": "^2.2.1"
   }
 }
