@@ -39,7 +39,8 @@
     "cypress:start:app": "BROWSER=none react-scripts -r @cypress/instrument-cra start",
     "cypress:start:wait": "start-server-and-test cypress:start:app http://localhost:3000",
     "cypress:open": "npm run cypress:start:wait -- \"cypress open\"",
-    "cypress:run": "npm run cypress:start:wait -- \"cypress run\""
+    "cypress:run": "npm run cypress:start:wait -- \"cypress run\"",
+    "start:ci": "npm run cypress:start:wait --headless -- \"cypress run\""
   },
   "eslintConfig": {
     "extends": [
