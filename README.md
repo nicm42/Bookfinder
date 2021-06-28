@@ -13,24 +13,37 @@
 * [Contact](#contact)
 
 ## General info
-TBC
+The brief from Chungu was to build a web application to allow users to search for books using the Google Books API. Since I'd only used APIs in JavaScript, I chose to do this in React. And once I'd started I learnt about TypeScript, so then added that in. I also used Styled Components as I was curious about CSS-in-JSS. I used Axios to fetch the data because I'd heard about it, heard that it made things easier, and wanted to try it out.
 
 ## Screenshots
-TBC
+![Screenshot](screenshot.png)
 
 ## Technologies
 * React
+* React Context
+* TypeScript
 * Styled Components
-* TBC
+* Axios
+* Jest
+* React Testing Library
+* Cypress
+* Cypress Testing Library
 
 ## Learnings
-Styled Components
+* React custom hooks
+* React Context
+* TypeScript
+* Styled Components
 
 ## Features
-TBC
+Allows you to search for a book by title or author, and go through the pages of books if there are more than ten.
 
 ## Setup
-TBC
+To view this project visit the demo (coming soon) or download the files, open a terminal in that folder and install locally using npm:
+```
+npm install
+npm start
+```
 
 ## Status
 Project is: _in progress_
