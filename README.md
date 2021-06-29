@@ -39,14 +39,14 @@ The brief from Chungu was to build a web application to allow users to search fo
 Allows you to search for a book by title or author, and go through the pages of books if there are more than ten.
 
 ## Setup
-To view this project visit the demo (coming soon) or download the files, open a terminal in that folder and install locally using npm:
+To view this project visit the [demo](https://book-search.nicm42.co.uk/) or download the files, open a terminal in that folder and install locally using npm:
 ```
 npm install
 npm start
 ```
 
 ## Status
-Project is: _in progress_
+Project is: _finished_
 
 ## Inspiration
 [https://github.com/chingu-voyages/soloproject-tier2-bookfinder](https://github.com/chingu-voyages/soloproject-tier2-bookfinder)
