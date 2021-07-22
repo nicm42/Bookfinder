@@ -28,6 +28,7 @@ The brief from Chungu was to build a web application to allow users to search fo
 * React Testing Library
 * Cypress
 * Cypress Testing Library
+* Google Books API
 
 ## Learnings
 * React custom hooks
